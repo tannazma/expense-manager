@@ -8,14 +8,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const seed = async () => {
-  // Seed every user
-  for (let i = 0; i < userData.length; i++) {
-    const thisUser = userData[i];
-    await prisma.user.create({
-      data: thisUser,
-    });
-  }
-
   //   Seed every income categories
   for (let i = 0; i < incomeCategories.length; i++) {
     const theIncomeCategories = incomeCategories[i];
@@ -31,21 +23,27 @@ const seed = async () => {
       data: theExpensesCategories,
     });
   }
-
+  // Seed every user
+  for (let i = 0; i < userData.length; i++) {
+    const thisUser = userData[i];
+    await prisma.user.create({
+      data: thisUser,
+    });
+  }
   // Seed every income
-//   for (let i = 0; i < incomesData.length; i++) {
-//     const thisIncome = incomesData[i];
-//     await prisma.income.create({
-//       data: thisIncome,
-//     });
-//   }
+  for (let i = 0; i < incomesData.length; i++) {
+    const thisIncome = incomesData[i];
+    await prisma.income.create({
+      data: thisIncome,
+    });
+  }
 
   // Seed every expense
-//   for (let i = 0; i < expensesData.length; i++) {
-//     const thisExpense = expensesData[i];
-//     await prisma.expense.create({
-//       data: thisExpense,
-//     });
-//   }
+  for (let i = 0; i < expensesData.length; i++) {
+    const thisExpense = expensesData[i];
+    await prisma.expense.create({
+      data: thisExpense,
+    });
+  }
 };
 seed();
