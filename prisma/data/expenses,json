@@ -1,0 +1,104 @@
+[
+  {
+    "id": 101,
+    "amount": 2000,
+    "expenseCategoryId": 1,
+    "userId": 1
+  },
+  {
+    "id": 102,
+    "amount": 400,
+    "expenseCategoryId": 2,
+    "userId": 1
+  },
+  {
+    "id": 103,
+    "amount": 150,
+    "expenseCategoryId": 3,
+    "userId": 1
+  },
+  {
+    "id": 104,
+    "amount": 550,
+    "expenseCategoryId": 4,
+    "userId": 1
+  },
+  {
+    "id": 105,
+    "amount": 50,
+    "expenseCategoryId": 7,
+    "userId": 1
+  },
+  {
+    "id": 106,
+    "amount": 800,
+    "expenseCategoryId": 9,
+    "userId": 1
+  },
+  {
+    "id": 107,
+    "amount": 800,
+    "expenseCategoryId": 10,
+    "userId": 1
+  },
+  {
+    "id": 108,
+    "amount": 20,
+    "expenseCategoryId": 12,
+    "userId": 1
+  },
+  {
+    "id": 109,
+    "amount": 200,
+    "expenseCategoryId": 13,
+    "userId": 1
+  },
+  {
+    "id": 110,
+    "amount": 90,
+    "expenseCategoryId": 14,
+    "userId": 1
+  },
+  {
+    "id": 111,
+    "amount": 1500,
+    "expenseCategoryId": 2,
+    "userId": 2
+  },
+  {
+    "id": 112,
+    "amount": 2300,
+    "expenseCategoryId": 3,
+    "userId": 2
+  },
+  {
+    "id": 113,
+    "amount": 1900,
+    "expenseCategoryId": 8,
+    "userId": 2
+  },
+  {
+    "id": 114,
+    "amount": 190,
+    "expenseCategoryId": 10,
+    "userId": 3
+  },
+  {
+    "id": 115,
+    "amount": 199,
+    "expenseCategoryId": 7,
+    "userId": 3
+  },
+  {
+    "id": 116,
+    "amount": 250,
+    "expenseCategoryId": 9,
+    "userId": 3
+  },
+  {
+    "id": 117,
+    "amount": 90,
+    "expenseCategoryId": 12,
+    "userId": 3
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "amount": 4500,
+    "date": "2022-02-01T00:00:00.000Z",
+    "userId": 1,
+    "incomeCategoryId": 1
+  },
+  {
+    "id": 2,
+    "amount": 3500,
+    "date": "2022-02-15T00:00:00.000Z",
+    "userId": 2,
+    "incomeCategoryId": 2
+  },
+  {
+    "id": 3,
+    "amount": 5200,
+    "date": "2022-02-28T00:00:00.000Z",
+    "userId": 3,
+    "incomeCategoryId": 1
+  },
+  {
+    "id": 4,
+    "amount": 4800,
+    "date": "2022-03-01T00:00:00.000Z",
+    "userId": 4,
+    "incomeCategoryId": 1
+  },
+  {
+    "id": 5,
+    "amount": 280,
+    "date": "2022-03-01T00:00:00.000Z",
+    "userId": 4,
+    "incomeCategoryId": 2
+  },
+  {
+    "id": 6,
+    "amount": 3000,
+    "date": "2022-03-15T00:00:00.000Z",
+    "userId": 5,
+    "incomeCategoryId": 2
+  }
+]
