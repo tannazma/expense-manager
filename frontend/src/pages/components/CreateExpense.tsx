@@ -7,12 +7,25 @@ export default function CreateExpense() {
   >(null);
 
   const [amount, setAmount] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [details, setDetails] = useState("");
+  const [expenseCategoryId, setExpenseCategoryId] = useState("");
+  // const [details, setDetails] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ amount, category: categoryId, details });
+    console.log({
+      amount,
+      category: expenseCategoryId,
+      // details
+    });
+    fetch("http://localhost:3001/expenses", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: Number(amount),
+        expenseCategoryId: Number(expenseCategoryId),
+        // details: details,
+      }),
+    });
   };
 
   useEffect(() => {
@@ -40,8 +53,8 @@ export default function CreateExpense() {
           <select
             id="category"
             name="category"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
+            value={expenseCategoryId}
+            onChange={(e) => setExpenseCategoryId(e.target.value)}
           >
             {expenseCategories &&
               expenseCategories.map((expenseCat) => (
@@ -52,14 +65,14 @@ export default function CreateExpense() {
               ))}
           </select>
         </label>
-        <label>
+        {/* <label>
           Details:
           <input
             type="text"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           />
-        </label>
+        </label> */}
         <button type="submit">submit</button>
       </form>
     </div>
