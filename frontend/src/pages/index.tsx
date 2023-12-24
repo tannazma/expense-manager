@@ -20,6 +20,7 @@ export default function Home() {
         {allExpenses.map((expense) => (
           <div key={expense.id}>
             <p key={expense.id}>
+              <span>{expense.expenseCategory.icon}</span>
               {expense.amount}
               <span>{expense.expenseCategory.name}</span>
             </p>
