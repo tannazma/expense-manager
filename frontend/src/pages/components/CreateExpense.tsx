@@ -18,17 +18,25 @@ export default function CreateExpense() {
     <div>
       <form>
         <label>
-          Amount
+          Amount:
           <input type="number" />
         </label>
-        <select id="category" name="category">
-          {expenseCategories &&
-            expenseCategories.map((expenseCat) => (
-              <option key={expenseCat.id}>{expenseCat.icon}{expenseCat.name}</option>
-            ))}
-          <option value="Rent">🏠 Rent</option>
-          <option value="coffee"></option>
-        </select>
+        <label>
+          Category:
+          <select id="category" name="category">
+            {expenseCategories &&
+              expenseCategories.map((expenseCat) => (
+                <option key={expenseCat.id}>
+                  {expenseCat.icon}
+                  {expenseCat.name}
+                </option>
+              ))}
+          </select>
+        </label>
+        <label>
+          Details:
+          <input type="text" />
+        </label>
       </form>
     </div>
   );
