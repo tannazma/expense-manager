@@ -2,6 +2,7 @@ export interface ExpenseCategory {
   id: number;
   name: string;
   expenses: Expense[];
+  icon: string;
 }
 
 export interface Expense {
