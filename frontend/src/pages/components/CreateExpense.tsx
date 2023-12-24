@@ -24,7 +24,7 @@ export default function CreateExpense() {
         <select id="category" name="category">
           {expenseCategories &&
             expenseCategories.map((expenseCat) => (
-              <option>{expenseCat.name}</option>
+              <option key={expenseCat.id}>{expenseCat.icon}{expenseCat.name}</option>
             ))}
           <option value="Rent">🏠 Rent</option>
           <option value="coffee"></option>
