@@ -3,6 +3,10 @@ import { Expense } from "../../types";
 
 export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const toggleShowForm = () => {
+    setShowForm(!showForm);
+  };
 
   useEffect(() => {
     const getAllExpenses = async () => {
@@ -16,6 +20,8 @@ export default function Home() {
   return (
     <div>
       <h1>Expenses</h1>
+      <button onClick={toggleShowForm}> + </button>
+      {showForm && <div>Create an expense</div>}
       <div>
         {allExpenses.map((expense) => (
           <div key={expense.id}>
