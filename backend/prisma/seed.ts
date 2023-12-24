@@ -1,5 +1,5 @@
 import userData from "./data/users.json";
-import expenseCategories from "./data/expenseCategories.json";
+import { seedCategories } from "./data/expenseCategories";
 import incomeCategories from "./data/incomeCategories.json";
 import incomesData from "./data/incomes.json";
 import expensesData from "./data/expenses.json";
@@ -17,8 +17,8 @@ const seed = async () => {
   }
 
   //   Seed every expense categories
-  for (let i = 0; i < expenseCategories.length; i++) {
-    const theExpensesCategories = expenseCategories[i];
+  for (let i = 0; i < seedCategories.length; i++) {
+    const theExpensesCategories = seedCategories[i];
     await prisma.expenseCategory.create({
       data: theExpensesCategories,
     });
