@@ -21,6 +21,11 @@ app.get("/expenses", async (req, res) => {
   res.json(allExpenses);
 });
 
+app.get("/expense-categories", async (req, res) => {
+  const allExpensesCategories = await prisma.expenseCategory.findMany({});
+  res.json(allExpensesCategories);
+});
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });
