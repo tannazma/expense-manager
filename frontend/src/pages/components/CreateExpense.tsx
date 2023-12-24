@@ -6,6 +6,15 @@ export default function CreateExpense() {
     ExpenseCategory[] | null
   >(null);
 
+  const [amount, setAmount] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [details, setDetails] = useState("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log({ amount, category: categoryId, details });
+  };
+
   useEffect(() => {
     const getAllExpenses = async () => {
       const response = await fetch("http://localhost:3001/expense-categories");
@@ -14,19 +23,29 @@ export default function CreateExpense() {
     };
     getAllExpenses();
   }, []);
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
           Amount:
-          <input type="number" />
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
         </label>
         <label>
           Category:
-          <select id="category" name="category">
+          <select
+            id="category"
+            name="category"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+          >
             {expenseCategories &&
               expenseCategories.map((expenseCat) => (
-                <option key={expenseCat.id}>
+                <option key={expenseCat.id} value={expenseCat.id}>
                   {expenseCat.icon}
                   {expenseCat.name}
                 </option>
@@ -35,8 +54,13 @@ export default function CreateExpense() {
         </label>
         <label>
           Details:
-          <input type="text" />
+          <input
+            type="text"
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
+          />
         </label>
+        <button type="submit">submit</button>
       </form>
     </div>
   );
