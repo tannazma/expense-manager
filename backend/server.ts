@@ -13,9 +13,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/expenses", async (req, res) => {
-    const allExpenses = await prisma.expense.findMany();
-    res.json(allExpenses);
+  const allExpenses = await prisma.expense.findMany({
+    include: {
+      expenseCategory: true,
+    },
   });
+  res.json(allExpenses);
+});
 
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
