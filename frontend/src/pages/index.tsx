@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Expense } from "../../types";
+import CreateExpense from "./components/CreateExpense";
 
 export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
@@ -21,7 +22,7 @@ export default function Home() {
     <div>
       <h1>Expenses</h1>
       <button onClick={toggleShowForm}> + </button>
-      {showForm && <div>Create an expense</div>}
+      {showForm && <CreateExpense />}
       <div>
         {allExpenses.map((expense) => (
           <div key={expense.id}>
