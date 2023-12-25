@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { ExpenseCategory } from "../../../types";
 
-export default function CreateExpense() {
+interface createxpenseProps {
+  showDialog: boolean;
+  setShowDialog: any;
+}
+
+export default function CreateExpense({
+  showDialog,
+  setShowDialog,
+}: createxpenseProps) {
   const [expenseCategories, setExpenseCategories] = useState<
     ExpenseCategory[] | null
   >(null);
@@ -9,8 +17,6 @@ export default function CreateExpense() {
   const [amount, setAmount] = useState("");
   const [expenseCategoryId, setExpenseCategoryId] = useState("");
   const [details, setDetails] = useState("");
-  const [showDialog, setShowDialog] = useState(false);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({
@@ -46,8 +52,8 @@ export default function CreateExpense() {
     <div
       className="dialog-backdrop"
       style={{
-        display: showDialog ? "none" : "grid",
-        opacity: showDialog ? 0 : 1,
+        display: showDialog ? "grid" : "none",
+        opacity: showDialog ? 1 : 0,
       }}
     >
       <form onSubmit={handleSubmit} className="dialog-content">
@@ -85,10 +91,10 @@ export default function CreateExpense() {
           />
         </label>
         <button type="submit">submit</button>
+        <button className="close-button" onClick={closeDialog}>
+          X
+        </button>
       </form>
-      <button className="close-button" onClick={closeDialog}>
-        X
-      </button>
     </div>
   );
 }
