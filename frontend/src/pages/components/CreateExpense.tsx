@@ -9,6 +9,7 @@ export default function CreateExpense() {
   const [amount, setAmount] = useState("");
   const [expenseCategoryId, setExpenseCategoryId] = useState("");
   const [details, setDetails] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,6 +37,10 @@ export default function CreateExpense() {
     };
     getAllExpenses();
   }, []);
+
+  function closeDialog() {
+    setShowDialog(!showDialog);
+  }
 
   return (
     <div
@@ -81,6 +86,9 @@ export default function CreateExpense() {
         </label>
         <button type="submit">submit</button>
       </form>
+      <button className="close-button" onClick={closeDialog}>
+        X
+      </button>
     </div>
   );
 }
