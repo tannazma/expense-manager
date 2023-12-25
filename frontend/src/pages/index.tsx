@@ -36,8 +36,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className="expense-income-container">
+      <div className="expense-container">
         <div>
           <h2>Expenses</h2>
           <button onClick={toggleShowExpenseDialog}> + </button>
@@ -60,7 +60,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div>
+      <div className="income-container">
         <div>
           <h2>Incomes</h2>
           <button onClick={toggleShowIncomeDialog}> + </button>
