@@ -4,9 +4,9 @@ import CreateExpense from "./components/CreateExpense";
 
 export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
-  const [showForm, setShowForm] = useState(false);
-  const toggleShowForm = () => {
-    setShowForm(!showForm);
+  const [showDialog, setShowDialog] = useState(false);
+  const toggleShowDialog = () => {
+    setShowDialog(!showDialog);
   };
 
   useEffect(() => {
@@ -21,8 +21,10 @@ export default function Home() {
   return (
     <div>
       <h1>Expenses</h1>
-      <button onClick={toggleShowForm}> + </button>
-      {showForm && <CreateExpense />}
+      <button onClick={toggleShowDialog}> + </button>
+      {showDialog && (
+        <CreateExpense showDialog={showDialog} setShowDialog={setShowDialog} />
+      )}
       <div>
         {allExpenses.map((expense) => (
           <div key={expense.id}>
