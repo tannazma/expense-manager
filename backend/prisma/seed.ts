@@ -1,6 +1,6 @@
 import userData from "./data/users.json";
 import { seedCategories } from "./data/expenseCategories";
-import incomeCategories from "./data/incomeCategories.json";
+import {seedIncomeCategories} from "./data/incomeCategories";
 import incomesData from "./data/incomes.json";
 import expensesData from "./data/expenses.json";
 import { PrismaClient } from "@prisma/client";
@@ -9,8 +9,8 @@ const prisma = new PrismaClient();
 
 const seed = async () => {
   //   Seed every income categories
-  for (let i = 0; i < incomeCategories.length; i++) {
-    const theIncomeCategories = incomeCategories[i];
+  for (let i = 0; i < seedIncomeCategories.length; i++) {
+    const theIncomeCategories = seedIncomeCategories[i];
     await prisma.incomeCategory.create({
       data: theIncomeCategories,
     });
