@@ -45,7 +45,7 @@
   flex-direction: column;
   gap: 20px;
   padding-top: 50px;
-  flex: 1s;
+  flex: 1;
 }
 .expense-content,
 .income-content {
