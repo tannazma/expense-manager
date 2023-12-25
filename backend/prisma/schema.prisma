@@ -23,8 +23,9 @@ model Expense {
   expenseCategoryId Int
   expenseCategory   ExpenseCategory @relation(fields: [expenseCategoryId], references: [id])
   details           String
-  User              User?           @relation(fields: [userId], references: [id])
+  user              User?           @relation(fields: [userId], references: [id])
   userId            Int?
+  date              DateTime
 }
 
 model User {
@@ -39,15 +40,17 @@ model User {
 model Income {
   id               Int            @id @default(autoincrement())
   amount           Int
-  date             DateTime
-  userId           Int
-  user             User           @relation(fields: [userId], references: [id])
   incomeCategoryId Int
   incomeCategory   IncomeCategory @relation(fields: [incomeCategoryId], references: [id])
+  details          String
+  user             User           @relation(fields: [userId], references: [id])
+  userId           Int
+  date             DateTime
 }
 
 model IncomeCategory {
   id      Int      @id @default(autoincrement())
   name    String
   incomes Income[]
+  icon    String
 }
