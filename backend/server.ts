@@ -32,8 +32,8 @@ app.post("/expenses", async (req, res) => {
   const requestBody = req.body;
   if (
     "amount" in requestBody &&
-    "expenseCategoryId" in requestBody 
-    // "details" in requestBody
+    "expenseCategoryId" in requestBody &&
+    "details" in requestBody
   ) {
     try {
       await prisma.expense.create({
@@ -42,12 +42,14 @@ app.post("/expenses", async (req, res) => {
       res.status(201).send({ message: "Expense created!" });
     } catch (error) {
       res.status(500).send({ message: "Something went wrong!" });
-      console.error("error while creating expense:", error)
+      console.error("error while creating expense:", error);
     }
   } else {
     res
       .status(400)
-      .send({ message: "amount and expenseCategoryId and details are required." });
+      .send({
+        message: "amount and expenseCategoryId and details are required.",
+      });
   }
 });
 
