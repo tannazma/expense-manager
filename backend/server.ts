@@ -88,6 +88,35 @@ app.post("/incomes", async (req, res) => {
   }
 });
 
+app.get("/expenses-sum", async (req, res) => {
+  const groupedExpenses = await prisma.expense.findMany({
+    select: {
+      expenseCategoryId: true,
+      expenseCategory: true,
+      amount: true,
+    },
+  });
+
+  let summedExpenses: { expenseCategoryId: number; amount: number }[] = [];
+
+  groupedExpenses.forEach((expense) => {
+    const index = summedExpenses.findIndex(
+      (x) => x.expenseCategoryId === expense.expenseCategoryId
+    );
+
+    if (index >= 0) {
+      summedExpenses[index].amount += expense.amount;
+    } else {
+      summedExpenses.push({
+        expenseCategoryId: expense.expenseCategoryId,
+        amount: expense.amount,
+      });
+    }
+  });
+
+  res.status(201).send(summedExpenses);
+});
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });
