@@ -6,6 +6,7 @@ import CreateIncome from "./components/CreateIncome";
 export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [allIncomes, setAllIncomes] = useState<Income[]>([]);
+  const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>([]);
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [showCreateIncomeDialog, setShowCreateIncomeDialog] = useState(false);
 
@@ -33,6 +34,14 @@ export default function Home() {
       setAllIncomes(data);
     };
     getAllIncomes();
+  }, []);
+  useEffect(() => {
+    const getExpensesCategories = async () => {
+      const response = await fetch("http://localhost:3001/expense-categories");
+      const data = await response.json();
+      setExpenseCategories(data);
+    };
+    getExpensesCategories();
   }, []);
 
   return (
