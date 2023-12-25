@@ -71,14 +71,14 @@ export default function Home() {
             />
           )}
         </div>
-        <div>
+        <div className="income-container">
           {allIncomes.map((income) => (
-            <div key={income.id}>
-              <p key={income.id}>
-                <span>{income.incomeCategory.icon}</span>
-                {income.amount}
-                <span>{income.incomeCategory.name}</span>
+            <div key={income.id} className="income-content">
+              <p className="income-icon-name">
+                <p className="income-icon">{income.incomeCategory.icon}</p>
+                <p className="income-name">{income.incomeCategory.name}</p>
               </p>
+              <p className="income-amount">{income.amount} €</p>
             </div>
           ))}
         </div>
