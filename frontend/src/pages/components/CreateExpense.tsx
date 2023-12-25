@@ -38,8 +38,14 @@ export default function CreateExpense() {
   }, []);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div
+      className="dialog-backdrop"
+      style={{
+        display: showDialog ? "none" : "grid",
+        opacity: showDialog ? 0 : 1,
+      }}
+    >
+      <form onSubmit={handleSubmit} className="dialog-content">
         <label>
           Amount:
           <input
