@@ -16,14 +16,26 @@
   background-color: white;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 10px rgb(97, 92, 99);
   position: relative;
   /* transition: all 1s; */
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 30px;
-  background-color: rebeccapurple;
+  background-color: rgb(140, 109, 170);
   color: white;
 }
 
+.close-button {
+  position: absolute;
+  top: 94px;
+  right: 568px;
+  background-color: rgb(198, 190, 246);
+  padding: 8px;
+  box-sizing: border-box;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  width: 30px;
+}
