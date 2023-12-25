@@ -53,6 +53,16 @@ app.post("/expenses", async (req, res) => {
   }
 });
 
+app.get("/incomes", async (req, res) => {
+  const allIncomes = await prisma.income.findMany({
+    include: {
+      incomeCategory: true,
+    },
+  });
+  res.json(allIncomes);
+});
+
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });
