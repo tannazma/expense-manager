@@ -29,8 +29,8 @@
 
 .close-button {
   position: absolute;
-  top: 94px;
-  right: 568px;
+  top: -15px;
+  right: -15px;
   background-color: rgb(198, 190, 246);
   padding: 8px;
   box-sizing: border-box;
