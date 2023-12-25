@@ -10,8 +10,10 @@ export interface Expense {
   amount: number;
   expenseCategoryId: number;
   expenseCategory: ExpenseCategory;
-  User?: User;
+  details: string;
+  user: User;
   userId?: number;
+  date: Date;
 }
 
 export interface User {
@@ -29,6 +31,7 @@ export interface Income {
   date: Date;
   userId: number;
   user: User;
+  details: string;
   incomeCategoryId: number;
   incomeCategory: IncomeCategory;
 }
@@ -37,4 +40,5 @@ export interface IncomeCategory {
   id: number;
   name: string;
   incomes: Income[];
+  icon: String;
 }
