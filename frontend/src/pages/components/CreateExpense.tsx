@@ -8,14 +8,14 @@ export default function CreateExpense() {
 
   const [amount, setAmount] = useState("");
   const [expenseCategoryId, setExpenseCategoryId] = useState("");
-  // const [details, setDetails] = useState("");
+  const [details, setDetails] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({
       amount,
       category: expenseCategoryId,
-      // details
+      details: details,
     });
     fetch("http://localhost:3001/expenses", {
       method: "post",
@@ -23,7 +23,7 @@ export default function CreateExpense() {
       body: JSON.stringify({
         amount: Number(amount),
         expenseCategoryId: Number(expenseCategoryId),
-        // details: details,
+        details: details,
       }),
     });
   };
@@ -65,14 +65,14 @@ export default function CreateExpense() {
               ))}
           </select>
         </label>
-        {/* <label>
+        <label>
           Details:
           <input
             type="text"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           />
-        </label> */}
+        </label>
         <button type="submit">submit</button>
       </form>
     </div>
