@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Expense, Income } from "../../types";
+import { Expense, ExpenseCategory, Income } from "../../types";
 import CreateExpense from "./components/CreateExpense";
 import CreateIncome from "./components/CreateIncome";
 
 export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [allIncomes, setAllIncomes] = useState<Income[]>([]);
+  const [expenseSum, setExpenseSum] = useState<Expense[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>([]);
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [showCreateIncomeDialog, setShowCreateIncomeDialog] = useState(false);
@@ -35,6 +36,16 @@ export default function Home() {
     };
     getAllIncomes();
   }, []);
+
+  useEffect(() => {
+    const getExpenseSum = async () => {
+      const response = await fetch("http://localhost:3001/expenses-sum");
+      const data = await response.json();
+      setExpenseSum(data);
+    };
+    getExpenseSum();
+  }, []);
+
   useEffect(() => {
     const getExpensesCategories = async () => {
       const response = await fetch("http://localhost:3001/expense-categories");
@@ -43,6 +54,11 @@ export default function Home() {
     };
     getExpensesCategories();
   }, []);
+
+  // const sumAllExpensesAmount = allExpenses.reduce(
+  //   (accumulator, currentValue) => accumulator + currentValue.amount,
+  //   0
+  // );
 
   return (
     <div className="expense-income-container">
@@ -58,15 +74,24 @@ export default function Home() {
           )}
         </div>
         <div className="expense-container">
-          {allExpenses.map((expense) => (
-            <div key={expense.id} className="expense-content">
-              <p className="expense-icon-name">
-                <p className="expense-icon">{expense.expenseCategory.icon}</p>
-                <p className="expense-name">{expense.expenseCategory.name}</p>
-              </p>
-              <p className="expense-amount">{expense.amount} €</p>
-            </div>
-          ))}
+          {expenseSum.map((summary) => {
+            const expCategory = expenseCategories.find(
+              (cat) => cat.id === summary.expenseCategoryId
+            );
+            return (
+              <div key={summary.expenseCategoryId} className="expense-content">
+                <p className="expense-icon-name">
+                  {expCategory && (
+                    <p className="expense-icon-name">
+                      <p className="expense-icon">{expCategory.icon}</p>
+                      <p className="expense-name">{expCategory.name}</p>
+                    </p>
+                  )}
+                </p>
+                <p className="expense-amount">{summary.amount} €</p>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="income-container">
