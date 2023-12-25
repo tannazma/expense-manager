@@ -2,43 +2,49 @@
   {
     "id": 1,
     "amount": 4500,
-    "date": "2022-02-01T00:00:00.000Z",
+    "date": "2023-12-25T14:55:55Z",
     "userId": 1,
-    "incomeCategoryId": 1
+    "incomeCategoryId": 1,
+    "details": "strange arrangement let anything toward probably mission north thread animal alone sang tried audience shoe raw headed describe powder education fix discussion wolf shot"
   },
   {
     "id": 2,
     "amount": 3500,
-    "date": "2022-02-15T00:00:00.000Z",
+    "date": "2023-12-25T14:55:55Z",
     "userId": 2,
-    "incomeCategoryId": 2
+    "incomeCategoryId": 2,
+    "details": "single serve science read planet rabbit however becoming please nose beneath sitting exercise identity naturally ourselves top duck law volume type rice married mixture"
   },
   {
     "id": 3,
     "amount": 5200,
-    "date": "2022-02-28T00:00:00.000Z",
+    "date": "2023-12-25T14:55:55Z",
     "userId": 3,
-    "incomeCategoryId": 1
+    "incomeCategoryId": 1,
+    "details": "drive attempt wife west find has mean reach aware neck tight treated add card may ordinary explanation upper trunk giving tax carbon tool your"
   },
   {
     "id": 4,
     "amount": 4800,
-    "date": "2022-03-01T00:00:00.000Z",
+    "date": "2023-12-25T14:55:55Z",
     "userId": 4,
-    "incomeCategoryId": 1
+    "incomeCategoryId": 1,
+    "details": "house stepped college battle dirty search tent pack produce universe unhappy enemy all shut fallen waste bottle frighten people blew behind easily steel couple"
   },
   {
     "id": 5,
     "amount": 280,
-    "date": "2022-03-01T00:00:00.000Z",
+    "date": "2023-12-25T14:55:55Z",
     "userId": 4,
-    "incomeCategoryId": 2
+    "incomeCategoryId": 2,
+    "details": "became sunlight cry bear row section shut setting gain mood herd principal below no ants nine success clock studying cent living spin ill bigger"
   },
   {
     "id": 6,
     "amount": 3000,
-    "date": "2022-03-15T00:00:00.000Z",
+    "date": "2023-12-25T14:55:55Z",
     "userId": 5,
-    "incomeCategoryId": 2
+    "incomeCategoryId": 2,
+    "details": "largest western dress volume put rough itself folks standard labor eye cry satisfied surface knowledge read root afraid general pile ants final bear difficult"
   }
 ]

@@ -4,118 +4,135 @@
     "amount": 2000,
     "expenseCategoryId": 1,
     "details": "mill simplest stomach sang add labor alphabet aid composed among chosen right locate made smaller white party feature why throughout film development breathe person",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 102,
     "amount": 400,
     "expenseCategoryId": 2,
     "details": "cage country bill claws surrounded she very political underline solution consist excitement health other soil example although pony lunch plenty seat because correctly clean",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 103,
     "amount": 150,
     "expenseCategoryId": 3,
     "details": "slightly there breakfast gun bee wrong seed house wave attached attention pet fed distance music might definition meat accident hill beyond caught death secret",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 104,
     "amount": 550,
     "expenseCategoryId": 4,
     "details": "took noted contain character these journey taught allow wagon beautiful definition origin cow low noise door gate hot imagine nest salt largest same rate",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 105,
     "amount": 50,
     "expenseCategoryId": 7,
     "details": "meal dead instance port men yesterday science since eat exact shorter shore having pleasure heat thou satisfied choose driven come kind author directly chose",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 106,
     "amount": 800,
     "expenseCategoryId": 9,
     "details": "should nodded save blanket attention stream mouse uncle baseball split related whispered image softly report yes successful shadow exactly observe bread noise bean dollar",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 107,
     "amount": 800,
     "expenseCategoryId": 10,
     "details": "clock hundred eager individual as simple using species diagram little dot completely afraid combination stems perfectly or there watch summer joy average more very",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 108,
     "amount": 20,
     "expenseCategoryId": 12,
     "details": "student dozen spread breathe article nearly guide about stuck won cover ought also star easily higher begun aside oil nine husband place farm dark",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 109,
     "amount": 200,
     "expenseCategoryId": 13,
     "details": "theory chapter action husband planet square imagine exact master air grade frozen find arrive discovery relationship replace were memory mail diameter mistake growth island",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 110,
     "amount": 90,
     "expenseCategoryId": 14,
     "details": "stop soon lunch into driven review five spend driver toward ever including wore verb ago construction ourselves stranger we pine hollow able speak belt",
-    "userId": 1
+    "userId": 1,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 111,
     "amount": 1500,
     "expenseCategoryId": 2,
     "details": "doubt band lot atmosphere put tried shoe faster hospital health explain line send iron furniture river history natural slight fox birth correct fell second",
-    "userId": 2
+    "userId": 2,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 112,
     "amount": 2300,
     "expenseCategoryId": 3,
     "details": "tube zero born card shorter religious current courage meal surface forget comfortable fairly bare headed smile solution got dust bark farmer finest office alike",
-    "userId": 2
+    "userId": 2,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 113,
     "amount": 1900,
     "expenseCategoryId": 8,
     "details": "increase machine clay rubbed making pan danger ourselves atom hill disappear silent gone load shelter husband member teacher wherever size back across chance canal",
-    "userId": 2
+    "userId": 2,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 114,
     "amount": 190,
     "expenseCategoryId": 10,
     "details": "trail elephant depend mass wolf so stranger paper pool third consist tomorrow heard peace adult mile bark child mouse birds offer declared vertical guide",
-    "userId": 3
+    "userId": 3,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 115,
     "amount": 199,
     "expenseCategoryId": 7,
     "details": "outside dance adventure probably language lunch curve dark shade area drew cotton damage beside fence fireplace tower death planned cowboy sentence doctor animal toward",
-    "userId": 3
+    "userId": 3,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 116,
     "amount": 250,
     "expenseCategoryId": 9,
     "details": "higher rich remain where successful gun spirit rapidly word excited route region frame system grow familiar independent adventure blank conversation lesson yellow sale bridge",
-    "userId": 3
+    "userId": 3,
+    "date": "2023-12-25T14:55:55Z"
   },
   {
     "id": 117,
     "amount": 90,
     "expenseCategoryId": 12,
     "details": "hay policeman private house disease allow cow tin history size sum one influence so worker common total declared mixture record that joy slightly concerned",
-    "userId": 3
+    "userId": 3,
+    "date": "2023-12-25T14:55:55Z"
   }
 ]
