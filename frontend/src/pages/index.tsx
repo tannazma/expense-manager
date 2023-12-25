@@ -48,14 +48,14 @@ export default function Home() {
             />
           )}
         </div>
-        <div>
+        <div className="expense-container">
           {allExpenses.map((expense) => (
-            <div key={expense.id}>
-              <p key={expense.id}>
-                <span>{expense.expenseCategory.icon}</span>
-                {expense.amount}
-                <span>{expense.expenseCategory.name}</span>
+            <div key={expense.id} className="expense-content">
+              <p className="expense-icon-name">
+                <p className="expense-icon">{expense.expenseCategory.icon}</p>
+                <p className="expense-name">{expense.expenseCategory.name}</p>
               </p>
+              <p className="expense-amount">{expense.amount} €</p>
             </div>
           ))}
         </div>
