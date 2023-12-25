@@ -17,6 +17,8 @@ export default function CreateExpense({
   const [amount, setAmount] = useState("");
   const [expenseCategoryId, setExpenseCategoryId] = useState("");
   const [details, setDetails] = useState("");
+  const [date, setDate] = useState("");
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({
@@ -31,6 +33,7 @@ export default function CreateExpense({
         amount: Number(amount),
         expenseCategoryId: Number(expenseCategoryId),
         details: details,
+        date: new Date().toISOString()
       }),
     });
   };
@@ -81,6 +84,14 @@ export default function CreateExpense({
                 </option>
               ))}
           </select>
+        </label>
+        <label>
+          date:
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </label>
         <label>
           Details:
