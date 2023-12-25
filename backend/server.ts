@@ -62,6 +62,11 @@ app.get("/incomes", async (req, res) => {
   res.json(allIncomes);
 });
 
+app.get("/income-categories", async (req, res) => {
+  const allIncomesCategories = await prisma.incomeCategory.findMany({});
+  res.json(allIncomesCategories);
+});
+
 
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
