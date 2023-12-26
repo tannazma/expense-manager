@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Expense, ExpenseCategory, Income } from "../../types";
+import { Expense, ExpenseCategory, Income, IncomeCategory } from "../../types";
 import CreateExpense from "./components/CreateExpense";
 import CreateIncome from "./components/CreateIncome";
 
@@ -7,7 +7,14 @@ export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [allIncomes, setAllIncomes] = useState<Income[]>([]);
   const [expenseSum, setExpenseSum] = useState<Expense[]>([]);
-  const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>([]);
+  const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
+    []
+  );
+  const [incomeSum, setIncomeSum] = useState<Income[]>([]);
+
+  const [incomeCategories, setIncomeCategories] = useState<IncomeCategory[]>(
+    []
+  );
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [showCreateIncomeDialog, setShowCreateIncomeDialog] = useState(false);
 
@@ -55,10 +62,35 @@ export default function Home() {
     getExpensesCategories();
   }, []);
 
+  useEffect(() => {
+    const getIncomeSum = async () => {
+      const response = await fetch("http://localhost:3001/incomes-sum");
+      const data = await response.json();
+      setIncomeSum(data);
+    };
+    getIncomeSum();
+  }, []);
+
+  useEffect(() => {
+    const getIncomesCategories = async () => {
+      const response = await fetch("http://localhost:3001/income-categories");
+      const data = await response.json();
+      setIncomeCategories(data);
+    };
+    getIncomesCategories();
+  }, []);
+
   // const sumAllExpensesAmount = allExpenses.reduce(
   //   (accumulator, currentValue) => accumulator + currentValue.amount,
   //   0
   // );
+
+  // const sumAllIncomesAmount = allIncomes.reduce(
+  //   (accumulator, currentValue) => accumulator + currentValue.amount,
+  //   0
+  // );
+
+  // console.log(sumAllExpensesAmount, sumAllIncomesAmount);
 
   return (
     <div className="expense-income-container">
