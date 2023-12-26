@@ -138,15 +138,24 @@ export default function Home() {
           )}
         </div>
         <div className="income-container">
-          {allIncomes.map((income) => (
-            <div key={income.id} className="income-content">
-              <p className="income-icon-name">
-                <p className="income-icon">{income.incomeCategory.icon}</p>
-                <p className="income-name">{income.incomeCategory.name}</p>
-              </p>
-              <p className="income-amount">{income.amount} €</p>
-            </div>
-          ))}
+          {incomeSum.map((summary) => {
+            const incCategory = incomeCategories.find(
+              (cat) => cat.id === summary.incomeCategoryId
+            );
+            return (
+              <div key={summary.incomeCategoryId} className="income-content">
+                <p className="income-icon-name">
+                  {incCategory && (
+                    <p className="income-icon-name">
+                      <p className="income-icon">{incCategory.icon}</p>
+                      <p className="income-name">{incCategory.name}</p>
+                    </p>
+                  )}
+                </p>
+                <p className="income-amount">{summary.amount} €</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
