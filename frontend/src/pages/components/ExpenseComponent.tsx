@@ -186,14 +186,14 @@ const ExpenseComponent = () => {
           );
           return (
             <div key={summary.expenseCategoryId} className="expense-content">
-              <p className="expense-icon-name">
+              <div className="expense-icon-name">
                 {expCategory && (
-                  <p className="expense-icon-name">
+                  <div className="expense-icon-name">
                     <p className="expense-icon">{expCategory.icon}</p>
                     <p className="expense-name">{expCategory.name}</p>
-                  </p>
+                  </div>
                 )}
-              </p>
+              </div>
               <p className="expense-amount">{summary.amount} €</p>
             </div>
           );

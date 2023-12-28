@@ -192,14 +192,14 @@ const IncomeComponent = () => {
           );
           return (
             <div key={summary.incomeCategoryId} className="income-content">
-              <p className="income-icon-name">
+              <div className="income-icon-name">
                 {incCategory && (
-                  <p className="income-icon-name">
+                  <div className="income-icon-name">
                     <p className="income-icon">{incCategory.icon}</p>
                     <p className="income-name">{incCategory.name}</p>
-                  </p>
+                  </div>
                 )}
-              </p>
+              </div>
               <p className="income-amount">{summary.amount} €</p>
             </div>
           );
