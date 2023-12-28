@@ -146,6 +146,26 @@ app.get("/incomes-sum", async (req, res) => {
   res.status(201).send(summedIncomes);
 });
 
+app.get("/category/:categoryId/expenses", async (req, res) => {
+  const categoryIdAsNumber = Number(req.params.categoryId);
+  const expenses = await prisma.expense.findMany({
+    where: {
+      expenseCategoryId: categoryIdAsNumber,
+    },
+    include: {
+      expenseCategory: true,
+      user: true,
+    },
+  });
+  if (!expenses) {
+    res.status(404).send({
+      message: "Expense Category with that id not found",
+    });
+    return;
+  }
+  res.status(200).send(expenses);
+});
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });
