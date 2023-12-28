@@ -3,6 +3,7 @@ import { Income, IncomeCategory } from "../../../types";
 import CreateIncome from "../components/CreateIncome";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
+import Link from "next/link";
 
 interface incomeSumData {
   amount: number;
@@ -191,17 +192,22 @@ const IncomeComponent = () => {
             (cat) => cat.id === summary.incomeCategoryId
           );
           return (
-            <div key={summary.incomeCategoryId} className="income-content">
-              <div className="income-icon-name">
-                {incCategory && (
-                  <div className="income-icon-name">
-                    <p className="income-icon">{incCategory.icon}</p>
-                    <p className="income-name">{incCategory.name}</p>
-                  </div>
-                )}
+            <Link
+              key={summary.incomeCategoryId}
+              href={`/incomes/${incCategory?.id}`}
+            >
+              <div key={summary.incomeCategoryId} className="income-content">
+                <div className="income-icon-name">
+                  {incCategory && (
+                    <div className="income-icon-name">
+                      <p className="income-icon">{incCategory.icon}</p>
+                      <p className="income-name">{incCategory.name}</p>
+                    </div>
+                  )}
+                </div>
+                <p className="income-amount">{summary.amount} €</p>
               </div>
-              <p className="income-amount">{summary.amount} €</p>
-            </div>
+            </Link>
           );
         })}
       </div>
