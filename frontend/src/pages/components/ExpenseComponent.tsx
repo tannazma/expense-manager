@@ -153,13 +153,18 @@ const ExpenseComponent = () => {
           }}
         >
           <CartesianGrid strokeDasharray="5 3" />
-          <XAxis dataKey="name" />
+          <XAxis
+            dataKey="name"
+            angle={-45}
+            textAnchor="end"
+            interval={0}
+            tick={{ fontSize: 15 }}
+            height={60}
+          />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="amount" fill="#8884d8">
-            <LabelList dataKey="name" position="bottom" angle={45} top={20} />
-          </Bar>
+          <Bar dataKey="amount" fill="#8884d8" animationDuration={2000}></Bar>
         </BarChart>
       </div>
     </div>
