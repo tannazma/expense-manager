@@ -3,6 +3,7 @@ import CreateExpense from "../components/CreateExpense";
 import { Expense, ExpenseCategory } from "../../../types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
+import Link from "next/link";
 
 interface expenseSumData {
   amount: number;
@@ -185,17 +186,19 @@ const ExpenseComponent = () => {
             (cat) => cat.id === summary.expenseCategoryId
           );
           return (
-            <div key={summary.expenseCategoryId} className="expense-content">
-              <div className="expense-icon-name">
-                {expCategory && (
-                  <div className="expense-icon-name">
-                    <p className="expense-icon">{expCategory.icon}</p>
-                    <p className="expense-name">{expCategory.name}</p>
-                  </div>
-                )}
+            <Link href={`/expenses/${expCategory?.id}`}>
+              <div key={summary.expenseCategoryId} className="expense-content">
+                <div className="expense-icon-name">
+                  {expCategory && (
+                    <div className="expense-icon-name">
+                      <p className="expense-icon">{expCategory.icon}</p>
+                      <p className="expense-name">{expCategory.name}</p>
+                    </div>
+                  )}
+                </div>
+                <p className="expense-amount">{summary.amount} €</p>
               </div>
-              <p className="expense-amount">{summary.amount} €</p>
-            </div>
+            </Link>
           );
         })}
       </div>
