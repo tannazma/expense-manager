@@ -69,7 +69,7 @@
 .income-amount {
   display: flex;
   flex: 1;
-  justify-content: end;
+  justify-content: flex-end;
   padding-right: 20px;
 }
 .expense-income-container {
