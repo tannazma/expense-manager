@@ -181,29 +181,31 @@ const ExpenseComponent = () => {
             </Bar>
           </BarChart>
         )}
-        {expenseSum.map((summary) => {
-          const expCategory = expenseCategories.find(
-            (cat) => cat.id === summary.expenseCategoryId
-          );
-          return (
-            <Link
-              key={summary.expenseCategoryId}
-              href={`/expenses/${expCategory?.id}`}
-            >
-              <div className="expense-content">
-                <div className="expense-icon-name">
-                  {expCategory && (
-                    <div className="expense-icon-name">
-                      <p className="expense-icon">{expCategory.icon}</p>
-                      <p className="expense-name">{expCategory.name}</p>
-                    </div>
-                  )}
+        {expenseSum
+          .sort((a, b) => (a.amount > b.amount ? -1 : 1))
+          .map((summary) => {
+            const expCategory = expenseCategories.find(
+              (cat) => cat.id === summary.expenseCategoryId
+            );
+            return (
+              <Link
+                key={summary.expenseCategoryId}
+                href={`/expenses/${expCategory?.id}`}
+              >
+                <div className="expense-content">
+                  <div className="expense-icon-name">
+                    {expCategory && (
+                      <div className="expense-icon-name">
+                        <p className="expense-icon">{expCategory.icon}</p>
+                        <p className="expense-name">{expCategory.name}</p>
+                      </div>
+                    )}
+                  </div>
+                  <p className="expense-amount">{summary.amount} €</p>
                 </div>
-                <p className="expense-amount">{summary.amount} €</p>
-              </div>
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
       </div>
     </div>
   );
