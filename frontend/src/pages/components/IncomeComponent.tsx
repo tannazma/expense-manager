@@ -23,6 +23,7 @@ const IncomeComponent = () => {
   const [showCreateIncomeDialog, setShowCreateIncomeDialog] = useState(false);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [chartType, setChartType] = useState("pie");
+  const [isRendered, setIsRendered] = useState(false);
 
   const toggleShowIncomeDialog = () => {
     setShowCreateIncomeDialog(!showCreateIncomeDialog);
@@ -36,6 +37,11 @@ const IncomeComponent = () => {
     "#EE82EE",
     "#DDA0DD",
   ];
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
   useEffect(() => {
     const getAllIncomes = async () => {
       const response = await fetch("http://localhost:3001/incomes");
@@ -106,7 +112,7 @@ const IncomeComponent = () => {
         <button onClick={toggleShowIncomeDialog}> + </button>
         <button onClick={() => setChartType("pie")}> Pie Chart </button>
         <button onClick={() => setChartType("bar")}>s Bar Chart </button>
-        {chartType === "pie" && (
+        {isRendered && chartType === "pie" && (
           <div>
             <PieChart width={400} height={400}>
               <Pie
@@ -140,7 +146,7 @@ const IncomeComponent = () => {
         )}
       </div>
       <div className="income-container">
-        {chartType === "bar" && (
+        {isRendered && chartType === "bar" && (
           <BarChart
             width={400}
             height={400}
