@@ -4,15 +4,24 @@ import CreateIncome from "../components/CreateIncome";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
 
+interface incomeSumData {
+  amount: number;
+  incomeCategoryId: number;
+}
+interface ChartDataType {
+  name: string;
+  amount: number;
+}
+
 const IncomeComponent = () => {
   const [allIncomes, setAllIncomes] = useState<Income[]>([]);
-  const [incomeSum, setIncomeSum] = useState<Income[]>([]);
+  const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
 
   const [incomeCategories, setIncomeCategories] = useState<IncomeCategory[]>(
     []
   );
   const [showCreateIncomeDialog, setShowCreateIncomeDialog] = useState(false);
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [chartType, setChartType] = useState("pie");
 
   const toggleShowIncomeDialog = () => {
@@ -64,18 +73,18 @@ const IncomeComponent = () => {
   useEffect(() => {
     const getIncomesCategories = async () => {
       const response = await fetch("http://localhost:3001/income-categories");
-      const data = await response.json();
+      const categories: IncomeCategory[] = await response.json();
 
-      setIncomeCategories(data);
+      setIncomeCategories(categories);
 
       const getIncomeSum = async () => {
         const response = await fetch("http://localhost:3001/incomes-sum");
-        const sumData = await response.json();
+        const sumData: incomeSumData[] = await response.json();
 
         // create chart data based on the response
-        const chartData = sumData.map((item) => ({
+        const chartData: ChartDataType[] = sumData.map((item) => ({
           name:
-            data.find((cat) => cat.id === item.incomeCategoryId)?.name ||
+            categories.find((cat) => cat.id === item.incomeCategoryId)?.name ||
             "Unknown",
           amount: item.amount,
         }));
