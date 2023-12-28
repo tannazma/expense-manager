@@ -13,6 +13,7 @@ interface ChartDataType {
   amount: number;
 }
 const ExpenseComponent = () => {
+  const [isRendered, setIsRendered] = useState(false);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
@@ -33,6 +34,11 @@ const ExpenseComponent = () => {
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
   useEffect(() => {
     const getAllExpenses = async () => {
       const response = await fetch("http://localhost:3001/expenses");
@@ -100,7 +106,7 @@ const ExpenseComponent = () => {
         <button onClick={toggleShowExpenseDialog}> + </button>
         <button onClick={() => setChartType("pie")}> Pie Chart </button>
         <button onClick={() => setChartType("bar")}>s Bar Chart </button>
-        {chartType === "pie" && (
+        {isRendered && chartType === "pie" && (
           <div>
             <PieChart width={400} height={400}>
               <Pie
@@ -134,7 +140,7 @@ const ExpenseComponent = () => {
         )}
       </div>
       <div className="expense-container">
-        {chartType === "bar" && (
+        {isRendered && chartType === "bar" && (
           <BarChart
             width={400}
             height={400}
