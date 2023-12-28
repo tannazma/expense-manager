@@ -31,15 +31,17 @@ const IncomeDetailPage = () => {
     <div>
       {getIncomes.length > 0 ? (
         <div>
-          {getIncomes.map((income) => (
-            <div key={income.id}>
-              <span>{income.incomeCategory.icon}</span>
-              {income.incomeCategory.name}
-              <p>{new Date(income.date).toUTCString()}</p>
-              <p>{income.amount} €</p>
-              <p>{income.details}</p>
-            </div>
-          ))}
+          {getIncomes
+            .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
+            .map((income) => (
+              <div key={income.id}>
+                <span>{income.incomeCategory.icon}</span>
+                {income.incomeCategory.name}
+                <p>{new Date(income.date).toUTCString()}</p>
+                <p>{income.amount} €</p>
+                <p>{income.details}</p>
+              </div>
+            ))}
         </div>
       ) : (
         <div>Url not found...</div>
