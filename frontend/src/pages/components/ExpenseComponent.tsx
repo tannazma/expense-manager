@@ -12,6 +12,7 @@ const ExpenseComponent = () => {
   );
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [chartData, setChartData] = useState([]);
+  const [chartType, setChartType] = useState("pie");
   const COLORS = [
     "#6a0dad",
     "#9370DB",
@@ -91,30 +92,34 @@ const ExpenseComponent = () => {
       <div>
         <h2>Expenses</h2>
         <button onClick={toggleShowExpenseDialog}> + </button>
-        <div>
-          <PieChart width={400} height={450}>
-            <Pie
-              dataKey="amount"
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              outerRadius={110}
-              fill="#00008"
-              label={true}
-              paddingAngle={2}
-              animationDuration={500}
-            >
-              {chartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </div>
+        <button onClick={() => setChartType("pie")}> Pie Chart </button>
+        <button onClick={() => setChartType("bar")}>s Bar Chart </button>
+        {chartType === "pie" && (
+          <div>
+            <PieChart width={400} height={450}>
+              <Pie
+                dataKey="amount"
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                outerRadius={110}
+                fill="#00008"
+                label={true}
+                paddingAngle={2}
+                animationDuration={500}
+              >
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
+        )}
         {showCreateExpenseDialog && (
           <CreateExpense
             showDialog={showCreateExpenseDialog}
@@ -123,6 +128,46 @@ const ExpenseComponent = () => {
         )}
       </div>
       <div className="expense-container">
+        {chartType === "bar" && (
+          <BarChart
+            width={600}
+            height={300}
+            data={chartData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="5 3" />
+            <XAxis
+              dataKey="name"
+              angle={-45}
+              textAnchor="end"
+              interval={0}
+              tick={{ fontSize: 15 }}
+              height={90}
+            />
+            <YAxis
+              dataKey="amount"
+              textAnchor="end"
+              interval={0}
+              tick={{ fontSize: 14 }}
+              height={90}
+            />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="amount" animationDuration={2000}>
+              {chartData.map((entry, index) => (
+                <Cell
+                  fill={COLORS[index % COLORS.length]}
+                  key={`cell-${index}`}
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        )}
         {expenseSum.map((summary) => {
           const expCategory = expenseCategories.find(
             (cat) => cat.id === summary.expenseCategoryId
@@ -141,44 +186,6 @@ const ExpenseComponent = () => {
             </div>
           );
         })}
-        <BarChart
-          width={600}
-          height={300}
-          data={chartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="5 3" />
-          <XAxis
-            dataKey="name"
-            angle={-45}
-            textAnchor="end"
-            interval={0}
-            tick={{ fontSize: 15 }}
-            height={90}
-          />
-          <YAxis
-            dataKey="amount"
-            textAnchor="end"
-            interval={0}
-            tick={{ fontSize: 14 }}
-            height={90}
-          />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="amount" animationDuration={2000}>
-            {chartData.map((entry, index) => (
-              <Cell
-                fill={COLORS[index % COLORS.length]}
-                key={`cell-${index}`}
-              />
-            ))}
-          </Bar>
-        </BarChart>
       </div>
     </div>
   );
