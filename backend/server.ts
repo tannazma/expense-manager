@@ -1,6 +1,5 @@
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
-import { json } from "express";
 import { PrismaClient } from "@prisma/client";
 
 const app = express();
