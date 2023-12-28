@@ -31,15 +31,17 @@ const ExpenseDetailPage = () => {
     <div>
       {getExpenses.length > 0 ? (
         <div>
-          {getExpenses.map((expense) => (
-            <div key={expense.id}>
-              <span>{expense.expenseCategory.icon}</span>
-              {expense.expenseCategory.name}
-              <p>{new Date(expense.date).toUTCString()}</p>
-              <p>{expense.amount} €</p>
-              <p>{expense.details}</p>
-            </div>
-          ))}
+          {getExpenses
+            .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
+            .map((expense) => (
+              <div key={expense.id}>
+                <span>{expense.expenseCategory.icon}</span>
+                {expense.expenseCategory.name}
+                <p>{new Date(expense.date).toUTCString()}</p>
+                <p>{expense.amount} €</p>
+                <p>{expense.details}</p>
+              </div>
+            ))}
         </div>
       ) : (
         <div>Url not found...</div>
