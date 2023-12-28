@@ -3,7 +3,7 @@ import { Expense } from "../../../types";
 import { useRouter } from "next/router";
 
 const ExpenseDetailPage = () => {
-  const [getExpense, setExpense] = useState<Expense | null>(null);
+  const [getExpenses, setExpenses] = useState<Expense[]>([]);
 
   const router = useRouter();
   const idFromUrl = Number(router.query.expensCategoryId);
@@ -15,10 +15,10 @@ const ExpenseDetailPage = () => {
     } else {
       const getExpensesFromCategories = async () => {
         const response = await fetch(
-          `http://localhost:3001/expenses/${idFromUrl}`
+          `http://localhost:3001/category/${idFromUrl}/expenses`
         );
         const data = await response.json();
-        setExpense(data);
+        setExpenses(data);
       };
       getExpensesFromCategories();
     }
