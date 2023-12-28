@@ -4,14 +4,22 @@ import { Expense, ExpenseCategory } from "../../../types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
 
+interface expenseSumData {
+  amount: number;
+  expenseCategoryId: number;
+}
+interface ChartDataType {
+  name: string;
+  amount: number;
+}
 const ExpenseComponent = () => {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
-  const [expenseSum, setExpenseSum] = useState<Expense[]>([]);
+  const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
     []
   );
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [chartType, setChartType] = useState("pie");
   const COLORS = [
     "#6a0dad",
@@ -25,7 +33,6 @@ const ExpenseComponent = () => {
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
-
   useEffect(() => {
     const getAllExpenses = async () => {
       const response = await fetch("http://localhost:3001/expenses");
@@ -62,18 +69,17 @@ const ExpenseComponent = () => {
   useEffect(() => {
     const getExpensesCategories = async () => {
       const response = await fetch("http://localhost:3001/expense-categories");
-      const data = await response.json();
+      const categories: ExpenseCategory[] = await response.json();
 
-      setExpenseCategories(data);
+      setExpenseCategories(categories);
 
       const getExpenseSum = async () => {
         const response = await fetch("http://localhost:3001/expenses-sum");
-        const sumData = await response.json();
-
+        const sumData: expenseSumData[] = await response.json();
         // create chart data based on the response
-        const chartData = sumData.map((item) => ({
+        const chartData: ChartDataType[] = sumData.map((item) => ({
           name:
-            data.find((cat) => cat.id === item.expenseCategoryId)?.name ||
+            categories.find((cat) => cat.id === item.expenseCategoryId)?.name ||
             "Unknown",
           amount: item.amount,
         }));
