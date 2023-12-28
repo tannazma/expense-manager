@@ -27,6 +27,24 @@ const ExpenseDetailPage = () => {
   if (isNaN(idFromUrl)) {
     return <div>Expense not found</div>;
   }
-  return <div>hi detail page</div>;
+  return (
+    <div>
+      {getExpenses.length > 0 ? (
+        <div>
+          {getExpenses.map((expense) => (
+            <div key={expense.id}>
+              <span>{expense.expenseCategory.icon}</span>
+              {expense.expenseCategory.name}
+              <p>{new Date(expense.date).toUTCString()}</p>
+              <p>{expense.amount} €</p>
+              <p>{expense.details}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>Url not found...</div>
+      )}
+    </div>
+  );
 };
 export default ExpenseDetailPage;
