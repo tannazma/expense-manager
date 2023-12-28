@@ -96,7 +96,7 @@ const ExpenseComponent = () => {
         <button onClick={() => setChartType("bar")}>s Bar Chart </button>
         {chartType === "pie" && (
           <div>
-            <PieChart width={400} height={450}>
+            <PieChart width={400} height={400}>
               <Pie
                 dataKey="amount"
                 data={chartData}
@@ -106,7 +106,7 @@ const ExpenseComponent = () => {
                 fill="#00008"
                 label={true}
                 paddingAngle={2}
-                animationDuration={500}
+                animationDuration={1000}
               >
                 {chartData.map((entry, index) => (
                   <Cell
@@ -130,15 +130,15 @@ const ExpenseComponent = () => {
       <div className="expense-container">
         {chartType === "bar" && (
           <BarChart
-            width={600}
-            height={300}
+            width={400}
+            height={400}
             data={chartData}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
+            // margin={{
+            //   top: 5,
+            //   right: 30,
+            //   left: 20,
+            //   bottom: 5,
+            // }}
           >
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
@@ -158,7 +158,7 @@ const ExpenseComponent = () => {
             />
             <Tooltip />
             <Legend />
-            <Bar dataKey="amount" animationDuration={2000}>
+            <Bar dataKey="amount" animationDuration={1000}>
               {chartData.map((entry, index) => (
                 <Cell
                   fill={COLORS[index % COLORS.length]}
