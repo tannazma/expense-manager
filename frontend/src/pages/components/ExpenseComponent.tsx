@@ -149,7 +149,7 @@ const ExpenseComponent = () => {
             top: 5,
             right: 30,
             left: 20,
-            bottom: 0,
+            bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="5 3" />
@@ -159,12 +159,25 @@ const ExpenseComponent = () => {
             textAnchor="end"
             interval={0}
             tick={{ fontSize: 15 }}
-            height={60}
+            height={90}
           />
-          <YAxis />
+          <YAxis
+            dataKey="amount"
+            textAnchor="end"
+            interval={0}
+            tick={{ fontSize: 14 }}
+            height={90}
+          />
           <Tooltip />
           <Legend />
-          <Bar dataKey="amount" fill="#8884d8" animationDuration={2000}></Bar>
+          <Bar dataKey="amount" animationDuration={2000}>
+            {chartData.map((entry, index) => (
+              <Cell
+                fill={COLORS[index % COLORS.length]}
+                key={`cell-${index}`}
+              />
+            ))}
+          </Bar>
         </BarChart>
       </div>
     </div>
