@@ -186,8 +186,11 @@ const ExpenseComponent = () => {
             (cat) => cat.id === summary.expenseCategoryId
           );
           return (
-            <Link href={`/expenses/${expCategory?.id}`}>
-              <div key={summary.expenseCategoryId} className="expense-content">
+            <Link
+              key={summary.expenseCategoryId}
+              href={`/expenses/${expCategory?.id}`}
+            >
+              <div className="expense-content">
                 <div className="expense-icon-name">
                   {expCategory && (
                     <div className="expense-icon-name">
