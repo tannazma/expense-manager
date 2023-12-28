@@ -187,29 +187,31 @@ const IncomeComponent = () => {
             </Bar>
           </BarChart>
         )}
-        {incomeSum.map((summary) => {
-          const incCategory = incomeCategories.find(
-            (cat) => cat.id === summary.incomeCategoryId
-          );
-          return (
-            <Link
-              key={summary.incomeCategoryId}
-              href={`/incomes/${incCategory?.id}`}
-            >
-              <div key={summary.incomeCategoryId} className="income-content">
-                <div className="income-icon-name">
-                  {incCategory && (
-                    <div className="income-icon-name">
-                      <p className="income-icon">{incCategory.icon}</p>
-                      <p className="income-name">{incCategory.name}</p>
-                    </div>
-                  )}
+        {incomeSum
+          .sort((a, b) => (a.amount > b.amount ? -1 : 1))
+          .map((summary) => {
+            const incCategory = incomeCategories.find(
+              (cat) => cat.id === summary.incomeCategoryId
+            );
+            return (
+              <Link
+                key={summary.incomeCategoryId}
+                href={`/incomes/${incCategory?.id}`}
+              >
+                <div key={summary.incomeCategoryId} className="income-content">
+                  <div className="income-icon-name">
+                    {incCategory && (
+                      <div className="income-icon-name">
+                        <p className="income-icon">{incCategory.icon}</p>
+                        <p className="income-name">{incCategory.name}</p>
+                      </div>
+                    )}
+                  </div>
+                  <p className="income-amount">{summary.amount} €</p>
                 </div>
-                <p className="income-amount">{summary.amount} €</p>
-              </div>
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
       </div>
     </div>
   );
