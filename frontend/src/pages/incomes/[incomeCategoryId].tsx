@@ -30,14 +30,21 @@ const IncomeDetailPage = () => {
   return (
     <div>
       {getIncomes.length > 0 ? (
-        <div>
+        <div className="flex flex-1 flex-col gap-10 p-10 text-zinc-50 ">
           {getIncomes
             .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
             .map((income) => (
-              <div key={income.id}>
-                <span>{income.incomeCategory.icon}</span>
-                {income.incomeCategory.name}
-                <p>{new Date(income.date).toUTCString()}</p>
+              <div
+                key={income.id}
+                className=" bg-indigo-400 p-5 shadow-xl rounded-md"
+              >
+                <div className="flex ">
+                  <span className="pr-2">{income.incomeCategory.icon}</span>
+                  <p className="pr-2 pb-6">{income.incomeCategory.name}</p>
+                  <p className="justify-between flex-1 text-right	">
+                    {new Date(income.date).toUTCString()}
+                  </p>
+                </div>
                 <p>{income.amount} €</p>
                 <p>{income.details}</p>
               </div>
