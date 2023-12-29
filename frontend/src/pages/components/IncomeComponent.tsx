@@ -112,12 +112,6 @@ const IncomeComponent = () => {
         <h2>Incomes</h2>
         <button
           className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
-          onClick={toggleShowIncomeDialog}
-        >
-          +
-        </button>
-        <button
-          className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("pie")}
         >
           Pie Chart
@@ -154,6 +148,14 @@ const IncomeComponent = () => {
             </PieChart>
           </div>
         )}
+        <div className="flex justify-end">
+          <button
+            className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
+            onClick={toggleShowIncomeDialog}
+          >
+            +
+          </button>
+        </div>
         {showCreateIncomeDialog && (
           <CreateIncome
             showDialog={showCreateIncomeDialog}

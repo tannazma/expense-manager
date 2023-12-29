@@ -104,12 +104,7 @@ const ExpenseComponent = () => {
     <div className="expense-container">
       <div>
         <h2>Expenses</h2>
-        <button
-          className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
-          onClick={toggleShowExpenseDialog}
-        >
-          +
-        </button>
+
         <button
           className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("pie")}
@@ -148,6 +143,15 @@ const ExpenseComponent = () => {
             </PieChart>
           </div>
         )}
+        <div className="flex justify-end">
+          <button
+            className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2 align-right"
+            onClick={toggleShowExpenseDialog}
+          >
+            +
+          </button>
+        </div>
+
         {showCreateExpenseDialog && (
           <CreateExpense
             showDialog={showCreateExpenseDialog}
