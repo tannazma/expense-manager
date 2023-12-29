@@ -38,7 +38,7 @@ const IncomeDetailPage = () => {
                 key={income.id}
                 className=" bg-indigo-400 p-5 shadow-xl rounded-md"
               >
-                <div className="flex ">
+                <div className="flex">
                   <span className="pr-2">{income.incomeCategory.icon}</span>
                   <p className="pr-2 pb-6">{income.incomeCategory.name}</p>
                   <p className="justify-between flex-1 text-right	">
