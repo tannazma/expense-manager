@@ -30,14 +30,21 @@ const ExpenseDetailPage = () => {
   return (
     <div>
       {getExpenses.length > 0 ? (
-        <div>
+        <div className="flex flex-1 flex-col gap-10 p-10 text-zinc-50 ">
           {getExpenses
             .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
             .map((expense) => (
-              <div key={expense.id}>
-                <span>{expense.expenseCategory.icon}</span>
-                {expense.expenseCategory.name}
-                <p>{new Date(expense.date).toUTCString()}</p>
+              <div
+                key={expense.id}
+                className=" bg-indigo-400 p-5 shadow-xl rounded-md"
+              >
+                <div className="flex ">
+                  <span>{expense.expenseCategory.icon}</span>
+                  <p className="pr-2 pb-6">{expense.expenseCategory.name}</p>
+                  <p className="justify-between flex-1 text-right	">
+                    {new Date(expense.date).toUTCString()}
+                  </p>
+                </div>
                 <p>{expense.amount} €</p>
                 <p>{expense.details}</p>
               </div>
