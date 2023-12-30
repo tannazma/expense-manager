@@ -122,6 +122,7 @@ app.get("/incomes-sum", async (req, res) => {
       incomeCategoryId: true,
       incomeCategory: true,
       amount: true,
+      accounts: true,
     },
   });
 
@@ -153,7 +154,7 @@ app.get("/category/:categoryId/expenses", async (req, res) => {
     },
     include: {
       expenseCategory: true,
-      user: true,
+      account: true,
     },
   });
   if (!expenses) {
@@ -173,7 +174,7 @@ app.get("/category/:categoryId/incomes", async (req, res) => {
     },
     include: {
       incomeCategory: true,
-      user: true,
+      accounts: true,
     },
   });
   if (!incomes) {
