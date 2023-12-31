@@ -42,3 +42,8 @@ export interface IncomeCategory {
   incomes: Income[];
   icon: String;
 }
+export interface Account {
+  id: number;
+  name: string;
+  userId: number;
+}
