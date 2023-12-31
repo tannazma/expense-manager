@@ -32,7 +32,9 @@ app.post("/expenses", async (req, res) => {
   if (
     "amount" in requestBody &&
     "expenseCategoryId" in requestBody &&
-    "details" in requestBody
+    "details" in requestBody &&
+    "date" in requestBody &&
+    "accountId" in requestBody
   ) {
     try {
       await prisma.expense.create({
@@ -45,7 +47,7 @@ app.post("/expenses", async (req, res) => {
     }
   } else {
     res.status(400).send({
-      message: "amount and expenseCategoryId and details are required.",
+      message: "amount, date, accountId and expenseCategoryId and details are required.",
     });
   }
 });
