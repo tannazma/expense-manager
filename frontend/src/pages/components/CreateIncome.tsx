@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { IncomeCategory } from "../../../types";
-import { Account } from "../../../types";
 import { useFetchAccounts } from "../hooks/useFetchAccounts";
 
 interface createIncomeProps {
