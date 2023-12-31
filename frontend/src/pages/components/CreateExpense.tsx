@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ExpenseCategory } from "../../../types";
+import { Account } from "../../../types";
 
 interface createxpenseProps {
   showDialog: boolean;
@@ -13,7 +14,8 @@ export default function CreateExpense({
   const [expenseCategories, setExpenseCategories] = useState<
     ExpenseCategory[] | null
   >(null);
-
+  const [accounts, setAccounts] = useState<Account[] | null>(null);
+  const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
   const [expenseCategoryId, setExpenseCategoryId] = useState("");
   const [details, setDetails] = useState("");
@@ -25,6 +27,7 @@ export default function CreateExpense({
       amount,
       category: expenseCategoryId,
       details: details,
+      account: accountId,
     });
     fetch("http://localhost:3001/expenses", {
       method: "post",
@@ -32,6 +35,7 @@ export default function CreateExpense({
       body: JSON.stringify({
         amount: Number(amount),
         expenseCategoryId: Number(expenseCategoryId),
+        accountId: Number(accountId),
         details: details,
         date: new Date().toISOString(),
       }),
@@ -45,6 +49,15 @@ export default function CreateExpense({
       setExpenseCategories(data);
     };
     getAllExpenses();
+  }, []);
+
+  useEffect(() => {
+    const getAllAccounts = async () => {
+      const response = await fetch("http://localhost:3001/accounts");
+      const data = await response.json();
+      setAccounts(data);
+    };
+    getAllAccounts();
   }, []);
 
   function closeDialog() {
@@ -81,6 +94,23 @@ export default function CreateExpense({
                 <option key={expenseCat.id} value={expenseCat.id}>
                   {expenseCat.icon}
                   {expenseCat.name}
+                </option>
+              ))}
+          </select>
+        </label>
+        <label>
+          Account:
+          <select
+            id="account"
+            name="account"
+            value={accountId}
+            onChange={(e) => setAccountId(e.target.value)}
+          >
+            {accounts &&
+              accounts.map((account) => (
+                <option key={account.id} value={account.id}>
+                  {/* {account.icon} */}
+                  {account.name}
                 </option>
               ))}
           </select>
