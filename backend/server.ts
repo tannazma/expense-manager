@@ -22,6 +22,27 @@ app.get("/expenses", async (req, res) => {
   res.json(allExpenses);
 });
 
+app.get("/account/:accountId/expenses", async (req, res) => {
+  const accountIdAsNumber = Number(req.params.accountId);
+  if (!accountIdAsNumber) {
+    res.status(404).send({
+      message: "Expense with that account id not found",
+    });
+    return;
+  }
+  const expensesForTheAccountId = await prisma.expense.findMany({
+    where: {
+      accountId: accountIdAsNumber,
+    },
+    include: {
+      account: true,
+      expenseCategory: true,
+    },
+  });
+
+  res.status(200).send(expensesForTheAccountId);
+});
+
 app.get("/expense-categories", async (req, res) => {
   const allExpensesCategories = await prisma.expenseCategory.findMany({});
   res.json(allExpensesCategories);
@@ -47,7 +68,8 @@ app.post("/expenses", async (req, res) => {
     }
   } else {
     res.status(400).send({
-      message: "amount, date, accountId and expenseCategoryId and details are required.",
+      message:
+        "amount, date, accountId and expenseCategoryId and details are required.",
     });
   }
 });
