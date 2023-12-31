@@ -79,7 +79,9 @@ app.post("/incomes", async (req, res) => {
   if (
     "amount" in requestBody &&
     "incomeCategoryId" in requestBody &&
-    "details" in requestBody
+    "details" in requestBody &&
+    "date" in requestBody &&
+    "accountId" in requestBody
   ) {
     try {
       await prisma.income.create({
@@ -92,7 +94,8 @@ app.post("/incomes", async (req, res) => {
     }
   } else {
     res.status(400).send({
-      message: "amount and incomeCategoryId and details are required.",
+      message:
+        "amount, date, accountId and incomeCategoryId and details are required.",
     });
   }
 });
