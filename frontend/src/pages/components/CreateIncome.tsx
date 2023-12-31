@@ -2,6 +2,19 @@ import { useEffect, useState } from "react";
 import { IncomeCategory } from "../../../types";
 import { Account } from "../../../types";
 
+const useFetchAccounts = () => {
+  const [accounts, setAccounts] = useState<Account[] | null>(null);
+
+  useEffect(() => {
+    const getAllAccounts = async () => {
+      const response = await fetch("http://localhost:3001/accounts");
+      const data = await response.json();
+      setAccounts(data);
+    };
+    getAllAccounts();
+  }, []);
+  return accounts;
+};
 interface createIncomeProps {
   showDialog: boolean;
   setShowDialog: any;
@@ -14,8 +27,7 @@ export default function CreateIncome({
   const [incomeCategories, setIncomeCategories] = useState<
     IncomeCategory[] | null
   >(null);
-
-  const [accounts, setAccounts] = useState<Account[] | null>(null);
+  const accounts = useFetchAccounts();
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
   const [incomeCategoryId, setIncomeCategoryId] = useState("");
@@ -50,15 +62,6 @@ export default function CreateIncome({
       setIncomeCategories(data);
     };
     getAllIncomes();
-  }, []);
-
-  useEffect(() => {
-    const getAllAccounts = async () => {
-      const response = await fetch("http://localhost:3001/accounts");
-      const data = await response.json();
-      setAccounts(data);
-    };
-    getAllAccounts();
   }, []);
 
   function closeDialog() {
