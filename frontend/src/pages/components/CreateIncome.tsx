@@ -16,6 +16,7 @@ export default function CreateIncome({
   >(null);
 
   const [accounts, setAccounts] = useState<Account[] | null>(null);
+  const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
   const [incomeCategoryId, setIncomeCategoryId] = useState("");
   const [details, setDetails] = useState("");
@@ -27,6 +28,7 @@ export default function CreateIncome({
       amount,
       category: incomeCategoryId,
       details: details,
+      account: accountId,
     });
     fetch("http://localhost:3001/incomes", {
       method: "post",
@@ -34,6 +36,7 @@ export default function CreateIncome({
       body: JSON.stringify({
         amount: Number(amount),
         incomeCategoryId: Number(incomeCategoryId),
+        accountId: Number(accountId),
         details: details,
         date: new Date().toISOString(),
       }),
@@ -92,6 +95,23 @@ export default function CreateIncome({
                 <option key={incomeCat.id} value={incomeCat.id}>
                   {incomeCat.icon}
                   {incomeCat.name}
+                </option>
+              ))}
+          </select>
+        </label>
+        <label>
+          Account:
+          <select
+            id="account"
+            name="account"
+            value={accountId}
+            onChange={(e) => setAccountId(e.target.value)}
+          >
+            {accounts &&
+              accounts.map((account) => (
+                <option key={account.id} value={account.id}>
+                  {/* {account.icon} */}
+                  {account.name}
                 </option>
               ))}
           </select>
