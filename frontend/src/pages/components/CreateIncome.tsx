@@ -1,20 +1,8 @@
 import { useEffect, useState } from "react";
 import { IncomeCategory } from "../../../types";
 import { Account } from "../../../types";
+import { useFetchAccounts } from "../hooks/useFetchAccounts";
 
-const useFetchAccounts = () => {
-  const [accounts, setAccounts] = useState<Account[] | null>(null);
-
-  useEffect(() => {
-    const getAllAccounts = async () => {
-      const response = await fetch("http://localhost:3001/accounts");
-      const data = await response.json();
-      setAccounts(data);
-    };
-    getAllAccounts();
-  }, []);
-  return accounts;
-};
 interface createIncomeProps {
   showDialog: boolean;
   setShowDialog: any;
