@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IncomeCategory } from "../../../types";
+import { Account } from "../../../types";
 
 interface createIncomeProps {
   showDialog: boolean;
@@ -14,6 +15,7 @@ export default function CreateIncome({
     IncomeCategory[] | null
   >(null);
 
+  const [accounts, setAccounts] = useState<Account[] | null>(null);
   const [amount, setAmount] = useState("");
   const [incomeCategoryId, setIncomeCategoryId] = useState("");
   const [details, setDetails] = useState("");
@@ -45,6 +47,15 @@ export default function CreateIncome({
       setIncomeCategories(data);
     };
     getAllIncomes();
+  }, []);
+
+  useEffect(() => {
+    const getAllAccounts = async () => {
+      const response = await fetch("http://localhost:3001/accounts");
+      const data = await response.json();
+      setAccounts(data);
+    };
+    getAllAccounts();
   }, []);
 
   function closeDialog() {
