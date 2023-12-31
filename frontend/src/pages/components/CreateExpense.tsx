@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ExpenseCategory } from "../../../types";
-import { Account } from "../../../types";
+import { useFetchAccounts } from "../hooks/useFetchAccounts";
 
 interface createxpenseProps {
   showDialog: boolean;
@@ -14,7 +14,7 @@ export default function CreateExpense({
   const [expenseCategories, setExpenseCategories] = useState<
     ExpenseCategory[] | null
   >(null);
-  const [accounts, setAccounts] = useState<Account[] | null>(null);
+  const accounts = useFetchAccounts();
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
   const [expenseCategoryId, setExpenseCategoryId] = useState("");
@@ -49,15 +49,6 @@ export default function CreateExpense({
       setExpenseCategories(data);
     };
     getAllExpenses();
-  }, []);
-
-  useEffect(() => {
-    const getAllAccounts = async () => {
-      const response = await fetch("http://localhost:3001/accounts");
-      const data = await response.json();
-      setAccounts(data);
-    };
-    getAllAccounts();
   }, []);
 
   function closeDialog() {
