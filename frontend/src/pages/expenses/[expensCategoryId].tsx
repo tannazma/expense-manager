@@ -36,7 +36,7 @@ const ExpenseDetailPage = () => {
             .map((expense) => (
               <div
                 key={expense.id}
-                className=" bg-indigo-400 p-5 shadow-xl rounded-md"
+                className="bg-violet-500 p-5 shadow-xl rounded-md"
               >
                 <div className="flex ">
                   <span>{expense.expenseCategory.icon}</span>
