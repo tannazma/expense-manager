@@ -4,6 +4,7 @@ import IncomeComponent from "./components/IncomeComponent";
 import { SelectedAccountContext } from "./components/SelectedAccountContext";
 import { useFetchAccounts } from "./hooks/useFetchAccounts";
 import { useFetchUser } from "./hooks/useFetchUser";
+import NavBar from "./components/NavBar";
 
 export default function Home() {
   const user = useFetchUser();
@@ -12,6 +13,7 @@ export default function Home() {
 
   return (
     <div>
+      <NavBar />
       {user && <h1>Hello {user.username}</h1>}
       <div className="flex gap-6">
         {accounts?.map((account) => (
