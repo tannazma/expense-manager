@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CreateExpense from "../components/CreateExpense";
 import { Expense, ExpenseCategory } from "../../../types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
 import Link from "next/link";
+import { SelectedAccountContext } from "./SelectedAccountContext";
 
 interface expenseSumData {
   amount: number;
@@ -14,6 +15,7 @@ interface ChartDataType {
   amount: number;
 }
 const ExpenseComponent = () => {
+  const selectedAccountId = useContext(SelectedAccountContext);
   const [isRendered, setIsRendered] = useState(false);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
@@ -51,12 +53,14 @@ const ExpenseComponent = () => {
 
   useEffect(() => {
     const getExpenseSum = async () => {
-      const response = await fetch("http://localhost:3001/expenses-sum");
+      const response = await fetch(
+        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
+      );
       const data = await response.json();
       setExpenseSum(data);
     };
     getExpenseSum();
-  }, []);
+  }, [selectedAccountId]);
 
   // const sumAllExpensesAmount = allExpenses.reduce(
   //   (accumulator, currentValue) => accumulator + currentValue.amount,
@@ -81,7 +85,9 @@ const ExpenseComponent = () => {
       setExpenseCategories(categories);
 
       const getExpenseSum = async () => {
-        const response = await fetch("http://localhost:3001/expenses-sum");
+        const response = await fetch(
+          `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
+        );
         const sumData: expenseSumData[] = await response.json();
         // create chart data based on the response
         const chartData: ChartDataType[] = sumData.map((item) => ({
