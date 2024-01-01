@@ -110,7 +110,7 @@ const ExpenseComponent = () => {
     };
 
     getExpensesCategories();
-  }, []);
+  }, [selectedAccountId]);
   return (
     <div className="expense-container">
       <div>
