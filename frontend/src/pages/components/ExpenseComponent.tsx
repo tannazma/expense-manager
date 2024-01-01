@@ -15,6 +15,16 @@ interface ChartDataType {
   name: string;
   amount: number;
 }
+const COLORS = [
+  "#6a0dad",
+  "#9370DB",
+  "#9932CC",
+  "#BA55D3",
+  "#DA70D6",
+  "#EE82EE",
+  "#DDA0DD",
+];
+
 const ExpenseComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
   const [isRendered, setIsRendered] = useState(false);
@@ -26,15 +36,6 @@ const ExpenseComponent = () => {
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [chartType, setChartType] = useState("pie");
-  const COLORS = [
-    "#6a0dad",
-    "#9370DB",
-    "#9932CC",
-    "#BA55D3",
-    "#DA70D6",
-    "#EE82EE",
-    "#DDA0DD",
-  ];
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
@@ -55,17 +56,6 @@ const ExpenseComponent = () => {
   //   };
   //   getAllExpenses();
   // }, [selectedAccountId]);
-
-  useEffect(() => {
-    const getExpenseSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
-      );
-      const data = await response.json();
-      setExpenseSum(data);
-    };
-    getExpenseSum();
-  }, [selectedAccountId]);
 
   // const sumAllExpensesAmount = allExpenses.reduce(
   //   (accumulator, currentValue) => accumulator + currentValue.amount,
