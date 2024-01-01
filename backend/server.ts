@@ -179,7 +179,11 @@ app.get("/accounts/:accountId/expenses-sum", async (req, res) => {
     },
   });
 
-  let summedExpenses: { expenseCategoryId: number; amount: number }[] = [];
+  let summedExpenses: {
+    expenseCategoryId: number;
+    expenseCategoryName: string;
+    amount: number;
+  }[] = [];
 
   groupedExpenses.forEach((expense) => {
     const index = summedExpenses.findIndex(
@@ -191,6 +195,7 @@ app.get("/accounts/:accountId/expenses-sum", async (req, res) => {
     } else {
       summedExpenses.push({
         expenseCategoryId: expense.expenseCategoryId,
+        expenseCategoryName: expense.expenseCategory.name,
         amount: expense.amount,
       });
     }
