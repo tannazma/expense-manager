@@ -42,25 +42,6 @@ const ExpenseComponent = () => {
   };
   const isRendered = useIsRendered();
 
-  // useEffect(() => {
-  //   const getAllExpenses = async () => {
-  //     const response = await fetch(
-  //       selectedAccountId === 0
-  //         ? "http://localhost:3001/expenses"
-  //         : "http://localhost:3001/account/:accountId/expenses"
-  //     );
-  //     const data = await response.json();
-  //     setAllExpenses(data);
-  //   };
-  //   getAllExpenses();
-  // }, [selectedAccountId]);
-
-  // const sumAllExpensesAmount = allExpenses.reduce(
-  //   (accumulator, currentValue) => accumulator + currentValue.amount,
-  //   0
-  // );
-  // console.log(sumAllExpensesAmount);
-
   useEffect(() => {
     const getExpensesCategories = async () => {
       const response = await fetch("http://localhost:3001/expense-categories");
@@ -151,17 +132,7 @@ const ExpenseComponent = () => {
       </div>
       <div className="expense-container">
         {isRendered && chartType === "bar" && (
-          <BarChart
-            width={400}
-            height={400}
-            data={chartData}
-            // margin={{
-            //   top: 5,
-            //   right: 30,
-            //   left: 20,
-            //   bottom: 5,
-            // }}
-          >
+          <BarChart width={400} height={400} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"
