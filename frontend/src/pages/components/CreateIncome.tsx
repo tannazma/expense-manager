@@ -47,6 +47,8 @@ export default function CreateIncome({
       const response = await fetch("http://localhost:3001/income-categories");
       const data = await response.json();
       setIncomeCategories(data);
+      setIncomeCategoryId(data[0].id);
+      setAccountId(data[0].id);
     };
     getAllIncomes();
   }, []);
