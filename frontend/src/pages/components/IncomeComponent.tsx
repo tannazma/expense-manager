@@ -45,42 +45,6 @@ const IncomeComponent = () => {
   };
   const isRendered = useIsRendered();
 
-  // useEffect(() => {
-  //   const getAllIncomes = async () => {
-  //     const response = await fetch("http://localhost:3001/incomes");
-  //     const data = await response.json();
-  //     setAllIncomes(data);
-  //   };
-  //   getAllIncomes();
-  // }, []);
-
-  useEffect(() => {
-    const getIncomeSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`
-      );
-      const data = await response.json();
-      setIncomeSum(data);
-    };
-    getIncomeSum();
-  }, [selectedAccountId]);
-
-  useEffect(() => {
-    const getIncomesCategories = async () => {
-      const response = await fetch("http://localhost:3001/income-categories");
-      const data = await response.json();
-      setIncomeCategories(data);
-    };
-    getIncomesCategories();
-  }, []);
-
-  // const sumAllIncomesAmount = allIncomes.reduce(
-  //   (accumulator, currentValue) => accumulator + currentValue.amount,
-  //   0
-  // );
-
-  // console.log(sumAllIncomesAmount);
-
   useEffect(() => {
     const getIncomesCategories = async () => {
       const response = await fetch("http://localhost:3001/income-categories");
@@ -166,17 +130,7 @@ const IncomeComponent = () => {
       </div>
       <div className="income-container">
         {isRendered && chartType === "bar" && (
-          <BarChart
-            width={400}
-            height={400}
-            data={chartData}
-            // margin={{
-            //   top: 5,
-            //   right: 30,
-            //   left: 20,
-            //   bottom: 5,
-            // }}
-          >
+          <BarChart width={400} height={400} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"
