@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useFetchUser } from "./hooks/useFetchUser";
 
 const formValuesSchema = z.object({
   username: z.string().min(5),
@@ -14,6 +15,7 @@ type LoginFormInputs = z.infer<typeof formValuesSchema>;
 const Login = () => {
   const router = useRouter();
   const justRegistered = router.query["just-registered"];
+  const user = useFetchUser();
 
   const handleLogin = async (data: LoginFormInputs) => {
     console.log(data);
@@ -49,6 +51,7 @@ const Login = () => {
 
   return (
     <div>
+      {user && <h1>You are logged in {user.username}</h1>}
       <div className="login-container">
         <form onSubmit={handleSubmit(handleLogin)} className="login">
           <h1>Login</h1>
