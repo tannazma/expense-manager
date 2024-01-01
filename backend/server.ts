@@ -43,6 +43,27 @@ app.get("/account/:accountId/expenses", async (req, res) => {
   res.status(200).send(expensesForTheAccountId);
 });
 
+app.get("/accounts/:accountId/incomes", async (req, res) => {
+  const accountIdAsNumber = Number(req.params.accountId);
+  if (!accountIdAsNumber) {
+    res.status(404).send({
+      message: "Income with that account id not found",
+    });
+    return;
+  }
+  const incomesForTheAccountId = await prisma.income.findMany({
+    where: {
+      accountId: accountIdAsNumber,
+    },
+    include: {
+      accounts: true,
+      incomeCategory: true,
+    },
+  });
+
+  res.status(200).send(incomesForTheAccountId);
+});
+
 app.get("/expense-categories", async (req, res) => {
   const allExpensesCategories = await prisma.expenseCategory.findMany({});
   res.json(allExpensesCategories);
