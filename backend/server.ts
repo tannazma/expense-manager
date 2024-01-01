@@ -266,6 +266,31 @@ app.get("/category/:categoryId/incomes", async (req, res) => {
   res.status(200).send(incomes);
 });
 
+app.post("/login", async (req, res) => {
+  const requestBody = req.body;
+  if ("username" in requestBody && "password" in requestBody) {
+    try {
+      const userToLogin = await prisma.user.findFirst({
+        where: {
+          username: requestBody.username,
+        },
+      });
+      if (userToLogin && userToLogin.password === requestBody.password) {
+        const token = toToken({ userId: userToLogin.id });
+        res.status(200).send({ token: token });
+        return;
+      }
+      res.status(400).send({ message: "Login failed" });
+    } catch (error) {
+      res.status(500).send({ message: "Something went wrong!" });
+    }
+  } else {
+    res
+      .status(400)
+      .send({ message: "'username' and 'password' are required!" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });
