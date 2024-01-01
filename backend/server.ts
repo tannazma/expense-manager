@@ -188,8 +188,16 @@ app.get("/accounts/:accountId/expenses-sum", async (req, res) => {
   res.status(201).send(summedExpenses);
 });
 
-app.get("/incomes-sum", async (req, res) => {
+app.get("/accounts/:accountId/incomes-sum", async (req, res) => {
+  const accountIdAsNumber = Number(req.params.accountId);
+  if (isNaN(accountIdAsNumber)) {
+    res.status(404).send({
+      message: "Income with that account id not found",
+    });
+    return;
+  }
   const groupedIncomes = await prisma.income.findMany({
+    where: accountIdAsNumber === 0 ? {} : { accountId: accountIdAsNumber },
     select: {
       incomeCategoryId: true,
       incomeCategory: true,
