@@ -10,6 +10,7 @@ import { SelectedAccountContext } from "./SelectedAccountContext";
 interface incomeSumData {
   amount: number;
   incomeCategoryId: number;
+  incomeCategoryName: string;
 }
 interface ChartDataType {
   name: string;
@@ -86,27 +87,26 @@ const IncomeComponent = () => {
     const getIncomesCategories = async () => {
       const response = await fetch("http://localhost:3001/income-categories");
       const categories: IncomeCategory[] = await response.json();
-
       setIncomeCategories(categories);
-
-      const getIncomeSum = async () => {
-        const response = await fetch(
-          `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`
-        );
-        const sumData: incomeSumData[] = await response.json();
-        // create chart data based on the response
-        const chartData: ChartDataType[] = sumData.map((item) => ({
-          name:
-            categories.find((cat) => cat.id === item.incomeCategoryId)?.name ||
-            "Unknown",
-          amount: item.amount,
-        }));
-        setIncomeSum(sumData);
-        setChartData(chartData); // set chart data
-      };
-      getIncomeSum();
     };
     getIncomesCategories();
+  }, []);
+
+  useEffect(() => {
+    const getIncomeSum = async () => {
+      const response = await fetch(
+        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`
+      );
+      const sumData: incomeSumData[] = await response.json();
+      // create chart data based on the response
+      const chartData: ChartDataType[] = sumData.map((item) => ({
+        amount: item.amount,
+        name: item.incomeCategoryName,
+      }));
+      setIncomeSum(sumData);
+      setChartData(chartData); // set chart data
+    };
+    getIncomeSum();
   }, [selectedAccountId]);
 
   return (
