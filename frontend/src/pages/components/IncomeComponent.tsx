@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { Income, IncomeCategory } from "../../../types";
+import { useContext, useEffect, useState } from "react";
+import { IncomeCategory } from "../../../types";
+// import { Income } from "../../../types";
 import CreateIncome from "../components/CreateIncome";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
 import Link from "next/link";
+import { SelectedAccountContext } from "./SelectedAccountContext";
 
 interface incomeSumData {
   amount: number;
@@ -15,7 +17,8 @@ interface ChartDataType {
 }
 
 const IncomeComponent = () => {
-  const [allIncomes, setAllIncomes] = useState<Income[]>([]);
+  const selectedAccountId = useContext(SelectedAccountContext);
+  // const [allIncomes, setAllIncomes] = useState<Income[]>([]);
   const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
 
   const [incomeCategories, setIncomeCategories] = useState<IncomeCategory[]>(
@@ -43,23 +46,25 @@ const IncomeComponent = () => {
     setIsRendered(true);
   }, []);
 
-  useEffect(() => {
-    const getAllIncomes = async () => {
-      const response = await fetch("http://localhost:3001/incomes");
-      const data = await response.json();
-      setAllIncomes(data);
-    };
-    getAllIncomes();
-  }, []);
+  // useEffect(() => {
+  //   const getAllIncomes = async () => {
+  //     const response = await fetch("http://localhost:3001/incomes");
+  //     const data = await response.json();
+  //     setAllIncomes(data);
+  //   };
+  //   getAllIncomes();
+  // }, []);
 
   useEffect(() => {
     const getIncomeSum = async () => {
-      const response = await fetch("http://localhost:3001/incomes-sum");
+      const response = await fetch(
+        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`
+      );
       const data = await response.json();
       setIncomeSum(data);
     };
     getIncomeSum();
-  }, []);
+  }, [selectedAccountId]);
 
   useEffect(() => {
     const getIncomesCategories = async () => {
@@ -85,9 +90,10 @@ const IncomeComponent = () => {
       setIncomeCategories(categories);
 
       const getIncomeSum = async () => {
-        const response = await fetch("http://localhost:3001/incomes-sum");
+        const response = await fetch(
+          `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`
+        );
         const sumData: incomeSumData[] = await response.json();
-
         // create chart data based on the response
         const chartData: ChartDataType[] = sumData.map((item) => ({
           name:
@@ -95,14 +101,11 @@ const IncomeComponent = () => {
             "Unknown",
           amount: item.amount,
         }));
-
         setIncomeSum(sumData);
         setChartData(chartData); // set chart data
       };
-
       getIncomeSum();
     };
-
     getIncomesCategories();
   }, []);
 
