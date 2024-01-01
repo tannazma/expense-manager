@@ -107,7 +107,7 @@ const IncomeComponent = () => {
       getIncomeSum();
     };
     getIncomesCategories();
-  }, []);
+  }, [selectedAccountId]);
 
   return (
     <div className="income-container">
