@@ -222,7 +222,11 @@ app.get("/accounts/:accountId/incomes-sum", async (req, res) => {
     },
   });
 
-  let summedIncomes: { incomeCategoryId: number; amount: number }[] = [];
+  let summedIncomes: {
+    incomeCategoryId: number;
+    amount: number;
+    incomeCategoryName: string;
+  }[] = [];
 
   groupedIncomes.forEach((income) => {
     const index = summedIncomes.findIndex(
@@ -235,6 +239,7 @@ app.get("/accounts/:accountId/incomes-sum", async (req, res) => {
       summedIncomes.push({
         incomeCategoryId: income.incomeCategoryId,
         amount: income.amount,
+        incomeCategoryName: income.incomeCategory.name,
       });
     }
   });
