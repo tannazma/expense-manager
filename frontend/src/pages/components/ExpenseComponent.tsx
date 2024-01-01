@@ -1,31 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import CreateExpense from "../components/CreateExpense";
-import { ExpenseCategory } from "../../../types";
+import { ChartDataType, ExpenseCategory, expenseSumData } from "../../../types";
 // import { Expense } from "../../../types";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+
 import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
 import { useIsRendered } from "../hooks/useIsRendered";
-
-interface expenseSumData {
-  amount: number;
-  expenseCategoryId: number;
-  expenseCategoryName: string;
-}
-interface ChartDataType {
-  name: string;
-  amount: number;
-}
-const COLORS = [
-  "#6a0dad",
-  "#9370DB",
-  "#9932CC",
-  "#BA55D3",
-  "#DA70D6",
-  "#EE82EE",
-  "#DDA0DD",
-];
+import ExpenseCharts from "./ExpenseCharts";
 
 const ExpenseComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
@@ -36,11 +17,10 @@ const ExpenseComponent = () => {
   );
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
-  const [chartType, setChartType] = useState("pie");
+
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
-  const isRendered = useIsRendered();
 
   useEffect(() => {
     const getExpensesCategories = async () => {
@@ -75,45 +55,7 @@ const ExpenseComponent = () => {
     <div className="expense-container">
       <div>
         <h2>Expenses</h2>
-
-        <button
-          className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
-          onClick={() => setChartType("pie")}
-        >
-          Pie Chart
-        </button>
-        <button
-          className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
-          onClick={() => setChartType("bar")}
-        >
-          s Bar Chart
-        </button>
-        {isRendered && chartType === "pie" && (
-          <div>
-            <PieChart width={400} height={400}>
-              <Pie
-                dataKey="amount"
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={110}
-                fill="#00008"
-                label={true}
-                paddingAngle={2}
-                animationDuration={1000}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
-        )}
+        <ExpenseCharts />
         <div className="flex justify-end">
           <button
             className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2 align-right"
@@ -122,7 +64,6 @@ const ExpenseComponent = () => {
             +
           </button>
         </div>
-
         {showCreateExpenseDialog && (
           <CreateExpense
             showDialog={showCreateExpenseDialog}
@@ -131,46 +72,6 @@ const ExpenseComponent = () => {
         )}
       </div>
       <div className="expense-container">
-        {isRendered && chartType === "bar" && (
-          <BarChart
-            width={400}
-            height={400}
-            data={chartData}
-            // margin={{
-            //   top: 5,
-            //   right: 30,
-            //   left: 20,
-            //   bottom: 5,
-            // }}
-          >
-            <CartesianGrid strokeDasharray="5 3" />
-            <XAxis
-              dataKey="name"
-              angle={-45}
-              textAnchor="end"
-              interval={0}
-              tick={{ fontSize: 15 }}
-              height={90}
-            />
-            <YAxis
-              dataKey="amount"
-              textAnchor="end"
-              interval={0}
-              tick={{ fontSize: 14 }}
-              height={90}
-            />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="amount" animationDuration={1000}>
-              {chartData.map((entry, index) => (
-                <Cell
-                  fill={COLORS[index % COLORS.length]}
-                  key={`cell-${index}`}
-                />
-              ))}
-            </Bar>
-          </BarChart>
-        )}
         {expenseSum
           .sort((a, b) => (a.amount > b.amount ? -1 : 1))
           .map((summary) => {
