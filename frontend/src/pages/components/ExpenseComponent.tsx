@@ -10,6 +10,7 @@ import { SelectedAccountContext } from "./SelectedAccountContext";
 interface expenseSumData {
   amount: number;
   expenseCategoryId: number;
+  expenseCategoryName: string;
 }
 interface ChartDataType {
   name: string;
@@ -66,41 +67,32 @@ const ExpenseComponent = () => {
   useEffect(() => {
     const getExpensesCategories = async () => {
       const response = await fetch("http://localhost:3001/expense-categories");
-      const data = await response.json();
-      setExpenseCategories(data);
+      const categories: ExpenseCategory[] = await response.json();
+
+      setExpenseCategories(categories);
     };
     getExpensesCategories();
   }, []);
 
   useEffect(() => {
-    const getExpensesCategories = async () => {
-      const response = await fetch("http://localhost:3001/expense-categories");
-      const categories: ExpenseCategory[] = await response.json();
+    const getExpenseSum = async () => {
+      const response = await fetch(
+        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
+      );
+      const sumData: expenseSumData[] = await response.json();
+      // create chart data based on the response
+      const chartData: ChartDataType[] = sumData.map((item) => ({
+        name: item.expenseCategoryName,
+        amount: item.amount,
+      }));
 
-      setExpenseCategories(categories);
-
-      const getExpenseSum = async () => {
-        const response = await fetch(
-          `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
-        );
-        const sumData: expenseSumData[] = await response.json();
-        // create chart data based on the response
-        const chartData: ChartDataType[] = sumData.map((item) => ({
-          name:
-            categories.find((cat) => cat.id === item.expenseCategoryId)?.name ||
-            "Unknown",
-          amount: item.amount,
-        }));
-
-        setExpenseSum(sumData);
-        setChartData(chartData); // set chart data
-      };
-
-      getExpenseSum();
+      setExpenseSum(sumData);
+      setChartData(chartData); // set chart data
     };
 
-    getExpensesCategories();
+    getExpenseSum();
   }, [selectedAccountId]);
+
   return (
     <div className="expense-container">
       <div>
