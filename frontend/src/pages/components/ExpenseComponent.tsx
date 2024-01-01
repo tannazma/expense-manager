@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import CreateExpense from "../components/CreateExpense";
-import { Expense, ExpenseCategory } from "../../../types";
+import { ExpenseCategory } from "../../../types";
+// import { Expense } from "../../../types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
 
@@ -17,7 +18,7 @@ interface ChartDataType {
 const ExpenseComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
   const [isRendered, setIsRendered] = useState(false);
-  const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
+  // const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
     []
@@ -42,14 +43,18 @@ const ExpenseComponent = () => {
     setIsRendered(true);
   }, []);
 
-  useEffect(() => {
-    const getAllExpenses = async () => {
-      const response = await fetch("http://localhost:3001/expenses");
-      const data = await response.json();
-      setAllExpenses(data);
-    };
-    getAllExpenses();
-  }, []);
+  // useEffect(() => {
+  //   const getAllExpenses = async () => {
+  //     const response = await fetch(
+  //       selectedAccountId === 0
+  //         ? "http://localhost:3001/expenses"
+  //         : "http://localhost:3001/account/:accountId/expenses"
+  //     );
+  //     const data = await response.json();
+  //     setAllExpenses(data);
+  //   };
+  //   getAllExpenses();
+  // }, [selectedAccountId]);
 
   useEffect(() => {
     const getExpenseSum = async () => {
