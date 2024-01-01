@@ -59,19 +59,23 @@ export default function CreateExpense({
 
   return (
     <div
-      className="dialog-backdrop"
+      className="dialog-backdrop h-screen	w-screen grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-50"
       style={{
         display: showDialog ? "grid" : "none",
         opacity: showDialog ? 1 : 0,
       }}
     >
-      <form onSubmit={handleSubmit} className="dialog-content">
-        <label>
+      <form
+        onSubmit={handleSubmit}
+        className="p-10 rounded bg-violet-400 relative flex flex-col gap-5 "
+      >
+        <label className="block text-sm font-medium leading-6 text-gray-900">
           Amount:
           <input
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
           />
         </label>
         <label>
@@ -81,6 +85,7 @@ export default function CreateExpense({
             name="category"
             value={expenseCategoryId}
             onChange={(e) => setExpenseCategoryId(e.target.value)}
+                className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
           >
             {expenseCategories &&
               expenseCategories.map((expenseCat) => (
@@ -98,6 +103,7 @@ export default function CreateExpense({
             name="account"
             value={accountId}
             onChange={(e) => setAccountId(e.target.value)}
+            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           >
             {accounts &&
               accounts.map((account) => (
@@ -114,6 +120,7 @@ export default function CreateExpense({
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           />
         </label>
         <label>
@@ -122,6 +129,7 @@ export default function CreateExpense({
             type="text"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
+            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           />
         </label>
         <button
@@ -130,7 +138,10 @@ export default function CreateExpense({
         >
           submit
         </button>
-        <button className="close-button" onClick={closeDialog}>
+        <button
+          className=" bg-purple-300 hover:bg-purple-700 text-white absolute -top-5 -right-5 p-2 w-10 box-border rounded-full border-none"
+          onClick={closeDialog}
+        >
           X
         </button>
       </form>
