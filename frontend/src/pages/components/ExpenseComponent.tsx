@@ -6,6 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
+import { useIsRendered } from "../hooks/useIsRendered";
 
 interface expenseSumData {
   amount: number;
@@ -28,7 +29,6 @@ const COLORS = [
 
 const ExpenseComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
-  const [isRendered, setIsRendered] = useState(false);
   // const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
@@ -40,10 +40,7 @@ const ExpenseComponent = () => {
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
-
-  useEffect(() => {
-    setIsRendered(true);
-  }, []);
+  const isRendered = useIsRendered();
 
   // useEffect(() => {
   //   const getAllExpenses = async () => {

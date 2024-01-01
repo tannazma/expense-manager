@@ -6,6 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
 import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
+import { useIsRendered } from "../hooks/useIsRendered";
 
 interface incomeSumData {
   amount: number;
@@ -16,6 +17,16 @@ interface ChartDataType {
   name: string;
   amount: number;
 }
+
+const COLORS = [
+  "#6a0dad",
+  "#9370DB",
+  "#9932CC",
+  "#BA55D3",
+  "#DA70D6",
+  "#EE82EE",
+  "#DDA0DD",
+];
 
 const IncomeComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
@@ -28,24 +39,11 @@ const IncomeComponent = () => {
   const [showCreateIncomeDialog, setShowCreateIncomeDialog] = useState(false);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [chartType, setChartType] = useState("pie");
-  const [isRendered, setIsRendered] = useState(false);
 
   const toggleShowIncomeDialog = () => {
     setShowCreateIncomeDialog(!showCreateIncomeDialog);
   };
-  const COLORS = [
-    "#6a0dad",
-    "#9370DB",
-    "#9932CC",
-    "#BA55D3",
-    "#DA70D6",
-    "#EE82EE",
-    "#DDA0DD",
-  ];
-
-  useEffect(() => {
-    setIsRendered(true);
-  }, []);
+  const isRendered = useIsRendered();
 
   // useEffect(() => {
   //   const getAllIncomes = async () => {
