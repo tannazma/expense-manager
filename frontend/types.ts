@@ -42,8 +42,20 @@ export interface IncomeCategory {
   incomes: Income[];
   icon: String;
 }
+
 export interface Account {
   id: number;
   name: string;
   userId: number;
+}
+
+export interface expenseSumData {
+  amount: number;
+  expenseCategoryId: number;
+  expenseCategoryName: string;
+}
+
+export interface ChartDataType {
+  name: string;
+  amount: number;
 }
