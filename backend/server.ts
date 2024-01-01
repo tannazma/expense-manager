@@ -2,6 +2,7 @@ import express, { json } from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { toToken } from "./auth/jwt";
+import { AuthMiddleware, AuthRequest } from "./auth/middleware";
 
 const app = express();
 const port = 3001;
@@ -118,6 +119,15 @@ app.get("/accounts", async (req, res) => {
     },
   });
   res.json(allAccounts);
+});
+
+app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
+  const loggedInUser = await prisma.user.findFirst({
+    where: {
+      id: req.userId,
+    },
+  });
+  res.json(loggedInUser);
 });
 
 app.post("/incomes", async (req, res) => {
