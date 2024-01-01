@@ -329,6 +329,21 @@ app.post("/users", async (req, res) => {
   }
 });
 
+app.post("/expenses-categories", async (req, res) => {
+  const { name: expenseCategoryName, icon: exoenseCategoryIcon } = req.body;
+  try {
+    const newExpenseCategory = await prisma.expenseCategory.create({
+      data: {
+        name: expenseCategoryName,
+        icon: exoenseCategoryIcon,
+      },
+    });
+    res.status(200).send(newExpenseCategory);
+  } catch {
+    res.status(500).send({ error: "Error registering user" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });
