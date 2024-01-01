@@ -7,16 +7,6 @@ import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
 import { useIsRendered } from "../hooks/useIsRendered";
 
-interface incomeSumData {
-  amount: number;
-  incomeCategoryId: number;
-  incomeCategoryName: string;
-}
-interface ChartDataType {
-  name: string;
-  amount: number;
-}
-
 const COLORS = [
   "#6a0dad",
   "#9370DB",

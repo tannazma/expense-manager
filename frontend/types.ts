@@ -59,3 +59,13 @@ export interface ChartDataType {
   name: string;
   amount: number;
 }
+
+export interface incomeSumData {
+  amount: number;
+  incomeCategoryId: number;
+  incomeCategoryName: string;
+}
+export interface ChartDataType {
+  name: string;
+  amount: number;
+}
