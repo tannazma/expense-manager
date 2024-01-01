@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
+import { toToken } from "./auth/jwt";
 
 const app = express();
 const port = 3001;
@@ -288,6 +289,23 @@ app.post("/login", async (req, res) => {
     res
       .status(400)
       .send({ message: "'username' and 'password' are required!" });
+  }
+});
+
+app.post("/users", async (req, res) => {
+  const { username, password, email } = req.body;
+  try {
+    const newUser = await prisma.user.create({
+      data: {
+        username,
+        password,
+        email,
+      },
+    });
+    res.status(200).send(newUser);
+    console.log(newUser);
+  } catch (error) {
+    res.status(500).send({ error: "Error registering user" });
   }
 });
 
