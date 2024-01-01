@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const dataFromFormValidator = z.object({
   username: z.string().min(4),
-  password: z.string().min(8),
+  password: z.string().min(4),
   email: z.string().email(),
 });
 
