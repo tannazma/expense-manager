@@ -132,7 +132,17 @@ const ExpenseComponent = () => {
       </div>
       <div className="expense-container">
         {isRendered && chartType === "bar" && (
-          <BarChart width={400} height={400} data={chartData}>
+          <BarChart
+            width={400}
+            height={400}
+            data={chartData}
+            // margin={{
+            //   top: 5,
+            //   right: 30,
+            //   left: 20,
+            //   bottom: 5,
+            // }}
+          >
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"
