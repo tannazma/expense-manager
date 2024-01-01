@@ -1,22 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import CreateExpense from "../components/CreateExpense";
-import { ChartDataType, ExpenseCategory, expenseSumData } from "../../../types";
-// import { Expense } from "../../../types";
-
+import { ExpenseCategory, expenseSumData } from "../../../types";
 import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
-import { useIsRendered } from "../hooks/useIsRendered";
 import ExpenseCharts from "./ExpenseCharts";
 
 const ExpenseComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
-  // const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
     []
   );
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
-  const [chartData, setChartData] = useState<ChartDataType[]>([]);
 
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
@@ -38,14 +33,7 @@ const ExpenseComponent = () => {
         `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
       );
       const sumData: expenseSumData[] = await response.json();
-      // create chart data based on the response
-      const chartData: ChartDataType[] = sumData.map((item) => ({
-        name: item.expenseCategoryName,
-        amount: item.amount,
-      }));
-
       setExpenseSum(sumData);
-      setChartData(chartData); // set chart data
     };
 
     getExpenseSum();

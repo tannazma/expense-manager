@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { IncomeCategory } from "../../../types";
-// import { Income } from "../../../types";
+import { ChartDataType, IncomeCategory, incomeSumData } from "../../../types";
 import CreateIncome from "../components/CreateIncome";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { PieChart, Pie, Cell, Tooltip, Legend, LabelList } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import Link from "next/link";
 import { SelectedAccountContext } from "./SelectedAccountContext";
 import { useIsRendered } from "../hooks/useIsRendered";
@@ -30,7 +29,6 @@ const COLORS = [
 
 const IncomeComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
-  // const [allIncomes, setAllIncomes] = useState<Income[]>([]);
   const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
 
   const [incomeCategories, setIncomeCategories] = useState<IncomeCategory[]>(
