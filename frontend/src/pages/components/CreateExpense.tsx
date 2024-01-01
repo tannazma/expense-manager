@@ -47,6 +47,8 @@ export default function CreateExpense({
       const response = await fetch("http://localhost:3001/expense-categories");
       const data = await response.json();
       setExpenseCategories(data);
+      setExpenseCategoryId(data[0].id);
+      setAccountId(data[0].id);
     };
     getAllExpenses();
   }, []);
