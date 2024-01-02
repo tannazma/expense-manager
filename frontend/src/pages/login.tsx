@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useFetchUser } from "./hooks/useFetchUser";
-import NavBar from "./components/NavBar";
 
 const formValuesSchema = z.object({
   username: z.string().min(3),
@@ -52,7 +51,7 @@ const Login = () => {
 
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="min-h-screen flex justify-center p-20 items-center align-top bg-violet-200">
         <div className="min-w-[500px] rounded-2xl shadow-xl p-10 bg-violet-100">
           {user && (
