@@ -217,48 +217,65 @@ app.get(
   }
 );
 
-app.get("/accounts/:accountId/incomes-sum", async (req, res) => {
-  const accountIdAsNumber = Number(req.params.accountId);
-  if (isNaN(accountIdAsNumber)) {
-    res.status(404).send({
-      message: "Income with that account id not found",
-    });
-    return;
-  }
-  const groupedIncomes = await prisma.income.findMany({
-    where: accountIdAsNumber === 0 ? {} : { accountId: accountIdAsNumber },
-    select: {
-      incomeCategoryId: true,
-      incomeCategory: true,
-      amount: true,
-      accounts: true,
-    },
-  });
-
-  let summedIncomes: {
-    incomeCategoryId: number;
-    amount: number;
-    incomeCategoryName: string;
-  }[] = [];
-
-  groupedIncomes.forEach((income) => {
-    const index = summedIncomes.findIndex(
-      (x) => x.incomeCategoryId === income.incomeCategoryId
-    );
-
-    if (index >= 0) {
-      summedIncomes[index].amount += income.amount;
-    } else {
-      summedIncomes.push({
-        incomeCategoryId: income.incomeCategoryId,
-        amount: income.amount,
-        incomeCategoryName: income.incomeCategory.name,
+app.get(
+  "/accounts/:accountId/incomes-sum",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const accountIdAsNumber = Number(req.params.accountId);
+    if (isNaN(accountIdAsNumber)) {
+      res.status(404).send({
+        message: "Income with that account id not found",
       });
+      return;
     }
-  });
+    const currentUserAccounts = await prisma.account.findMany({
+      where: {
+        userId: req.userId,
+      },
+    });
 
-  res.status(201).send(summedIncomes);
-});
+    const groupedIncomes = await prisma.income.findMany({
+      where:
+        accountIdAsNumber === 0
+          ? {
+              accountId: {
+                in: currentUserAccounts.map((acc) => acc.id),
+              },
+            }
+          : { accountId: accountIdAsNumber },
+      select: {
+        incomeCategoryId: true,
+        incomeCategory: true,
+        amount: true,
+        accounts: true,
+      },
+    });
+
+    let summedIncomes: {
+      incomeCategoryId: number;
+      amount: number;
+      incomeCategoryName: string;
+    }[] = [];
+
+    groupedIncomes.forEach((income) => {
+      const index = summedIncomes.findIndex(
+        (x) => x.incomeCategoryId === income.incomeCategoryId
+      );
+
+      if (index >= 0) {
+        summedIncomes[index].amount += income.amount;
+      } else {
+        summedIncomes.push({
+          incomeCategoryId: income.incomeCategoryId,
+          amount: income.amount,
+          incomeCategoryName: income.incomeCategory.name,
+        });
+      }
+    });
+
+    res.status(201).send(summedIncomes);
+  }
+);
 
 app.get(
   "/category/:categoryId/expenses",
