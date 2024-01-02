@@ -111,11 +111,10 @@ app.get("/income-categories", async (req, res) => {
   res.json(allIncomesCategories);
 });
 
-app.get("/accounts", async (req, res) => {
+app.get("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
   const allAccounts = await prisma.account.findMany({
     where: {
-      // for now I juste wanted the accounts for userId=1 and later I will change it
-      userId: 1,
+      userId: req.userId,
     },
   });
   res.json(allAccounts);

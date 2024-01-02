@@ -6,7 +6,11 @@ export const useFetchAccounts = () => {
 
   useEffect(() => {
     const getAllAccounts = async () => {
-      const response = await fetch("http://localhost:3001/accounts");
+      const response = await fetch("http://localhost:3001/accounts", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
       const data = await response.json();
       setAccounts(data);
     };
