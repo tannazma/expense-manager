@@ -14,6 +14,9 @@ import {
 } from "recharts";
 import { ChartDataType, incomeSumData } from "../../../types";
 import { SelectedAccountContext } from "./SelectedAccountContext";
+import barChartIcon from "./bar-chart-1-svgrepo-com.svg";
+import pieChartIcon from "./pie-chart-svgrepo-com.svg";
+import Image from "next/image";
 
 const COLORS = [
   "#6a0dad",
@@ -51,16 +54,18 @@ const IncomeCharts = () => {
     <div>
       <div className="flex mb-10">
         <button
-          className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
+          className="flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("pie")}
         >
+          <Image src={pieChartIcon} width={20} alt={pieChartIcon} />
           Pie Chart
         </button>
         <button
-          className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
+          className="flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("bar")}
         >
-          s Bar Chart
+          <Image src={barChartIcon} width={20} alt={barChartIcon} />
+          Bar Chart
         </button>
       </div>
       {isRendered && chartType === "pie" && (
