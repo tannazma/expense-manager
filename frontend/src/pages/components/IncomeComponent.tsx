@@ -29,7 +29,12 @@ const IncomeComponent = () => {
   useEffect(() => {
     const getIncomeSum = async () => {
       const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`
+        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
       );
       const sumData: incomeSumData[] = await response.json();
       setIncomeSum(sumData);
