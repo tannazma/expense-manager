@@ -247,25 +247,29 @@ app.get("/accounts/:accountId/incomes-sum", async (req, res) => {
   res.status(201).send(summedIncomes);
 });
 
-app.get("/category/:categoryId/expenses", async (req, res) => {
-  const categoryIdAsNumber = Number(req.params.categoryId);
-  const expenses = await prisma.expense.findMany({
-    where: {
-      expenseCategoryId: categoryIdAsNumber,
-    },
-    include: {
-      expenseCategory: true,
-      account: true,
-    },
-  });
-  if (!expenses) {
-    res.status(404).send({
-      message: "Expense Category with that id not found",
+app.get(
+  "/category/:categoryId/expenses",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const categoryIdAsNumber = Number(req.params.categoryId);
+    const expenses = await prisma.expense.findMany({
+      where: {
+        expenseCategoryId: categoryIdAsNumber,
+      },
+      include: {
+        expenseCategory: true,
+        account: true,
+      },
     });
-    return;
+    if (!expenses) {
+      res.status(404).send({
+        message: "Expense Category with that id not found",
+      });
+      return;
+    }
+    res.status(200).send(expenses);
   }
-  res.status(200).send(expenses);
-});
+);
 
 app.get("/category/:categoryId/incomes", async (req, res) => {
   const categoryIdAsNumber = Number(req.params.categoryId);
