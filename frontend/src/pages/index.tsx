@@ -26,7 +26,7 @@ export default function Home() {
         ))}
         <button onClick={() => setSelectedAccount(0)}>All</button>
       </div>
-      <div className="expense-income-container">
+      <div className="flex flex-wrap gap-20 p-7 mb-5">
         <SelectedAccountContext.Provider value={selectedAccountId}>
           <ExpenseComponent />
           <IncomeComponent />
