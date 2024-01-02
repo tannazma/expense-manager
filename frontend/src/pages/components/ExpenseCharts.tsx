@@ -37,7 +37,12 @@ const ExpenseCharts = () => {
   useEffect(() => {
     const getExpenseSum = async () => {
       const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`
+        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
       );
       const sumData: expenseSumData[] = await response.json();
       // create chart data based on the response
