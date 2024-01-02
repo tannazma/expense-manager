@@ -15,7 +15,12 @@ const ExpenseDetailPage = () => {
     } else {
       const getExpensesFromCategories = async () => {
         const response = await fetch(
-          `http://localhost:3001/category/${idFromUrl}/expenses`
+          `http://localhost:3001/category/${idFromUrl}/expenses`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
         );
         const data = await response.json();
         setExpenses(data);
@@ -51,7 +56,7 @@ const ExpenseDetailPage = () => {
             ))}
         </div>
       ) : (
-        <div>Url not found...</div>
+        <div>Expenses with the categoryId not found...</div>
       )}
     </div>
   );
