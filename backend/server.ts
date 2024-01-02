@@ -155,53 +155,67 @@ app.post("/incomes", async (req, res) => {
   }
 });
 
-app.get("/accounts/:accountId/expenses-sum", async (req, res) => {
-  const accountIdAsNumber = Number(req.params.accountId);
-  if (isNaN(accountIdAsNumber)) {
-    res.status(404).send({
-      message: "Expense with that account id not found",
-    });
-    return;
-  }
-
-  const groupedExpenses = await prisma.expense.findMany({
-    where:
-      accountIdAsNumber === 0
-        ? {}
-        : {
-            accountId: accountIdAsNumber,
-          },
-    select: {
-      expenseCategoryId: true,
-      expenseCategory: true,
-      amount: true,
-    },
-  });
-
-  let summedExpenses: {
-    expenseCategoryId: number;
-    expenseCategoryName: string;
-    amount: number;
-  }[] = [];
-
-  groupedExpenses.forEach((expense) => {
-    const index = summedExpenses.findIndex(
-      (x) => x.expenseCategoryId === expense.expenseCategoryId
-    );
-
-    if (index >= 0) {
-      summedExpenses[index].amount += expense.amount;
-    } else {
-      summedExpenses.push({
-        expenseCategoryId: expense.expenseCategoryId,
-        expenseCategoryName: expense.expenseCategory.name,
-        amount: expense.amount,
+app.get(
+  "/accounts/:accountId/expenses-sum",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const accountIdAsNumber = Number(req.params.accountId);
+    if (isNaN(accountIdAsNumber)) {
+      res.status(404).send({
+        message: "Expense with that account id not found",
       });
+      return;
     }
-  });
 
-  res.status(201).send(summedExpenses);
-});
+    const currentUserAccounts = await prisma.account.findMany({
+      where: {
+        userId: req.userId,
+      },
+    });
+
+    const groupedExpenses = await prisma.expense.findMany({
+      where:
+        accountIdAsNumber === 0
+          ? {
+              accountId: {
+                in: currentUserAccounts.map((acc) => acc.id),
+              },
+            }
+          : {
+              accountId: accountIdAsNumber,
+            },
+      select: {
+        expenseCategoryId: true,
+        expenseCategory: true,
+        amount: true,
+      },
+    });
+
+    let summedExpenses: {
+      expenseCategoryId: number;
+      expenseCategoryName: string;
+      amount: number;
+    }[] = [];
+
+    groupedExpenses.forEach((expense) => {
+      const index = summedExpenses.findIndex(
+        (x) => x.expenseCategoryId === expense.expenseCategoryId
+      );
+
+      if (index >= 0) {
+        summedExpenses[index].amount += expense.amount;
+      } else {
+        summedExpenses.push({
+          expenseCategoryId: expense.expenseCategoryId,
+          expenseCategoryName: expense.expenseCategory.name,
+          amount: expense.amount,
+        });
+      }
+    });
+
+    res.status(201).send(summedExpenses);
+  }
+);
 
 app.get("/accounts/:accountId/incomes-sum", async (req, res) => {
   const accountIdAsNumber = Number(req.params.accountId);
