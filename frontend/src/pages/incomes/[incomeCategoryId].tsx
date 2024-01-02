@@ -15,7 +15,12 @@ const IncomeDetailPage = () => {
     } else {
       const getIncomesFromCategories = async () => {
         const response = await fetch(
-          `http://localhost:3001/category/${idFromUrl}/incomes`
+          `http://localhost:3001/category/${idFromUrl}/incomes`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
         );
         const data = await response.json();
         setIncomes(data);
@@ -51,7 +56,7 @@ const IncomeDetailPage = () => {
             ))}
         </div>
       ) : (
-        <div>Url not found...</div>
+        <div>Incomes with the categoryId not found...</div>
       )}
     </div>
   );

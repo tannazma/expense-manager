@@ -270,25 +270,29 @@ app.get(
   }
 );
 
-app.get("/category/:categoryId/incomes", async (req, res) => {
-  const categoryIdAsNumber = Number(req.params.categoryId);
-  const incomes = await prisma.income.findMany({
-    where: {
-      incomeCategoryId: categoryIdAsNumber,
-    },
-    include: {
-      incomeCategory: true,
-      accounts: true,
-    },
-  });
-  if (!incomes) {
-    res.status(404).send({
-      message: "Expense Category with that id not found",
+app.get(
+  "/category/:categoryId/incomes",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const categoryIdAsNumber = Number(req.params.categoryId);
+    const incomes = await prisma.income.findMany({
+      where: {
+        incomeCategoryId: categoryIdAsNumber,
+      },
+      include: {
+        incomeCategory: true,
+        accounts: true,
+      },
     });
-    return;
+    if (!incomes) {
+      res.status(404).send({
+        message: "Expense Category with that id not found",
+      });
+      return;
+    }
+    res.status(200).send(incomes);
   }
-  res.status(200).send(incomes);
-});
+);
 
 app.post("/login", async (req, res) => {
   const requestBody = req.body;
