@@ -38,13 +38,13 @@ const IncomeComponent = () => {
   }, [selectedAccountId]);
 
   return (
-    <div className="income-container">
+    <div className="pt-50 flex-1 pr-20 pl-20">
       <div>
         <h2>Incomes</h2>
         <IncomeCharts />
-        <div className="flex justify-end">
+        <div className="flex justify-end pr-8">
           <button
-            className="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
+            className="bg-purple-500 hover:bg-purple-800 text-white font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2 align-right"
             onClick={toggleShowIncomeDialog}
           >
             +
@@ -57,7 +57,7 @@ const IncomeComponent = () => {
           />
         )}
       </div>
-      <div className="income-container">
+      <div className="pt-10 flex flex-col pr-10 pl-10">
         {incomeSum
           .sort((a, b) => (a.amount > b.amount ? -1 : 1))
           .map((summary) => {
@@ -69,16 +69,21 @@ const IncomeComponent = () => {
                 key={summary.incomeCategoryId}
                 href={`/incomes/${incCategory?.id}`}
               >
-                <div key={summary.incomeCategoryId} className="income-content">
-                  <div className="income-icon-name">
+                <div
+                  key={summary.incomeCategoryId}
+                  className="flex pl-3 items-center bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white border border-purple-500 hover:border-transparent rounded m-2"
+                >
+                  <div className="m-3 flex justify-between gap-4 items-center">
                     {incCategory && (
-                      <div className="income-icon-name">
-                        <p className="income-icon">{incCategory.icon}</p>
-                        <p className="income-name">{incCategory.name}</p>
+                      <div className="m-0 flex justify-between gap-4 items-center">
+                        <p>{incCategory.icon}</p>
+                        <p>{incCategory.name}</p>
                       </div>
                     )}
                   </div>
-                  <p className="income-amount">{summary.amount} €</p>
+                  <p className="flex flex-1 justify-end pr-6">
+                    {summary.amount} €
+                  </p>
                 </div>
               </Link>
             );
