@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import CreateExpense from "./CreateExpense";
+import CreateExpense from "./CreateEntry";
 import { ExpenseCategory, expenseSumData } from "../../types";
 import Link from "next/link";
 import SelectedAccountContext from "./SelectedAccountContext";
@@ -60,6 +60,7 @@ const ExpenseComponent = () => {
         {showCreateExpenseDialog && (
           <CreateExpense
             showDialog={showCreateExpenseDialog}
+            type="expense"
             setShowDialog={setShowCreateExpenseDialog}
           />
         )}

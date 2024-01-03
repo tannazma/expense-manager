@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { IncomeCategory, incomeSumData } from "../../types";
-import CreateIncome from "./CreateIncome";
 import Link from "next/link";
 import SelectedAccountContext from "./SelectedAccountContext";
 import IncomeCharts from "./IncomeCharts";
+import CreateIncome from "./CreateEntry";
 
 const IncomeComponent = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
@@ -58,6 +58,7 @@ const IncomeComponent = () => {
         {showCreateIncomeDialog && (
           <CreateIncome
             showDialog={showCreateIncomeDialog}
+            type="income"
             setShowDialog={setShowCreateIncomeDialog}
           />
         )}
