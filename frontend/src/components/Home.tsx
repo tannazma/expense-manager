@@ -59,16 +59,22 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <div className="flex gap-6">
+      <div className="flex gap-6 bg-violet-200 p-4 pl-7 mb-7">
         {accounts?.map((account) => (
           <button
             key={account.id}
             onClick={() => setSelectedAccount(account.id)}
+            className="hover:text-violet-600 font-semibold text-purple-900"
           >
             {account.name}
           </button>
         ))}
-        <button onClick={() => setSelectedAccount(0)}>All</button>
+        <button
+          onClick={() => setSelectedAccount(0)}
+          className="hover:text-violet-600 font-semibold text-purple-900"
+        >
+          All
+        </button>
       </div>
       {balance > 1000 && (
         <>
