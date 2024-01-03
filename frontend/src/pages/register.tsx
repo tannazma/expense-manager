@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import NavBar from "./components/NavBar";
+import NavBar from "../components/NavBar";
 
 const dataFromFormValidator = z.object({
   username: z.string().min(4),

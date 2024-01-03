@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { IncomeCategory } from "../../../types";
-import { useFetchAccounts } from "../hooks/useFetchAccounts";
+import { IncomeCategory } from "../../types";
+import useFetchAccounts from "../pages/hooks/useFetchAccounts";
 
 interface createIncomeProps {
   showDialog: boolean;

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { IncomeCategory, incomeSumData } from "../../../types";
-import CreateIncome from "../components/CreateIncome";
+import { IncomeCategory, incomeSumData } from "../../types";
+import CreateIncome from "./CreateIncome";
 import Link from "next/link";
-import { SelectedAccountContext } from "./SelectedAccountContext";
+import SelectedAccountContext from "./SelectedAccountContext";
 import IncomeCharts from "./IncomeCharts";
 
 const IncomeComponent = () => {

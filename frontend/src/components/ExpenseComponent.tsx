@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import CreateExpense from "../components/CreateExpense";
-import { ExpenseCategory, expenseSumData } from "../../../types";
+import CreateExpense from "./CreateExpense";
+import { ExpenseCategory, expenseSumData } from "../../types";
 import Link from "next/link";
-import { SelectedAccountContext } from "./SelectedAccountContext";
+import SelectedAccountContext from "./SelectedAccountContext";
 import ExpenseCharts from "./ExpenseCharts";
 
 const ExpenseComponent = () => {
