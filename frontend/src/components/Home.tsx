@@ -70,7 +70,38 @@ const Home = () => {
         ))}
         <button onClick={() => setSelectedAccount(0)}>All</button>
       </div>
-      <h2>Current Balance: {balance}</h2>
+      {balance > 1000 && (
+        <>
+          <h2 className="text-lg pl-7">
+            Balance: <span className="text-green-600">{balance}</span>
+          </h2>
+          <p className="bg-green-100 border rounded border-green-800  text-green-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
+            <span>😍 </span>Great job! You&apos;re on track with your
+            finances!
+          </p>
+        </>
+      )}
+      {balance <= 1000 && balance > 500 && (
+        <>
+          <h2 className="text-lg pl-7">
+            Balance: <span className="text-yellow-600">{balance}</span>
+          </h2>
+          <p className="border-yellow-500 border rounded bg-yellow-50 text-yellow-700 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
+            <span className="text-xl">🚧 </span>Watch out! Consider limiting
+            your spendings!
+          </p>
+        </>
+      )}
+      {balance <= 500 && (
+        <>
+          <h2 className="text-lg pl-7">
+            Balance: <span className="text-red-600">{balance}</span>
+          </h2>
+          <p className="bg-red-100 border rounded border-red-500 text-red-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
+            <span>⛔ </span> Warning! You have low funds! Consider saving more.
+          </p>
+        </>
+      )}
       <div className="flex flex-wrap gap-20 p-7 mb-5">
         <SelectedAccountContext.Provider value={selectedAccountId}>
           <ExpenseComponent />
