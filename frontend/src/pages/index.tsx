@@ -1,6 +1,6 @@
-import { useFetchUser } from "./hooks/useFetchUser";
+import useFetchUser from "./hooks/useFetchUser";
 import Login from "./login";
-import Home from "./components/Home";
+import Home from "../components/Home";
 import Link from "next/link";
 
 export default function Index() {

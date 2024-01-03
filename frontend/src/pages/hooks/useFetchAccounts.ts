@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Account } from "../../../types";
 
-export const useFetchAccounts = () => {
+const useFetchAccounts = () => {
   const [accounts, setAccounts] = useState<Account[] | null>(null);
 
   useEffect(() => {
@@ -18,3 +18,4 @@ export const useFetchAccounts = () => {
   }, []);
   return accounts;
 };
+export default useFetchAccounts;

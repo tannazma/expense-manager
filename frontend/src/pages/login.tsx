@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useFetchUser } from "./hooks/useFetchUser";
+import useFetchUser from "./hooks/useFetchUser";
 
 const formValuesSchema = z.object({
   username: z.string().min(3),

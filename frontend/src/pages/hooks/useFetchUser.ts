@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { User } from "../../../types";
 
-export const useFetchUser = () => {
+const useFetchUser = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -20,3 +20,4 @@ export const useFetchUser = () => {
   }, []);
   return user;
 };
+export default useFetchUser;
