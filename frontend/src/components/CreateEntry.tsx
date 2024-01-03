@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import { ExpenseCategory } from "../../types";
+import { ExpenseCategory as EntryCategory } from "../../types";
 import useFetchAccounts from "../pages/hooks/useFetchAccounts";
 
-interface createxpenseProps {
+interface createEntryProps {
   showDialog: boolean;
   setShowDialog: any;
+  type: "expense" | "income";
 }
 
 export default function CreateExpense({
   showDialog,
   setShowDialog,
-}: createxpenseProps) {
-  const [expenseCategories, setExpenseCategories] = useState<
-    ExpenseCategory[] | null
+  type,
+}: createEntryProps) {
+  const [entryCategories, setEntryCategories] = useState<
+    EntryCategory[] | null
   >(null);
   const accounts = useFetchAccounts();
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
-  const [expenseCategoryId, setExpenseCategoryId] = useState("");
+  const [entryCategoryId, setEntryCategoryId] = useState("");
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [details, setDetails] = useState("");
   const [date, setDate] = useState("");
@@ -26,32 +28,42 @@ export default function CreateExpense({
     event.preventDefault();
     console.log({
       amount,
-      category: expenseCategoryId,
+      category: entryCategoryId,
       details: details,
       account: accountId,
     });
-    fetch("http://localhost:3001/expenses", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: Number(amount),
-        expenseCategoryId: Number(expenseCategoryId),
-        accountId: Number(accountId),
-        details: details,
-        date: new Date().toISOString(),
-      }),
-    });
+    fetch(
+      type === "expense"
+        ? "http://localhost:3001/expenses"
+        : "http://localhost:3001/incomes",
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: Number(amount),
+          [type === "expense" ? "expenseCategoryId" : "incomeCategoryId"]:
+            Number(entryCategoryId),
+          accountId: Number(accountId),
+          details: details,
+          date: new Date().toISOString(),
+        }),
+      }
+    );
   };
 
   useEffect(() => {
-    const getAllExpenses = async () => {
-      const response = await fetch("http://localhost:3001/expense-categories");
+    const getAllExpenseCategories = async () => {
+      const response = await fetch(
+        type === "expense"
+          ? "http://localhost:3001/expense-categories"
+          : "http://localhost:3001/income-categories"
+      );
       const data = await response.json();
-      setExpenseCategories(data);
-      setExpenseCategoryId(data[0].id);
+      setEntryCategories(data);
+      setEntryCategoryId(data[0].id);
       setAccountId(data[0].id);
     };
-    getAllExpenses();
+    getAllExpenseCategories();
   }, []);
 
   function closeDialog() {
@@ -102,15 +114,15 @@ export default function CreateExpense({
               <select
                 id="category"
                 name="category"
-                value={expenseCategoryId}
-                onChange={(e) => setExpenseCategoryId(e.target.value)}
+                value={entryCategoryId}
+                onChange={(e) => setEntryCategoryId(e.target.value)}
                 className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
               >
-                {expenseCategories &&
-                  expenseCategories.map((expenseCat) => (
-                    <option key={expenseCat.id} value={expenseCat.id}>
-                      {expenseCat.icon}
-                      {expenseCat.name}
+                {entryCategories &&
+                  entryCategories.map((entryCat) => (
+                    <option key={entryCat.id} value={entryCat.id}>
+                      {entryCat.icon}
+                      {entryCat.name}
                     </option>
                   ))}
               </select>
