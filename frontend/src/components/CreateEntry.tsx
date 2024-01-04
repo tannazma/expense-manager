@@ -16,7 +16,7 @@ export default function CreateExpense({
   const [entryCategories, setEntryCategories] = useState<
     EntryCategory[] | null
   >(null);
-  const accounts = useFetchAccounts();
+  const {accounts} = useFetchAccounts();
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
   const [entryCategoryId, setEntryCategoryId] = useState("");
