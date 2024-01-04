@@ -32,6 +32,31 @@ const ExpenseDetailPage = () => {
   if (isNaN(idFromUrl)) {
     return <div>Expense not found</div>;
   }
+
+  const handleDeleteClick = (expenseId: number) => {
+    console.log(expenseId)
+    if (!Number.isInteger(expenseId)) {
+      console.error("Invalid expenseCategoryId:", expenseId);
+      return;
+    }
+    fetch(`http://localhost:3001/expenses/${expenseId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch expenses:",
+          error
+        );
+      });
+  };
   return (
     <div>
       {getExpenses.length > 0 ? (
@@ -52,6 +77,11 @@ const ExpenseDetailPage = () => {
                 </div>
                 <p>{expense.amount} €</p>
                 <p>{expense.details}</p>
+                <button
+                  onClick={() => handleDeleteClick(expense.id)}
+                >
+                  Delete
+                </button>
               </div>
             ))}
         </div>
