@@ -8,9 +8,33 @@ import { expenseSumData, incomeSumData } from "../../types";
 
 const Home = () => {
   const [selectedAccountId, setSelectedAccount] = useState(0);
-  const accounts = useFetchAccounts();
+  const {accounts, refetchAccounts} = useFetchAccounts();
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
+  const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
+  const [accountName, setAccountName] = useState("");
+
+  const toggleShowExpenseDialog = () => {
+    setShowCreateExpenseDialog(!showCreateExpenseDialog);
+    fetch;
+  };
+
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("gchvjbk");
+    await fetch("http://localhost:3001/accounts", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        name: accountName,
+      }),
+    });
+
+    refetchAccounts();
+  };
 
   let incomeTotal = incomeSum.reduce(
     (acc, curr) => acc + Number(curr.amount),
@@ -75,6 +99,32 @@ const Home = () => {
         >
           All
         </button>
+        <button
+          className="hover:text-violet-600 font-semibold text-purple-900 bg-violet-100 border border-violet-800 px-2 py-2 rounded"
+          onClick={toggleShowExpenseDialog}
+        >
+          Create New Account
+        </button>
+        {showCreateExpenseDialog && (
+          <form onSubmit={handleSubmit}>
+            <label>
+              <input
+                id="accountName"
+                name="accountName"
+                value={accountName}
+                className="mr-3"
+                onChange={(e) => setAccountName(e.target.value)}
+              />
+              Account name
+            </label>
+            <button
+              className="hover:text-violet-600 font-semibold hover:bg-violet-300 text-white bg-violet-800 ml-3 px-2 py-2 rounded"
+              type="submit"
+            >
+              Create
+            </button>
+          </form>
+        )}
       </div>
       {balance > 1000 && (
         <>
@@ -82,8 +132,7 @@ const Home = () => {
             Balance: <span className="text-green-600">{balance}</span>
           </h2>
           <p className="bg-green-100 border rounded border-green-800  text-green-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
-            <span>😍 </span>Great job! You&apos;re on track with your
-            finances!
+            <span>😍 </span>Great job! You&apos;re on track with your finances!
           </p>
         </>
       )}
