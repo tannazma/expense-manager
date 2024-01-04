@@ -120,6 +120,35 @@ app.get("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
   res.json(allAccounts);
 });
 
+app.post("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
+  const requestBody = req.body;
+  const { name } = req.body;
+  if (!name) {
+    res.status(400).send({ error: "Name is required" });
+    return;
+  }
+  if ("name" in requestBody) {
+    try {
+      const newAccount = await prisma.account.create({
+        data: {
+          name,
+          userId: Number(req.userId),
+        },
+      });
+      res.status(200).send(newAccount);
+      console.log(newAccount);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Error creating account" });
+    }
+  } else {
+    res.status(400).send({
+      message:
+        "amount, date, accountId and incomeCategoryId and details are required.",
+    });
+  }
+});
+
 app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
   const loggedInUser = await prisma.user.findFirst({
     where: {
