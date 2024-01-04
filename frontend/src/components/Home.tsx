@@ -10,13 +10,13 @@ const Home = () => {
   const { accounts, refetchAccounts } = useFetchAccounts();
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [accountName, setAccountName] = useState("");
-  const { balance, setSelectedAccount, selectedAccountId, refetchBalance } =
+  const { balance, setSelectedAccount, selectedAccountId } =
     useBalance();
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
     fetch;
   };
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateAccount = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("gchvjbk");
     await fetch("http://localhost:3001/accounts", {
@@ -31,7 +31,6 @@ const Home = () => {
     });
 
     refetchAccounts();
-    refetchBalance();
   };
 
   return (
@@ -60,7 +59,7 @@ const Home = () => {
           Create New Account
         </button>
         {showCreateExpenseDialog && (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleCreateAccount}>
             <label>
               <input
                 id="accountName"
@@ -112,7 +111,6 @@ const Home = () => {
           </p>
         </>
       )}
-      <button onClick={refetchBalance}>update balance</button>
       <div className="flex flex-wrap gap-20 p-7 mb-5">
         <SelectedAccountContext.Provider value={selectedAccountId}>
           <ExpenseComponent />
