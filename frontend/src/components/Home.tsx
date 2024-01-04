@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ExpenseComponent from "./ExpenseComponent";
 import IncomeComponent from "./IncomeComponent";
 import SelectedAccountContext from "./SelectedAccountContext";
 import useFetchAccounts from "../pages/hooks/useFetchAccounts";
 import NavBar from "./NavBar";
-import { expenseSumData, incomeSumData } from "../../types";
+import useBalance from "@/pages/hooks/useBalance";
 
 const Home = () => {
-  const [selectedAccountId, setSelectedAccount] = useState(0);
-  const {accounts, refetchAccounts} = useFetchAccounts();
-  const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
-  const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
+  const { accounts, refetchAccounts } = useFetchAccounts();
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [accountName, setAccountName] = useState("");
-
+  const { balance, setSelectedAccount, selectedAccountId } = useBalance();
   const toggleShowExpenseDialog = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
     fetch;
@@ -35,50 +32,6 @@ const Home = () => {
 
     refetchAccounts();
   };
-
-  let incomeTotal = incomeSum.reduce(
-    (acc, curr) => acc + Number(curr.amount),
-    0
-  );
-  let expenseTotal = expenseSum.reduce(
-    (acc, curr) => acc + Number(curr.amount),
-    0
-  );
-
-  useEffect(() => {
-    const getIncomeSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const sumData: incomeSumData[] = await response.json();
-      setIncomeSum(sumData);
-    };
-    getIncomeSum();
-  }, [selectedAccountId]);
-
-  useEffect(() => {
-    const getExpenseSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const sumData: expenseSumData[] = await response.json();
-      setExpenseSum(sumData);
-    };
-
-    getExpenseSum();
-  }, [selectedAccountId]);
-
-  const balance = incomeTotal - expenseTotal;
 
   return (
     <div>
@@ -129,7 +82,8 @@ const Home = () => {
       {balance > 1000 && (
         <>
           <h2 className="text-lg pl-7">
-            Balance: <span className="text-green-600">{balance}</span>
+            Balance:
+            <span className="text-green-600">{balance}</span>
           </h2>
           <p className="bg-green-100 border rounded border-green-800  text-green-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
             <span>😍 </span>Great job! You&apos;re on track with your finances!
