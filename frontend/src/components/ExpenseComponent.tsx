@@ -27,20 +27,20 @@ const ExpenseComponent = () => {
     getExpensesCategories();
   }, []);
 
-  useEffect(() => {
-    const getExpenseSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const sumData: expenseSumData[] = await response.json();
-      setExpenseSum(sumData);
-    };
+  const getExpenseSum = async () => {
+    const response = await fetch(
+      `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const sumData: expenseSumData[] = await response.json();
+    setExpenseSum(sumData);
+  };
 
+  useEffect(() => {
     getExpenseSum();
   }, [selectedAccountId]);
 
@@ -62,6 +62,7 @@ const ExpenseComponent = () => {
             showDialog={showCreateExpenseDialog}
             type="expense"
             setShowDialog={setShowCreateExpenseDialog}
+            onCreated={getExpenseSum}
           />
         )}
       </div>

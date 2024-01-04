@@ -6,25 +6,29 @@ interface createEntryProps {
   showDialog: boolean;
   setShowDialog: any;
   type: "expense" | "income";
+  onCreated: () => void;
 }
 
 export default function CreateExpense({
   showDialog,
   setShowDialog,
   type,
+  onCreated,
 }: createEntryProps) {
   const [entryCategories, setEntryCategories] = useState<
     EntryCategory[] | null
   >(null);
-  const {accounts} = useFetchAccounts();
+  const { accounts } = useFetchAccounts();
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
   const [entryCategoryId, setEntryCategoryId] = useState("");
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [details, setDetails] = useState("");
   const [date, setDate] = useState("");
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [newCategoryIcon, setNewCategoryIcon] = useState("💟");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({
       amount,
@@ -32,7 +36,7 @@ export default function CreateExpense({
       details: details,
       account: accountId,
     });
-    fetch(
+    await fetch(
       type === "expense"
         ? "http://localhost:3001/expenses"
         : "http://localhost:3001/incomes",
@@ -49,6 +53,8 @@ export default function CreateExpense({
         }),
       }
     );
+    onCreated();
+    setShowDialog(false);
   };
 
   useEffect(() => {
@@ -69,9 +75,6 @@ export default function CreateExpense({
   function closeDialog() {
     setShowDialog(!showDialog);
   }
-
-  const [newCategoryName, setNewCategoryName] = useState("");
-  const [newCategoryIcon, setNewCategoryIcon] = useState("💟");
 
   async function addNewCategory() {
     console.log({ newCategoryName, newCategoryIcon });
