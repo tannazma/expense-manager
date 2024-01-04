@@ -149,6 +149,25 @@ app.post("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
   }
 });
 
+app.delete(
+  "/expenses/:expenseId",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const { expenseId } = req.params;
+    try {
+      const deletedExpenses = await prisma.expense.deleteMany({
+        where: { id: Number(expenseId) },
+      });
+      res.status(200).send({
+        message: `${deletedExpenses.count} expenses successfully deleted`,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Error deleting expenses" });
+    }
+  }
+);
+
 app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
   const loggedInUser = await prisma.user.findFirst({
     where: {
