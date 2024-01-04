@@ -14,42 +14,47 @@ const useBalance = () => {
     (acc, curr) => acc + Number(curr.amount),
     0
   );
+  const balance = incomeTotal - expenseTotal;
+
+  const getIncomeSum = async () => {
+    const response = await fetch(
+      `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const sumData: incomeSumData[] = await response.json();
+    setIncomeSum(sumData);
+  };
 
   useEffect(() => {
-    const getIncomeSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const sumData: incomeSumData[] = await response.json();
-      setIncomeSum(sumData);
-    };
     getIncomeSum();
   }, [selectedAccountId]);
 
-  useEffect(() => {
-    const getExpenseSum = async () => {
-      const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const sumData: expenseSumData[] = await response.json();
-      setExpenseSum(sumData);
-    };
+  const getExpenseSum = async () => {
+    const response = await fetch(
+      `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const sumData: expenseSumData[] = await response.json();
+    setExpenseSum(sumData);
+  };
 
+  useEffect(() => {
     getExpenseSum();
   }, [selectedAccountId]);
 
-  const balance = incomeTotal - expenseTotal;
+  function refetchBalance() {
+    getExpenseSum();
+    getIncomeSum();
+  }
 
-  return {balance, selectedAccountId, setSelectedAccount};
+  return { balance, selectedAccountId, setSelectedAccount, refetchBalance };
 };
 export default useBalance;
