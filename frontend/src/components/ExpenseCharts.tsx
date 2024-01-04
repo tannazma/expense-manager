@@ -71,7 +71,8 @@ const ExpenseCharts = () => {
           className="flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("bar")}
         >
-          <Image src={barChartIcon} width={20} alt={barChartIcon} />s Bar Chart
+          <Image src={barChartIcon} width={20} alt={barChartIcon} />
+           Bar Chart
         </button>
       </div>
       {isRendered && chartType === "pie" && (
