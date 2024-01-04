@@ -19,7 +19,7 @@ const Home = () => {
     fetch;
   };
 
-  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("gchvjbk");
     await fetch("http://localhost:3001/accounts", {
