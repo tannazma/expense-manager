@@ -7,13 +7,15 @@ interface createEntryProps {
   setShowDialog: any;
   type: "expense" | "income";
   onCreated: () => void;
+  refetchBalance: () => void;
 }
 
-export default function CreateExpense({
+export default function CreateEntry({
   showDialog,
   setShowDialog,
   type,
   onCreated,
+  refetchBalance,
 }: createEntryProps) {
   const [entryCategories, setEntryCategories] = useState<
     EntryCategory[] | null
@@ -55,6 +57,7 @@ export default function CreateExpense({
     );
     onCreated();
     setShowDialog(false);
+    refetchBalance();
   };
 
   useEffect(() => {

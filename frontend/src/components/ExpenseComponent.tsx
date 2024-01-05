@@ -1,11 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import CreateExpense from "./CreateEntry";
+import CreateEntry from "./CreateEntry";
 import { ExpenseCategory, expenseSumData } from "../../types";
 import Link from "next/link";
 import SelectedAccountContext from "./SelectedAccountContext";
 import ExpenseCharts from "./ExpenseCharts";
 
-const ExpenseComponent = () => {
+interface expenseProps {
+  refetchBalance: () => void;
+}
+
+const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
   const selectedAccountId = useContext(SelectedAccountContext);
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
@@ -58,11 +62,12 @@ const ExpenseComponent = () => {
           </button>
         </div>
         {showCreateExpenseDialog && (
-          <CreateExpense
+          <CreateEntry
             showDialog={showCreateExpenseDialog}
             type="expense"
             setShowDialog={setShowCreateExpenseDialog}
             onCreated={getExpenseSum}
+            refetchBalance={refetchBalance}
           />
         )}
       </div>

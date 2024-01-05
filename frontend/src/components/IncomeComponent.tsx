@@ -5,7 +5,11 @@ import SelectedAccountContext from "./SelectedAccountContext";
 import IncomeCharts from "./IncomeCharts";
 import CreateIncome from "./CreateEntry";
 
-const IncomeComponent = () => {
+interface incomeProps {
+  refetchBalance: () => void;
+}
+
+const IncomeComponent = ({ refetchBalance }: incomeProps) => {
   const selectedAccountId = useContext(SelectedAccountContext);
   const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
   const [incomeCategories, setIncomeCategories] = useState<IncomeCategory[]>(
@@ -62,6 +66,7 @@ const IncomeComponent = () => {
             type="income"
             setShowDialog={setShowCreateIncomeDialog}
             onCreated={getIncomeSum}
+            refetchBalance={refetchBalance}
           />
         )}
       </div>
