@@ -33,6 +33,7 @@ const Home = () => {
     });
 
     refetchAccounts();
+    setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
 
   return (
@@ -116,7 +117,7 @@ const Home = () => {
       <div className="flex flex-wrap gap-20 p-7 mb-5">
         <SelectedAccountContext.Provider value={selectedAccountId}>
           <ExpenseComponent refetchBalance={refetchBalance} />
-          <IncomeComponent refetchBalance={refetchBalance}/>
+          <IncomeComponent refetchBalance={refetchBalance} />
         </SelectedAccountContext.Provider>
       </div>
     </div>
