@@ -141,10 +141,16 @@ const ExpenseDetailPage = () => {
                 </div>
                 <p>{expense.amount} €</p>
                 <p>{expense.details}</p>
-                <button onClick={() => handleDeleteExpense(expense.id)}>
+                <button
+                  onClick={() => handleDeleteExpense(expense.id)}
+                  className=" bg-purple-100 hover:bg-purple-700 text-purple-800 font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                >
                   Delete
                 </button>
-                <button onClick={() => handleEditExpense(expense.id)}>
+                <button
+                  onClick={() => handleEditExpense(expense.id)}
+                  className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                >
                   Edit
                 </button>
                 {isEditMode && (
@@ -205,8 +211,16 @@ const ExpenseDetailPage = () => {
                           className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         />
                       </label>
-                      <button type="submit">Save</button>
-                      <button onClick={() => setIsEditMode(false)}>
+                      <button
+                        type="submit"
+                        className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setIsEditMode(false)}
+                        className=" bg-purple-100 hover:bg-purple-700 text-purple-800 font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                      >
                         Close
                       </button>
                     </form>
