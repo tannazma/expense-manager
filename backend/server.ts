@@ -168,6 +168,53 @@ app.delete(
   }
 );
 
+app.put(
+  "/expenses/:expenseId",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const { expenseId } = req.params;
+    console.log(expenseId); 
+    const { amount, expenseCategoryId, details, date } = req.body;
+    // console.log(req.body);
+    const expense = await prisma.expense.findUnique({
+      where: { id: Number(expenseId) },
+    });
+
+    if (!expense) {
+      return res.status(404).send({ error: "Expense not found." });
+    }
+
+    if (!amount || !expenseCategoryId || !details || !date) {
+      res.status(400).send({ error: "Expense information is incomplete" });
+      return;
+    }
+    if (!Number.isInteger(amount) || !expenseCategoryId || !details || !date) {
+      res
+        .status(400)
+        .send({ error: "Expense information is invalid or incomplete" });
+      return;
+    }
+    console.log(amount, expenseCategoryId, details, date);
+
+    try {
+      const updatedExpense = await prisma.expense.update({
+        where: { id: Number(expenseId) },
+        data: {
+          amount: amount,
+          expenseCategoryId: expenseCategoryId,
+          details: details,
+          date: date,
+        },
+      });
+
+      res.status(200).send(updatedExpense);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Error updating expense" });
+    }
+  }
+);
+
 app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
   const loggedInUser = await prisma.user.findFirst({
     where: {
