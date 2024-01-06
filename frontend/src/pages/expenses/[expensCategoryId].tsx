@@ -3,38 +3,38 @@ import { Expense, ExpenseCategory } from "../../../types";
 import { useRouter } from "next/router";
 
 const ExpenseDetailPage = () => {
-  const [getExpenses, setExpenses] = useState<Expense[]>([]);
-  const [editMode, setEditMode] = useState(false);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [isEditMode, setIsEditMode] = useState(false);
   const router = useRouter();
-  const idFromUrl = Number(router.query.expensCategoryId);
-  const [amount, setAmount] = useState("");
-  const [expenseCategoryId, setExpenseCategoryId] = useState("");
-  const [details, setDetails] = useState("");
-  const [date, setDate] = useState("");
+  const categoryIdFromUrl = Number(router.query.expensCategoryId);
+  const [expenseAmount, setExpenseAmount] = useState("");
+  const [selectedExpenseCategoryId, setSelectedExpenseCategoryId] =
+    useState("");
+  const [expenseDetails, setExpenseDetails] = useState("");
+  const [expenseDate, setExpenseDate] = useState("");
   const [expenseCategories, setExpenseCategories] = useState<
     ExpenseCategory[] | null
   >(null);
-  console.log(idFromUrl);
 
   useEffect(() => {
-    const getAllExpenseCategories = async () => {
+    const fetchAllExpenseCategories = async () => {
       const response = await fetch("http://localhost:3001/expense-categories");
       const data = await response.json();
       setExpenseCategories(data);
       if (data[0]) {
-        setExpenseCategoryId(data[0].id); // Ensure data[0] exists before accessing its id
+        setSelectedExpenseCategoryId(data[0].id);
       }
     };
-    getAllExpenseCategories();
+    fetchAllExpenseCategories();
   }, []);
 
   useEffect(() => {
-    if (isNaN(idFromUrl)) {
+    if (isNaN(categoryIdFromUrl)) {
       return;
     } else {
-      const getExpensesFromCategories = async () => {
+      const fetchExpensesFromCategory = async () => {
         const response = await fetch(
-          `http://localhost:3001/category/${idFromUrl}/expenses`,
+          `http://localhost:3001/category/${categoryIdFromUrl}/expenses`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -42,19 +42,18 @@ const ExpenseDetailPage = () => {
           }
         );
         const data = await response.json();
-        setExpenseCategoryId(data[0].id);
+        setSelectedExpenseCategoryId(data[0].id);
         setExpenses(data);
       };
-      getExpensesFromCategories();
+      fetchExpensesFromCategory();
     }
-  }, [idFromUrl]);
+  }, [categoryIdFromUrl]);
 
-  if (isNaN(idFromUrl)) {
+  if (isNaN(categoryIdFromUrl)) {
     return <div>Expense not found</div>;
   }
 
-  const handleDeleteClick = (expenseId: number) => {
-    console.log(expenseId)
+  const handleDeleteExpense = (expenseId: number) => {
     if (!Number.isInteger(expenseId)) {
       console.error("Invalid expenseCategoryId:", expenseId);
       return;
@@ -78,16 +77,14 @@ const ExpenseDetailPage = () => {
       });
   };
 
-  const handleEditClick = (expenseId: number) => {
-    const expenseToEdit = getExpenses.find(
-      (expense) => expense.id === expenseId
-    );
+  const handleEditExpense = (expenseId: number) => {
+    const expenseToEdit = expenses.find((expense) => expense.id === expenseId);
     if (expenseToEdit) {
-      setAmount(expenseToEdit.amount.toString());
-      setExpenseCategoryId(expenseToEdit.expenseCategoryId.toString());
-      setDetails(expenseToEdit.details);
-      setDate(expenseToEdit.date.toString());
-      setEditMode(true);
+      setExpenseAmount(expenseToEdit.amount.toString());
+      setSelectedExpenseCategoryId(expenseToEdit.expenseCategoryId.toString());
+      setExpenseDetails(expenseToEdit.details);
+      setExpenseDate(expenseToEdit.date.toString());
+      setIsEditMode(true);
     }
   };
 
@@ -106,10 +103,10 @@ const ExpenseDetailPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: Number(amount),
-          expenseCategoryId: Number(expenseCategoryId),
-          details: details,
-          date: new Date(date).toISOString(),
+          amount: Number(expenseAmount),
+          expenseCategoryId: Number(selectedExpenseCategoryId),
+          details: expenseDetails,
+          date: new Date(expenseDate).toISOString(),
         }),
       }
     );
@@ -120,15 +117,15 @@ const ExpenseDetailPage = () => {
           expense.id === expenseId ? updatedExpense : expense
         )
       );
-      setEditMode(false);
+      setIsEditMode(false);
     }
   };
 
   return (
     <div>
-      {getExpenses.length > 0 ? (
+      {expenses.length > 0 ? (
         <div className="flex flex-1 flex-col gap-10 p-10 text-zinc-50 ">
-          {getExpenses
+          {expenses
             .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
             .map((expense) => (
               <div
@@ -144,24 +141,26 @@ const ExpenseDetailPage = () => {
                 </div>
                 <p>{expense.amount} €</p>
                 <p>{expense.details}</p>
-                <button onClick={() => handleDeleteClick(expense.id)}>
+                <button onClick={() => handleDeleteExpense(expense.id)}>
                   Delete
                 </button>
-                <button onClick={() => handleEditClick(expense.id)}>
+                <button onClick={() => handleEditExpense(expense.id)}>
                   Edit
                 </button>
-                {editMode && (
+                {isEditMode && (
                   <div className="modal">
                     <form
-                      onSubmit={(event) => handleUpdateExpense(expense.id, event)}
+                      onSubmit={(event) =>
+                        handleUpdateExpense(expense.id, event)
+                      }
                       className="p-10 rounded bg-violet-400 relative flex flex-col gap-5 "
                     >
                       <label>
                         Amount:
                         <input
                           type="number"
-                          value={amount}
-                          onChange={(e) => setAmount(e.target.value)}
+                          value={expenseAmount}
+                          onChange={(e) => setExpenseAmount(e.target.value)}
                           className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                         />
                         <label>
@@ -169,9 +168,9 @@ const ExpenseDetailPage = () => {
                           <select
                             id="category"
                             name="category"
-                            value={expenseCategoryId}
+                            value={selectedExpenseCategoryId}
                             onChange={(e) =>
-                              setExpenseCategoryId(e.target.value)
+                              setSelectedExpenseCategoryId(e.target.value)
                             }
                             className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                           >
@@ -192,8 +191,8 @@ const ExpenseDetailPage = () => {
                         Details:
                         <input
                           type="text"
-                          value={details}
-                          onChange={(e) => setDetails(e.target.value)}
+                          value={expenseDetails}
+                          onChange={(e) => setExpenseDetails(e.target.value)}
                           className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         />
                       </label>
@@ -201,13 +200,15 @@ const ExpenseDetailPage = () => {
                         date:
                         <input
                           type="date"
-                          value={date}
-                          onChange={(e) => setDate(e.target.value)}
+                          value={expenseDate}
+                          onChange={(e) => setExpenseDate(e.target.value)}
                           className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         />
                       </label>
                       <button type="submit">Save</button>
-                      <button onClick={() => setEditMode(false)}>Close</button>
+                      <button onClick={() => setIsEditMode(false)}>
+                        Close
+                      </button>
                     </form>
                   </div>
                 )}
