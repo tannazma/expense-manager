@@ -66,10 +66,7 @@ export default function AccountsList({
   return (
     <>
       {accounts.map((account) => (
-        <div
-          key={account.id}
-          className="hover:text-violet-600 font-semibold text-purple-900"
-        >
+        <div key={account.id} className="hover:text-violet-600 text-purple-900 text-xs font-semibold">
           {editingAccountId === account.id ? (
             <>
               <input
@@ -90,7 +87,7 @@ export default function AccountsList({
               className={`border-b bg  ${
                 selectedAccountId !== account.id
                   ? "border-b-0 "
-                  : " px-2 py-2 bg-purple-100 rounded text-purple-600 "
+                  : "px-2 py-2 bg-purple-100 rounded text-purple-600 font-semibold"
               }`}
             >
               {account.name}
@@ -99,7 +96,7 @@ export default function AccountsList({
           {selectedAccountId === account.id && !editingAccountId ? (
             <>
               <button
-                className="ml-2 hover:text-violet-600 text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
+                className="ml-2 hover:text-violet-800 text-xs font-medium text-purple-900"
                 onClick={() => {
                   setEditingAccountId(account.id);
                   setEditingAccountName(account.name);
@@ -108,7 +105,7 @@ export default function AccountsList({
                 Edit
               </button>
               <button
-                className="ml-2 hover:text-violet-600  text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
+                className="ml-2 hover:text-violet-600 text-xs text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
                 onClick={() => handleDeleteAccount(account.id)}
               >
                 Delete
