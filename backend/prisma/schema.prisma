@@ -23,7 +23,7 @@ model Expense {
   expenseCategoryId Int
   expenseCategory   ExpenseCategory @relation(fields: [expenseCategoryId], references: [id])
   details           String
-  account           Account         @relation(fields: [accountId], references: [id])
+  account           Account         @relation(fields: [accountId], references: [id], onDelete: Cascade)
   accountId         Int
   date              DateTime
 }
@@ -51,7 +51,7 @@ model Income {
   incomeCategoryId Int
   incomeCategory   IncomeCategory @relation(fields: [incomeCategoryId], references: [id])
   details          String
-  accounts         Account        @relation(fields: [accountId], references: [id])
+  accounts         Account        @relation(fields: [accountId], references: [id], onDelete: Cascade)
   accountId        Int
   date             DateTime
 }

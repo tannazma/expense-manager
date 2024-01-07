@@ -264,6 +264,28 @@ app.put(
   }
 );
 
+app.delete(
+  "/accounts/:accountId",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const { accountId } = req.params;
+    try {
+      const deletedAccount = await prisma.account.deleteMany({
+        where: {
+          id: Number(accountId),
+        },
+      });
+      console.log(deletedAccount);
+      res.status(200).send({
+        message: `Account successfully deleted`,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "something happened" });
+    }
+  }
+);
+
 app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
   const loggedInUser = await prisma.user.findFirst({
     where: {

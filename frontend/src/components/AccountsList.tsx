@@ -34,6 +34,34 @@ export default function AccountsList({
     await refetchAccounts();
     cancelEdit();
   }
+  
+  async function handleDeleteAccount(accountId: number) {
+    if (!Number.isInteger(accountId)) {
+      console.error("Invalid accountId:", accountId);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/accounts/${accountId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      await refetchAccounts();
+    } catch (error) {
+      console.error("There has been a problem with deleting account:", error);
+    }
+  }
 
   return (
     <>
@@ -74,7 +102,12 @@ export default function AccountsList({
               >
                 edit
               </button>
-              <button className="ml-2">delete</button>
+              <button
+                className="ml-2"
+                onClick={() => handleDeleteAccount(account.id)}
+              >
+                delete
+              </button>
             </>
           ) : null}
         </div>
