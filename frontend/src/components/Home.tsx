@@ -40,7 +40,7 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <div className="flex gap-6 bg-violet-200 p-4 pl-7 mb-7">
+      <div className="flex gap-6 bg-violet-200 p-2 pl-7 mb-3 items-center">
         {accounts && (
           <AccountsList
             accounts={accounts}
@@ -51,12 +51,16 @@ const Home = () => {
         )}
         <button
           onClick={() => setSelectedAccount(0)}
-          className="hover:text-violet-600 font-semibold text-purple-900"
+          className={`border-b text-xs px-2 py-2${
+            selectedAccountId !== 0
+              ? "border-b-0 text-xs font-semibold"
+              : " bg-purple-100 rounded text-purple-600 text-xs font-semibold "
+          }`}
         >
           All
         </button>
         <button
-          className="hover:text-violet-600 font-semibold text-purple-900 bg-violet-100 border border-violet-800 px-2 py-2 rounded"
+          className="text-xs hover:text-violet-600 font-bold text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
           onClick={toggleShowExpenseDialog}
         >
           Create New Account
@@ -84,33 +88,36 @@ const Home = () => {
       </div>
       {balance > 1000 && (
         <>
-          <h2 className="text-lg pl-7">
+          <h2 className="text-l pl-6">
             Balance:
-            <span className="text-green-600">{balance}</span>
+            <span className="text-green-600"> {balance}</span>
           </h2>
           <p className="bg-green-100 border rounded border-green-800  text-green-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
-            <span>😍 </span>Great job! You&apos;re on track with your finances!
+            <span className="text-xs mr-2">😍 </span>Great job! You&apos;re on
+            track with your finances!
           </p>
         </>
       )}
       {balance <= 1000 && balance > 500 && (
         <>
-          <h2 className="text-lg pl-7">
-            Balance: <span className="text-yellow-600">{balance}</span>
+          <h2 className=" text-l pl-7 ">
+            Balance:
+            <span className="text-yellow-600 font-semibold">{balance}</span>
           </h2>
           <p className="border-yellow-500 border rounded bg-yellow-50 text-yellow-700 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
-            <span className="text-xl">🚧 </span>Watch out! Consider limiting
-            your spendings!
+            <span className="text-xs mr-2">🚧 </span>Watch out! Consider
+            limiting your spendings!
           </p>
         </>
       )}
       {balance <= 500 && (
         <>
-          <h2 className="text-lg pl-7">
+          <h2 className="text-l pl-7">
             Balance: <span className="text-red-600">{balance}</span>
           </h2>
           <p className="bg-red-100 border rounded border-red-500 text-red-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
-            <span>⛔ </span> Warning! You have low funds! Consider saving more.
+            <span className="text-xs mr-2">⛔ </span> Warning! You have low
+            funds! Consider saving more.
           </p>
         </>
       )}
