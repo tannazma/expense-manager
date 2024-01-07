@@ -173,7 +173,7 @@ app.put(
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const { expenseId } = req.params;
-    console.log(expenseId); 
+    console.log(expenseId);
     const { amount, expenseCategoryId, details, date } = req.body;
     // console.log(req.body);
     const expense = await prisma.expense.findUnique({
@@ -212,6 +212,55 @@ app.put(
       console.error(error);
       res.status(500).send({ error: "Error updating expense" });
     }
+  }
+);
+
+app.put(
+  "/accounts/:accountId/edit",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const { newName } = req.body;
+
+    if (!newName) {
+      res.status(400).send("Please provide `newName` for the account");
+      return;
+    }
+
+    const accountId = Number(req.params.accountId);
+
+    const foundAccount = await prisma.account.findFirst({
+      where: {
+        userId: req.userId,
+        id: accountId,
+      },
+    });
+
+    // foundAccount may not exist for two reasons:
+    //    1) provided accountId is wrong
+    //    2) the userId does not own this account
+    if (!foundAccount) {
+      res.status(400).send({ message: "You cannot edit this account" });
+      return;
+    }
+
+    if (newName === foundAccount.name) {
+      res
+        .status(200)
+        .send({ message: "Changd succefully (already has the same name)" });
+      return;
+    }
+
+    await prisma.account.update({
+      where: {
+        userId: req.userId,
+        id: accountId,
+      },
+      data: {
+        name: newName,
+      },
+    });
+
+    res.status(200).send({ message: "Changd succefully" });
   }
 );
 

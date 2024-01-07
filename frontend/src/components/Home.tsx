@@ -5,6 +5,7 @@ import SelectedAccountContext from "./SelectedAccountContext";
 import useFetchAccounts from "../pages/hooks/useFetchAccounts";
 import NavBar from "./NavBar";
 import useBalance from "@/pages/hooks/useBalance";
+import AccountsList from "./AccountsList";
 
 const Home = () => {
   const { accounts, refetchAccounts } = useFetchAccounts();
@@ -40,15 +41,14 @@ const Home = () => {
     <div>
       <NavBar />
       <div className="flex gap-6 bg-violet-200 p-4 pl-7 mb-7">
-        {accounts?.map((account) => (
-          <button
-            key={account.id}
-            onClick={() => setSelectedAccount(account.id)}
-            className="hover:text-violet-600 font-semibold text-purple-900"
-          >
-            {account.name}
-          </button>
-        ))}
+        {accounts && (
+          <AccountsList
+            accounts={accounts}
+            refetchAccounts={refetchAccounts}
+            selectedAccountId={selectedAccountId}
+            setSelectedAccount={setSelectedAccount}
+          />
+        )}
         <button
           onClick={() => setSelectedAccount(0)}
           className="hover:text-violet-600 font-semibold text-purple-900"
