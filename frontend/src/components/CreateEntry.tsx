@@ -104,7 +104,7 @@ export default function CreateEntry({
         onSubmit={handleSubmit}
         className="p-10 rounded bg-violet-400 relative flex flex-col gap-5 "
       >
-        <label className="block text-sm font-medium leading-6 text-gray-900">
+        <label className="block leading-6 text-gray-900">
           Amount:
           <input
             type="number"

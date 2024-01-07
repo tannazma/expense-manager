@@ -40,7 +40,7 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <div className="flex gap-6 bg-violet-200 p-2 pl-7 mb-3 items-center">
+      <div className="flex gap-6 bg-violet-200 p-1 pl-7 mb-3 items-center">
         {accounts && (
           <AccountsList
             accounts={accounts}
@@ -67,21 +67,27 @@ const Home = () => {
         </button>
         {showCreateExpenseDialog && (
           <form onSubmit={handleCreateAccount}>
-            <label>
+            <label className="text-xs">
               <input
                 id="accountName"
                 name="accountName"
                 value={accountName}
-                className="mr-3"
+                className="mr-3 px-1 py-1"
                 onChange={(e) => setAccountName(e.target.value)}
               />
               Account name
             </label>
             <button
-              className="hover:text-violet-600 font-semibold hover:bg-violet-300 text-white bg-violet-800 ml-3 px-2 py-2 rounded"
+              className="hover:text-violet-600 font-semibold text-xs hover:bg-violet-300 text-white bg-violet-800 ml-3 px-1 py-1 rounded"
               type="submit"
             >
               Create
+            </button>
+            <button
+              className="hover:text-white font-semibold text-xs hover:bg-violet-800 text-violet-600 bg-violet-100 ml-3 px-1 py-1 rounded"
+              type="submit"
+            >
+              Cancel
             </button>
           </form>
         )}
