@@ -15,9 +15,9 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex flex-row justify-between items-center bg-violet-300 p-5">
+    <nav className="flex flex-row justify-between items-center bg-violet-300 pl-6">
       <Link href="/" className="">
-        <h1 className="text-purple-700 text-3xl font-bold cursor-pointer">
+        <h1 className="text-purple-700 text-l font-semibold cursor-pointer">
           Expense Manager
         </h1>
       </Link>
@@ -27,7 +27,7 @@ const NavBar = () => {
             <div className="mb-3">Hello {user.username}</div>
             <Link
               href="/logout"
-              className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+              className=" bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
               id="logout-btn"
               onClick={handleLogout}
             >
@@ -44,7 +44,7 @@ const NavBar = () => {
             </Link>
             <Link
               href="/register"
-              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded"
             >
               Register
             </Link>

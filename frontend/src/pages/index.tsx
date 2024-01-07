@@ -10,7 +10,7 @@ export default function Index() {
       {user ? (
         <Home />
       ) : (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-violet-200 pt-10">
+        <div className="min-h-screen flex flex-col justify-center items-center bg-violet-200 pt-10 ">
           <h1 className="text-center text-xl text-black font-bold">
             Ready to explore? Log in and lets get started! <span>👇</span>
           </h1>
