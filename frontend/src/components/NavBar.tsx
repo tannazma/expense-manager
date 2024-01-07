@@ -23,11 +23,11 @@ const NavBar = () => {
       </Link>
       <div className="pr-8">
         {token && user ? (
-          <div>
-            <div className="mb-3">Hello {user.username}</div>
+          <div className="flex px-2 py-2">
+            <div className="flex flex-row items-center text-xs mr-3">Hello {user.username}</div>
             <Link
               href="/logout"
-              className=" bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+              className="flex items-center bg-purple-500 text-xs hover:bg-purple-700 text-white font-semibold py-1 px-1 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-center"
               id="logout-btn"
               onClick={handleLogout}
             >
