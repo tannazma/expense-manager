@@ -34,7 +34,7 @@ export default function AccountsList({
     await refetchAccounts();
     cancelEdit();
   }
-  
+
   async function handleDeleteAccount(accountId: number) {
     if (!Number.isInteger(accountId)) {
       console.error("Invalid accountId:", accountId);
@@ -87,6 +87,11 @@ export default function AccountsList({
                 setSelectedAccount(account.id);
                 setEditingAccountId(null);
               }}
+              className={`border-b bg  ${
+                selectedAccountId !== account.id
+                  ? "border-b-0 "
+                  : " px-2 py-2 bg-purple-100 rounded text-purple-600 "
+              }`}
             >
               {account.name}
             </button>
@@ -94,19 +99,19 @@ export default function AccountsList({
           {selectedAccountId === account.id && !editingAccountId ? (
             <>
               <button
-                className="ml-2"
+                className="ml-2 hover:text-violet-600 text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
                 onClick={() => {
                   setEditingAccountId(account.id);
                   setEditingAccountName(account.name);
                 }}
               >
-                edit
+                Edit
               </button>
               <button
-                className="ml-2"
+                className="ml-2 hover:text-violet-600  text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
                 onClick={() => handleDeleteAccount(account.id)}
               >
-                delete
+                Delete
               </button>
             </>
           ) : null}
