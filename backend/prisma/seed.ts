@@ -5,6 +5,7 @@ import incomesData from "./data/incomes.json";
 import accountsData from "./data/accounts.json";
 import expensesData from "./data/expenses.json";
 import { PrismaClient } from "@prisma/client";
+import { hashSync } from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -28,7 +29,12 @@ const seed = async () => {
   for (let i = 0; i < userData.length; i++) {
     const thisUser = userData[i];
     await prisma.user.create({
-      data: thisUser,
+      data: {
+        id: thisUser.id,
+        email: thisUser.email,
+        password: hashSync(thisUser.password, 10),
+        username: thisUser.username,
+      },
     });
   }
   // Seed every account
