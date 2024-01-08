@@ -77,7 +77,7 @@ const ExpenseCharts = () => {
       </div>
       {isRendered && chartType === "pie" && (
         <div>
-          <PieChart width={500} height={500}>
+          <PieChart width={500} height={300}>
             <Pie
               dataKey="amount"
               data={chartData}
@@ -104,7 +104,7 @@ const ExpenseCharts = () => {
         </div>
       )}
       {isRendered && chartType === "bar" && (
-        <div className="flex items-center h-[500px]">
+        <div className="flex items-center h-[300px]">
           <BarChart width={500} height={300} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
