@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Expense, ExpenseCategory } from "../../../types";
 import { useRouter } from "next/router";
+import NavBar from "@/components/NavBar";
+import ExpenseCharts from "@/components/ExpenseCharts";
 
 const ExpenseDetailPage = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -123,8 +125,9 @@ const ExpenseDetailPage = () => {
 
   return (
     <div>
+      <NavBar />
       {expenses.length > 0 ? (
-        <div className="flex flex-1 flex-col gap-10 p-10 text-zinc-50 ">
+        <div className="flex flex-1 flex-col gap-3 text-xs p-3 pt-10 text-zinc-50 ">
           {expenses
             .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
             .map((expense) => (
@@ -141,18 +144,20 @@ const ExpenseDetailPage = () => {
                 </div>
                 <p>{expense.amount} €</p>
                 <p>{expense.details}</p>
-                <button
-                  onClick={() => handleDeleteExpense(expense.id)}
-                  className=" bg-purple-100 hover:bg-purple-700 text-purple-800 font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={() => handleEditExpense(expense.id)}
-                  className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
-                >
-                  Edit
-                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => handleDeleteExpense(expense.id)}
+                    className=" bg-purple-100 hover:bg-purple-700 text-purple-800 font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => handleEditExpense(expense.id)}
+                    className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                  >
+                    Edit
+                  </button>
+                </div>
                 {isEditMode && (
                   <div className="modal">
                     <form
