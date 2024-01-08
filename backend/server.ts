@@ -3,6 +3,8 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { toToken } from "./auth/jwt";
 import { AuthMiddleware, AuthRequest } from "./auth/middleware";
+import { hashSync, compareSync } from "bcrypt";
+import bcrypt from "bcrypt";
 
 const app = express();
 const port = 3001;
@@ -500,7 +502,10 @@ app.post("/login", async (req, res) => {
           username: requestBody.username,
         },
       });
-      if (userToLogin && userToLogin.password === requestBody.password) {
+      if (
+        userToLogin &&
+        bcrypt.compareSync(requestBody.password, userToLogin.password)
+      ) {
         const token = toToken({ userId: userToLogin.id });
         res.status(200).send({ token: token });
         return;
@@ -518,11 +523,13 @@ app.post("/login", async (req, res) => {
 
 app.post("/users", async (req, res) => {
   const { username, password, email } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
   try {
     const newUser = await prisma.user.create({
       data: {
         username,
-        password,
+        password: hashedPassword,
         email,
       },
     });
