@@ -59,25 +59,25 @@ const ExpenseCharts = () => {
 
   return (
     <div>
-      <div className="flex mb-10">
+      <div className="flex">
         <button
-          className="flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
+          className="text-xs items-center flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-2 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("pie")}
         >
           <Image src={pieChartIcon} width={20} alt={pieChartIcon} />
           Pie Chart
         </button>
         <button
-          className="flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2"
+          className="text-xs items-center flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-2 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("bar")}
         >
           <Image src={barChartIcon} width={20} alt={barChartIcon} />
-           Bar Chart
+          Bar Chart
         </button>
       </div>
       {isRendered && chartType === "pie" && (
         <div>
-          <PieChart width={400} height={400}>
+          <PieChart width={500} height={500}>
             <Pie
               dataKey="amount"
               data={chartData}
@@ -88,48 +88,52 @@ const ExpenseCharts = () => {
               label={true}
               paddingAngle={2}
               animationDuration={1000}
+              fontSize={12}
             >
               {chartData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
+                  fontSize={12}
                 />
               ))}
             </Pie>
             <Tooltip />
-            <Legend />
+            <Legend layout="vertical" align="left" verticalAlign="middle" />
           </PieChart>
         </div>
       )}
       {isRendered && chartType === "bar" && (
-        <BarChart width={400} height={400} data={chartData}>
-          <CartesianGrid strokeDasharray="5 3" />
-          <XAxis
-            dataKey="name"
-            angle={-45}
-            textAnchor="end"
-            interval={0}
-            tick={{ fontSize: 15 }}
-            height={90}
-          />
-          <YAxis
-            dataKey="amount"
-            textAnchor="end"
-            interval={0}
-            tick={{ fontSize: 14 }}
-            height={90}
-          />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="amount" animationDuration={1000}>
-            {chartData.map((entry, index) => (
-              <Cell
-                fill={COLORS[index % COLORS.length]}
-                key={`cell-${index}`}
-              />
-            ))}
-          </Bar>
-        </BarChart>
+        <div className="flex items-center h-[500px]">
+          <BarChart width={500} height={300} data={chartData}>
+            <CartesianGrid strokeDasharray="5 3" />
+            <XAxis
+              dataKey="name"
+              angle={-45}
+              textAnchor="end"
+              interval={0}
+              tick={{ fontSize: 12 }}
+              height={90}
+            />
+            <YAxis
+              dataKey="amount"
+              textAnchor="end"
+              interval={0}
+              tick={{ fontSize: 12 }}
+              height={90}
+            />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="amount" animationDuration={1000}>
+              {chartData.map((entry, index) => (
+                <Cell
+                  fill={COLORS[index % COLORS.length]}
+                  key={`cell-${index}`}
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        </div>
       )}
     </div>
   );

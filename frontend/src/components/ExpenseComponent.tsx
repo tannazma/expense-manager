@@ -49,9 +49,9 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
   }, [selectedAccountId]);
 
   return (
-    <div className="pt-50 flex-1 pr-20 pl-20">
+    <div className="flex-1 pr-10 pl-10">
       <div>
-        <h2>Expenses</h2>
+        <h2 className="text-lg font-semibold">Expenses</h2>
         <ExpenseCharts />
         <div className="flex justify-end pr-8">
           <button
@@ -71,7 +71,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
           />
         )}
       </div>
-      <div className="pt-10 flex flex-col pr-10 pl-10">
+      <div className="flex flex-col pr-10 pl-10">
         {expenseSum
           .sort((a, b) => (a.amount > b.amount ? -1 : 1))
           .map((summary) => {
