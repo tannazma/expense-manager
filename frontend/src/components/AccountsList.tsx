@@ -66,7 +66,10 @@ export default function AccountsList({
   return (
     <>
       {accounts.map((account) => (
-        <div key={account.id} className="hover:text-violet-600 text-purple-900 text-xs font-semibold">
+        <div
+          key={account.id}
+          className="hover:text-violet-600 text-purple-900 text-xs font-semibold"
+        >
           {editingAccountId === account.id ? (
             <>
               <input
@@ -74,9 +77,20 @@ export default function AccountsList({
                 onInput={(e) =>
                   setEditingAccountName((e.target as HTMLInputElement).value)
                 }
+                className="px-1 py-1"
               />
-              <button onClick={handleSaveEditAccount}>save</button>
-              <button onClick={cancelEdit}>cancel</button>
+              <button
+                onClick={handleSaveEditAccount}
+                className="ml-2 hover:text-violet-800 text-xs font-medium text-purple-900"
+              >
+                Save
+              </button>
+              <button
+                onClick={cancelEdit}
+                className="ml-2 hover:text-violet-600 text-xs text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
+              >
+                Cancel
+              </button>
             </>
           ) : (
             <button
