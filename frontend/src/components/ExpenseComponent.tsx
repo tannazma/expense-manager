@@ -82,13 +82,14 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
               <Link
                 key={summary.expenseCategoryId}
                 href={`/expenses/${expCategory?.id}`}
+                className="text-xs"
               >
-                <div className="flex pl-3 items-center bg-violet-100 hover:bg-purple-500 text-purple-700 font-semibold hover:text-white border border-purple-500 hover:border-transparent rounded m-2">
-                  <div className="m-3 flex justify-between gap-4 items-center">
+                <div className="flex pl-3 items-center bg-violet-100 hover:bg-purple-500 text-purple-700 font-semibold hover:text-white border border-purple-500 hover:border-transparent rounded m-2 px-2 py-2">
+                  <div className="flex justify-between gap-2 items-center">
                     {expCategory && (
-                      <div className="m-0 flex justify-between gap-4 items-center">
-                        <p>{expCategory.icon}</p>
-                        <p>{expCategory.name}</p>
+                      <div className="flex justify-between gap-2 items-center">
+                        <p className="text-xs">{expCategory.icon}</p>
+                        <p className="text-xs">{expCategory.name}</p>
                       </div>
                     )}
                   </div>

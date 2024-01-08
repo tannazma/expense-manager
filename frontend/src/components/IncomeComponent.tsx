@@ -81,16 +81,17 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
               <Link
                 key={summary.incomeCategoryId}
                 href={`/incomes/${incCategory?.id}`}
+                className="text-xs"
               >
                 <div
                   key={summary.incomeCategoryId}
-                  className="flex pl-3 items-center bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white border border-purple-500 hover:border-transparent rounded m-2"
+                  className="flex pl-3 items-center bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white border border-purple-500 hover:border-transparent rounded m-2 px-2 py-2"
                 >
-                  <div className="m-3 flex justify-between gap-4 items-center">
+                  <div className="flex justify-between gap-2 items-center">
                     {incCategory && (
-                      <div className="m-0 flex justify-between gap-4 items-center">
-                        <p>{incCategory.icon}</p>
-                        <p>{incCategory.name}</p>
+                      <div className="flex justify-between gap-2 items-center">
+                        <p className="text-xs">{incCategory.icon}</p>
+                        <p className="text-xs">{incCategory.name}</p>
                       </div>
                     )}
                   </div>
