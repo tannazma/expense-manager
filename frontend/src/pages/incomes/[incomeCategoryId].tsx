@@ -3,13 +3,12 @@ import { Income } from "../../../types";
 import { useRouter } from "next/router";
 
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Cell,
+  LineChart,
+  Line,
 } from "recharts";
 import NavBar from "@/components/NavBar";
 
@@ -76,7 +75,7 @@ const IncomeDetailPage = () => {
     <div>
       <NavBar />
       <div className="pt-10">
-        <BarChart
+        <LineChart
           width={300}
           height={300}
           data={chartData}
@@ -91,15 +90,13 @@ const IncomeDetailPage = () => {
           <XAxis dataKey="date" tick={{ fontSize: 12 }} height={90} />
           <YAxis tick={{ fontSize: 12 }} height={90} />
           <Tooltip />
-          <Bar dataKey="amount" animationDuration={1000}>
-            {chartData.map((entry, index) => (
-              <Cell
-                fill={COLORS[index % COLORS.length]}
-                key={`cell-${index}`}
-              />
-            ))}
-          </Bar>
-        </BarChart>
+          <Line
+            type="monotone"
+            dataKey="amount"
+            stroke="#8884d8"
+            animationDuration={1000}
+          />
+        </LineChart>
       </div>
       {getIncomes.length > 0 ? (
         <div className="flex flex-1 flex-col gap-10 p-10 text-zinc-50 ">
