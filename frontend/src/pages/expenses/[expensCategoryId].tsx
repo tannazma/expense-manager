@@ -3,15 +3,13 @@ import { Expense, ExpenseCategory } from "../../../types";
 import { useRouter } from "next/router";
 import NavBar from "@/components/NavBar";
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Cell,
+  Line,
+  LineChart,
 } from "recharts";
-import exp from "constants";
 
 interface ChartDataType {
   date: string;
@@ -164,7 +162,7 @@ const ExpenseDetailPage = () => {
     <div>
       <NavBar />
       <div className="pt-10">
-        <BarChart
+        <LineChart
           width={300}
           height={300}
           data={chartData}
@@ -179,15 +177,13 @@ const ExpenseDetailPage = () => {
           <XAxis dataKey="date" tick={{ fontSize: 12 }} height={90} />
           <YAxis tick={{ fontSize: 12 }} height={90} />
           <Tooltip />
-          <Bar dataKey="amount" animationDuration={1000}>
-            {chartData.map((entry, index) => (
-              <Cell
-                fill={COLORS[index % COLORS.length]}
-                key={`cell-${index}`}
-              />
-            ))}
-          </Bar>
-        </BarChart>
+          <Line
+            type="monotone"
+            dataKey="amount"
+            stroke="#8884d8"
+            animationDuration={1000}
+          />
+        </LineChart>
       </div>
       {expenses.length > 0 ? (
         <div className="flex flex-1 flex-col gap-3 text-xs p-3 pt-10 text-zinc-50 ">
