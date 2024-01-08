@@ -121,7 +121,6 @@ const IncomeCharts = () => {
               height={90}
             />
             <Tooltip />
-            <Legend />
             <Bar dataKey="amount" animationDuration={1000}>
               {chartData.map((entry, index) => (
                 <Cell
