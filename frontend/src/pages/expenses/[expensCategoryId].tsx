@@ -2,7 +2,31 @@ import { useEffect, useState } from "react";
 import { Expense, ExpenseCategory } from "../../../types";
 import { useRouter } from "next/router";
 import NavBar from "@/components/NavBar";
-import ExpenseCharts from "@/components/ExpenseCharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Cell,
+} from "recharts";
+import exp from "constants";
+
+interface ChartDataType {
+  date: string;
+  amount: number;
+}
+
+const COLORS = [
+  "#6a0dad",
+  "#9370DB",
+  "#9932CC",
+  "#BA55D3",
+  "#DA70D6",
+  "#EE82EE",
+  "#DDA0DD",
+];
 
 const ExpenseDetailPage = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -17,6 +41,7 @@ const ExpenseDetailPage = () => {
   const [expenseCategories, setExpenseCategories] = useState<
     ExpenseCategory[] | null
   >(null);
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
 
   useEffect(() => {
     const fetchAllExpenseCategories = async () => {
@@ -46,6 +71,18 @@ const ExpenseDetailPage = () => {
         const data = await response.json();
         setSelectedExpenseCategoryId(data[0].id);
         setExpenses(data);
+
+        const chartData: ChartDataType[] = data.map((expense: Expense) => ({
+          // format the date as MM-DD
+          date:
+            new Date(expense.date).getMonth() +
+            1 +
+            "/" +
+            new Date(expense.date).getDate(),
+          amount: expense.amount,
+        }));
+
+        setChartData(chartData);
       };
       fetchExpensesFromCategory();
     }
@@ -126,6 +163,32 @@ const ExpenseDetailPage = () => {
   return (
     <div>
       <NavBar />
+      <div className="pt-10">
+        <BarChart
+          width={300}
+          height={300}
+          data={chartData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="5 3" />
+          <XAxis dataKey="date" tick={{ fontSize: 12 }} height={90} />
+          <YAxis tick={{ fontSize: 12 }} height={90} />
+          <Tooltip />
+          <Bar dataKey="amount" animationDuration={1000}>
+            {chartData.map((entry, index) => (
+              <Cell
+                fill={COLORS[index % COLORS.length]}
+                key={`cell-${index}`}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </div>
       {expenses.length > 0 ? (
         <div className="flex flex-1 flex-col gap-3 text-xs p-3 pt-10 text-zinc-50 ">
           {expenses
