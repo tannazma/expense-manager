@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, ChangeEvent } from "react";
 import ThemeContext from "./ThemeContext";
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useContext(ThemeContext);
 
-  function handleThemeChange(e) {
+  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>) {
     setTheme(e.target.value);
   }
 
