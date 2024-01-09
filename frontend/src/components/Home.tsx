@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ExpenseComponent from "./ExpenseComponent";
 import IncomeComponent from "./IncomeComponent";
 import SelectedAccountContext from "./SelectedAccountContext";
@@ -6,6 +6,9 @@ import useFetchAccounts from "../hooks/useFetchAccounts";
 import NavBar from "./NavBar";
 import useBalance from "@/hooks/useBalance";
 import AccountsList from "./AccountsList";
+import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
+import ThemeContext from "./ThemeContext";
 
 const Home = () => {
   const { accounts, refetchAccounts } = useFetchAccounts();
@@ -37,10 +40,24 @@ const Home = () => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
 
+  const { theme } = useContext(ThemeContext);
+  let navbarBackgroundColor = "bg-violet-200";
+
+  if (theme === "red") {
+    navbarBackgroundColor = "bg-red-200";
+  } else if (theme === "green") {
+    navbarBackgroundColor = "bg-green-200";
+  } else if (theme === "blue") {
+    navbarBackgroundColor = "bg-blue-200";
+  } else if (theme === "dark") {
+    navbarBackgroundColor = "bg-gray-600";
+  }
   return (
     <div>
       <NavBar />
-      <div className="flex gap-6 bg-violet-200 p-1 pl-7 mb-3 items-center px-2 py-2">
+      <div
+        className={`${navbarBackgroundColor} flex gap-6 min-h-[80px] p-1 pl-7 mb-3 items-center px-2 py-2`}
+      >
         {accounts && (
           <AccountsList
             accounts={accounts}
@@ -59,14 +76,14 @@ const Home = () => {
         >
           All
         </button>
-        <button
-          className="text-xs hover:text-violet-600 font-bold text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
+        <SecondaryButton
+          // className="text-xs hover:text-violet-600 font-bold text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
           onClick={toggleShowExpenseDialog}
         >
           Create New Account
-        </button>
+        </SecondaryButton>
         {showCreateExpenseDialog && (
-          <form onSubmit={handleCreateAccount}>
+          <form onSubmit={handleCreateAccount} className="flex items-center">
             <label className="text-xs">
               <input
                 id="accountName"
@@ -77,18 +94,9 @@ const Home = () => {
               />
               Account name
             </label>
-            <button
-              className="hover:text-violet-600 font-semibold text-xs hover:bg-violet-300 text-white bg-violet-800 ml-3 px-1 py-1 rounded"
-              type="submit"
-            >
-              Create
-            </button>
-            <button
-              className="hover:text-white font-semibold text-xs hover:bg-violet-800 text-violet-600 bg-violet-100 ml-3 px-1 py-1 rounded"
-              type="submit"
-            >
-              Cancel
-            </button>
+
+            <PrimaryButton type="submit">Create</PrimaryButton>
+            <SecondaryButton type="submit">Cancel</SecondaryButton>
           </form>
         )}
       </div>
