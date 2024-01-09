@@ -2,3 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #000;
+  --secondary-color: #fff;
+  --background-color: #f0f0f0;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+p {
+  color: var(--secondary-color);
+}
+.default {
+  --primary-color: #000;
+  --secondary-color: #333;
+  --background-color: #fff;
+}
+
+.dark {
+  --primary-color: #fff;
+  --secondary-color: #000;
+  --background-color: #333;
+}
+
+.light {
+  --primary-color: #000;
+  --secondary-color: #fff;
+  --background-color: #f0f0f0;
+}
