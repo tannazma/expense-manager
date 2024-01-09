@@ -1,8 +1,17 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import ThemeContext from "./ThemeContext";
 
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
+type ThemeType = {
+  theme: string;
+  setTheme: (value: string) => void;
+};
+
+type ThemeProviderProps = {
+  children: ReactNode;
+};
+
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [theme, setTheme] = useState<string>(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("theme") || "default";
     } else {
@@ -18,7 +27,7 @@ export function ThemeProvider({ children }) {
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme } as ThemeType}>
       {children}
     </ThemeContext.Provider>
   );

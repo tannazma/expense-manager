@@ -1,6 +1,11 @@
 import { createContext } from "react";
 
-const ThemeContext = createContext({
+type ThemeType = {
+  theme: string;
+  setTheme: (value: string) => void;
+};
+
+const ThemeContext = createContext<ThemeType>({
   theme: "default",
   setTheme: () => {},
 });
