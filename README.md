@@ -35,7 +35,7 @@ Start Prisma Studio to view and edit your database:
 `npx prisma studio`
  
 6. Install npm Packages
-npm should be installed in the root, backend, and frontend directories. Navigate to each directory and run the following command:
+npm should be installed in the *root, backend, and frontend directories*. Navigate to each directory and run the following command:
  `npm i` 
  
 8. Run the application
