@@ -2,9 +2,9 @@ import { useState } from "react";
 import ExpenseComponent from "./ExpenseComponent";
 import IncomeComponent from "./IncomeComponent";
 import SelectedAccountContext from "./SelectedAccountContext";
-import useFetchAccounts from "../pages/hooks/useFetchAccounts";
+import useFetchAccounts from "../hooks/useFetchAccounts";
 import NavBar from "./NavBar";
-import useBalance from "@/pages/hooks/useBalance";
+import useBalance from "@/hooks/useBalance";
 import AccountsList from "./AccountsList";
 
 const Home = () => {

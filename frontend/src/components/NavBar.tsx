@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useToken from "../pages/hooks/useToken";
-import useFetchUser from "../pages/hooks/useFetchUser";
+import useToken from "../hooks/useToken";
+import useFetchUser from "../hooks/useFetchUser";
 
 const NavBar = () => {
   const user = useFetchUser();

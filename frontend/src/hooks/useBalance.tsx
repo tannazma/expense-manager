@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { expenseSumData, incomeSumData } from "../../../types";
+import { expenseSumData, incomeSumData } from "../../types";
 
 const useBalance = () => {
   const [expenseSum, setExpenseSum] = useState<expenseSumData[]>([]);

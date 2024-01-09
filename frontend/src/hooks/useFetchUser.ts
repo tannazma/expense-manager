@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { User } from "../../../types";
+import { User } from "../../types";
 
 const useFetchUser = () => {
   const [user, setUser] = useState<User | null>(null);

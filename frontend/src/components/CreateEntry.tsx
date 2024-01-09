@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ExpenseCategory as EntryCategory } from "../../types";
-import useFetchAccounts from "../pages/hooks/useFetchAccounts";
+import useFetchAccounts from "../hooks/useFetchAccounts";
 
 interface createEntryProps {
   showDialog: boolean;

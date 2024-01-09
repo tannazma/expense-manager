@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import useIsRendered from "../pages/hooks/useIsRendered";
+import useIsRendered from "../hooks/useIsRendered";
 import {
   BarChart,
   Bar,
