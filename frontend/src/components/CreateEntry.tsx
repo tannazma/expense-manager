@@ -95,6 +95,10 @@ export default function CreateEntry({
     setIsAddingCategory(false);
   }
 
+  function closeAddingCategory() {
+    setIsAddingCategory(false);
+  }
+
   return (
     <div
       className="dialog-backdrop h-screen	w-screen grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-50"
@@ -105,19 +109,19 @@ export default function CreateEntry({
     >
       <form
         onSubmit={handleSubmit}
-        className="p-10 rounded bg-violet-400 relative flex flex-col gap-5 "
+        className="p-6 text-xs rounded bg-violet-400 relative flex flex-col gap-5 "
       >
-        <label className="block leading-6 text-gray-900">
+        <label className="block text-xs text-gray-900">
           Amount:
           <input
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+            className="mt-2 w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
           />
         </label>
         {!isAddingCategory ? (
-          <div className="flex gap-2 bc-white">
+          <div className="flex gap-2 bc-white items-center">
             <label>
               Category:
               <select
@@ -125,7 +129,7 @@ export default function CreateEntry({
                 name="category"
                 value={entryCategoryId}
                 onChange={(e) => setEntryCategoryId(e.target.value)}
-                className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
               >
                 {entryCategories &&
                   entryCategories.map((entryCat) => (
@@ -137,7 +141,7 @@ export default function CreateEntry({
               </select>
             </label>
             <button
-              className="bg-purple-500 hover:bg-purple-700 font-bold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded ml-3 text-white"
+              className=" bg-purple-500 hover:bg-purple-700 font-bold hover:text-white py-1.5 px-3 mt-6 mb-0 border border-purple-500 hover:border-transparent rounded ml-3 text-white"
               title="Add a new category"
               onClick={() => setIsAddingCategory(true)}
             >
@@ -145,15 +149,16 @@ export default function CreateEntry({
             </button>
           </div>
         ) : (
-          <div className="border flex-col flex">
+          <div className=" flex-col flex">
             <label>
-              Category Name:
+              Category Name
               <input
                 value={newCategoryName}
+                placeholder="tooth"
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setNewCategoryName(e.target.value)
                 }
-                className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="mb-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
             </label>
             <label>
@@ -161,7 +166,7 @@ export default function CreateEntry({
               <select
                 value={newCategoryIcon}
                 onChange={(e) => setNewCategoryIcon(e.target.value)}
-                className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                className="mb-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
               >
                 {["💟", "👎", "🦷", "👨‍🦲"].map((emoji, index) => (
                   <option key={index} value={emoji}>
@@ -170,7 +175,20 @@ export default function CreateEntry({
                 ))}
               </select>
             </label>
-            <button onClick={addNewCategory}>Save Category</button>
+            <div className="flex ">
+              <button
+                onClick={addNewCategory}
+                className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Save
+              </button>
+              <button
+                onClick={closeAddingCategory}
+                className="bg-purple-50 hover:bg-purple-400 text-purple-800 font-bold py-2 px-4 rounded"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
         <label>
@@ -180,7 +198,7 @@ export default function CreateEntry({
             name="account"
             value={accountId}
             onChange={(e) => setAccountId(e.target.value)}
-            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+            className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           >
             {accounts &&
               accounts.map((account) => (
@@ -197,7 +215,7 @@ export default function CreateEntry({
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+            className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           />
         </label>
         <label>
@@ -206,7 +224,7 @@ export default function CreateEntry({
             type="text"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
-            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+            className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
           />
         </label>
         <button
@@ -217,7 +235,7 @@ export default function CreateEntry({
           submit
         </button>
         <button
-          className=" bg-purple-300 hover:bg-purple-700 text-white absolute -top-5 -right-5 p-2 w-10 box-border rounded-full border-none"
+          className=" bg-purple-300 hover:bg-purple-700 text-white absolute -top-3 -right-4 p-2 w-8 box-border rounded-full border-none"
           onClick={closeDialog}
         >
           X
