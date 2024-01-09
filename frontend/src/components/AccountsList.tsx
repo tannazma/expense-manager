@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Account } from "../../types";
+import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
+import ThemeContext from "./ThemeContext";
 
 type Props = {
   accounts: Account[];
@@ -63,12 +66,25 @@ export default function AccountsList({
     }
   }
 
+  const { theme } = useContext(ThemeContext);
+  let navbarTextColor = "hover:text-violet-600 text-purple-900";
+
+  if (theme === "red") {
+    navbarTextColor = "hover:text-red-600 text-red-900";
+  } else if (theme === "green") {
+    navbarTextColor = "hover:text-green-600 text-green-900";
+  } else if (theme === "blue") {
+    navbarTextColor = "hover:text-blue-600 text-blue-900";
+  } else if (theme === "dark") {
+    navbarTextColor = "hover:text-gray-600 text-gray-900";
+  }
+
   return (
     <>
       {accounts.map((account) => (
         <div
           key={account.id}
-          className="hover:text-violet-600 text-purple-900 text-xs font-semibold"
+          className={`${navbarTextColor} text-xs font-semibold flex items-center`}
         >
           {editingAccountId === account.id ? (
             <>
@@ -79,18 +95,10 @@ export default function AccountsList({
                 }
                 className="px-1 py-1"
               />
-              <button
-                onClick={handleSaveEditAccount}
-                className="ml-2 hover:text-violet-800 text-xs font-medium text-purple-900"
-              >
+              <SecondaryButton onClick={handleSaveEditAccount}>
                 Save
-              </button>
-              <button
-                onClick={cancelEdit}
-                className="ml-2 hover:text-violet-600 text-xs text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
-              >
-                Cancel
-              </button>
+              </SecondaryButton>
+              <SecondaryButton onClick={cancelEdit}>Cancel</SecondaryButton>
             </>
           ) : (
             <button
@@ -118,12 +126,9 @@ export default function AccountsList({
               >
                 Edit
               </button>
-              <button
-                className="ml-2 hover:text-violet-600 text-xs text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
-                onClick={() => handleDeleteAccount(account.id)}
-              >
+              <PrimaryButton onClick={() => handleDeleteAccount(account.id)}>
                 Delete
-              </button>
+              </PrimaryButton>
             </>
           ) : null}
         </div>
