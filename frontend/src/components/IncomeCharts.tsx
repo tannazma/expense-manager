@@ -18,6 +18,7 @@ import barChartIcon from "../../public/bar-chart-1-svgrepo-com.svg";
 import pieChartIcon from "../../public/pie-chart-svgrepo-com.svg";
 import Image from "next/image";
 import ThemeContext from "./ThemeContext";
+import SecondaryButton from "./SecondaryButton";
 
 const COLORS = [
   "#6a0dad",
@@ -111,10 +112,7 @@ const IncomeCharts = () => {
   return (
     <div>
       <div className="flex">
-        <button
-          className="text-xs items-center flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-2 border border-purple-500 hover:border-transparent rounded m-2"
-          onClick={() => setChartType("pie")}
-        >
+        <SecondaryButton onClick={() => setChartType("pie")}>
           <Image
             src={pieChartIcon}
             width={20}
@@ -122,11 +120,8 @@ const IncomeCharts = () => {
             className={isDarkMode ? "invert" : ""}
           />
           Pie Chart
-        </button>
-        <button
-          className="text-xs items-center flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-2 border border-purple-500 hover:border-transparent rounded m-2"
-          onClick={() => setChartType("bar")}
-        >
+        </SecondaryButton>
+        <SecondaryButton onClick={() => setChartType("bar")}>
           <Image
             src={barChartIcon}
             width={20}
@@ -134,7 +129,7 @@ const IncomeCharts = () => {
             className={isDarkMode ? "invert" : ""}
           />
           Bar Chart
-        </button>
+        </SecondaryButton>
       </div>
       {isRendered && chartType === "pie" && (
         <div>
