@@ -4,6 +4,7 @@ import Link from "next/link";
 import SelectedAccountContext from "./SelectedAccountContext";
 import IncomeCharts from "./IncomeCharts";
 import CreateIncome from "./CreateEntry";
+import PrimaryButton from "./PrimaryButton";
 
 interface incomeProps {
   refetchBalance: () => void;
@@ -53,12 +54,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
         <h2 className="text-lg font-semibold">Incomes</h2>
         <IncomeCharts />
         <div className="flex justify-end pr-8">
-          <button
-            className="bg-purple-500 hover:bg-purple-800 text-white font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2 align-right"
-            onClick={toggleShowIncomeDialog}
-          >
-            +
-          </button>
+          <PrimaryButton onClick={toggleShowIncomeDialog}>+</PrimaryButton>
         </div>
         {showCreateIncomeDialog && (
           <CreateIncome

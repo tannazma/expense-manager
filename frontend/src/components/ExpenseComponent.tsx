@@ -4,6 +4,8 @@ import { ExpenseCategory, expenseSumData } from "../../types";
 import Link from "next/link";
 import SelectedAccountContext from "./SelectedAccountContext";
 import ExpenseCharts from "./ExpenseCharts";
+import ThemeContext from "./ThemeContext";
+import PrimaryButton from "./PrimaryButton";
 
 interface expenseProps {
   refetchBalance: () => void;
@@ -54,12 +56,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
         <h2 className="text-lg font-semibold">Expenses</h2>
         <ExpenseCharts />
         <div className="flex justify-end pr-8">
-          <button
-            className="bg-purple-500 hover:bg-purple-800 text-white font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2 align-right"
-            onClick={toggleShowExpenseDialog}
-          >
-            +
-          </button>
+          <PrimaryButton onClick={toggleShowExpenseDialog}>+</PrimaryButton>
         </div>
         {showCreateExpenseDialog && (
           <CreateEntry
