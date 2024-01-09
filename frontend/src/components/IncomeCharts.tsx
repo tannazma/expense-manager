@@ -17,6 +17,7 @@ import SelectedAccountContext from "./SelectedAccountContext";
 import barChartIcon from "../../public/bar-chart-1-svgrepo-com.svg";
 import pieChartIcon from "../../public/pie-chart-svgrepo-com.svg";
 import Image from "next/image";
+import ThemeContext from "./ThemeContext";
 
 const COLORS = [
   "#6a0dad",
@@ -28,11 +29,63 @@ const COLORS = [
   "#DDA0DD",
 ];
 
+const COLORSDark = [
+  "#181818", // very dark gray
+  "#282828", // dark gray
+  "#383838", // medium gray
+  "#484848", // light gray
+  "#FFFFFF", // white
+];
+
+const COLORSBlue = [
+  "#0000FF",
+  "#1E90FF",
+  "#4169E1",
+  "#4682B4",
+  "#5F9EA0",
+  "#87CEEB",
+  "#B0E0E6",
+];
+
+const COLORSGreen = [
+  "#008000",
+  "#008B8B",
+  "#20B2AA",
+  "#32CD32",
+  "#3CB371",
+  "#66CDAA",
+  "#7CFC00",
+];
+
+const COLORSRed = [
+  "#B22222",
+  "#CD5C5C",
+  "#DC143C",
+  "#FF0000",
+  "#FF4500",
+  "#FF6347",
+  "#FF7F50",
+];
+
 const IncomeCharts = () => {
   const [chartType, setChartType] = useState("pie");
   const isRendered = useIsRendered();
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const selectedAccountId = useContext(SelectedAccountContext);
+  const { isDarkMode, isGreen, isBlue, isRed } = useContext(ThemeContext);
+  let correctColors: string[];
+
+  if (isDarkMode) {
+    correctColors = COLORSDark;
+  } else if (isGreen) {
+    correctColors = COLORSGreen;
+  } else if (isBlue) {
+    correctColors = COLORSBlue;
+  } else if (isRed) {
+    correctColors = COLORSRed;
+  } else {
+    correctColors = COLORS; // default colors
+  }
 
   useEffect(() => {
     const getIncomeSum = async () => {
@@ -62,14 +115,24 @@ const IncomeCharts = () => {
           className="text-xs items-center flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-2 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("pie")}
         >
-          <Image src={pieChartIcon} width={20} alt={pieChartIcon} />
+          <Image
+            src={pieChartIcon}
+            width={20}
+            alt={pieChartIcon}
+            className={isDarkMode ? "invert" : ""}
+          />
           Pie Chart
         </button>
         <button
           className="text-xs items-center flex gap-2 bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-1 px-2 border border-purple-500 hover:border-transparent rounded m-2"
           onClick={() => setChartType("bar")}
         >
-          <Image src={barChartIcon} width={20} alt={barChartIcon} />
+          <Image
+            src={barChartIcon}
+            width={20}
+            alt={barChartIcon}
+            className={isDarkMode ? "invert" : ""}
+          />
           Bar Chart
         </button>
       </div>
@@ -91,7 +154,7 @@ const IncomeCharts = () => {
               {chartData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
+                  fill={correctColors[index % correctColors.length]}
                   fontSize={12}
                 />
               ))}
@@ -124,7 +187,7 @@ const IncomeCharts = () => {
             <Bar dataKey="amount" animationDuration={1000}>
               {chartData.map((entry, index) => (
                 <Cell
-                  fill={COLORS[index % COLORS.length]}
+                  fill={correctColors[index % correctColors.length]}
                   key={`cell-${index}`}
                 />
               ))}

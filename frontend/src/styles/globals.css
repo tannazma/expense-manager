@@ -22,17 +22,29 @@ p {
 .default {
   --primary-color: #000;
   --secondary-color: #333;
-  --background-color: #fff;
+  --background-color: #d7dff3;
 }
 
 .dark {
-  --primary-color: #fff;
-  --secondary-color: #000;
-  --background-color: #333;
+  --primary-color: #777777;
+  --secondary-color: #010101;
+  --background-color: #393939;
 }
 
-.light {
+.red {
   --primary-color: #000;
-  --secondary-color: #fff;
-  --background-color: #f0f0f0;
+  --secondary-color: #070707;
+  --background-color: #faeceb;
+}
+
+.blue {
+  --primary-color: #000;
+  --secondary-color: #070707;
+  --background-color: #cae8fa;
+}
+
+.green {
+  --primary-color: #000;
+  --secondary-color: #070707;
+  --background-color: #dbf8ea;
 }
