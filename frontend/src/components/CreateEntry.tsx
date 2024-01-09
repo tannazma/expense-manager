@@ -17,6 +17,9 @@ export default function CreateEntry({
   onCreated,
   refetchBalance,
 }: createEntryProps) {
+  const today = new Date();
+  const todayStr = today.toISOString().split("T")[0];
+
   const [entryCategories, setEntryCategories] = useState<
     EntryCategory[] | null
   >(null);
@@ -26,7 +29,7 @@ export default function CreateEntry({
   const [entryCategoryId, setEntryCategoryId] = useState("");
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [details, setDetails] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(todayStr);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryIcon, setNewCategoryIcon] = useState("💟");
 
