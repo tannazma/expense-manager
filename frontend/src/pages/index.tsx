@@ -4,9 +4,24 @@ import Home from "../components/Home";
 import Link from "next/link";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
+import { useContext } from "react";
+import ThemeContext from "@/components/ThemeContext";
 
 export default function Index() {
   const user = useFetchUser();
+  const { theme } = useContext(ThemeContext);
+
+  let navbarBackgroundColor = "bg-violet-200";
+  if (theme === "red") {
+    navbarBackgroundColor = "bg-red-200";
+  } else if (theme === "green") {
+    navbarBackgroundColor = "bg-green-200";
+  } else if (theme === "blue") {
+    navbarBackgroundColor = "bg-blue-200";
+  } else if (theme === "dark") {
+    navbarBackgroundColor = "bg-gray";
+  }
+
   return (
     <ThemeProvider>
       <div>
@@ -16,7 +31,10 @@ export default function Index() {
             <ThemeSwitcher />
           </>
         ) : (
-          <div className="min-h-screen flex flex-col justify-center items-center bg-violet-200 pt-10 ">
+          <div
+            //does nothing
+            className={`${navbarBackgroundColor}  min-h-screen flex flex-col justify-center items-center`}
+          >
             <h1 className="text-center text-xl text-black font-bold">
               Ready to explore? Log in and lets get started! <span>👇</span>
             </h1>
