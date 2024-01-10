@@ -103,24 +103,24 @@ export default function CreateEntry({
   }
 
   const { theme } = useContext(ThemeContext);
-  let saveButtonClass = "bg-purple-500 hover:bg-purple-700";
+  let saveButtonClass = "bg-purple-500 hover:bg-purple-800";
   let cancelButtonClass = "bg-purple-300 hover:bg-purple-700";
   let dynamicBackgroundClass = "bg-violet-400";
 
   if (theme === "red") {
-    saveButtonClass = "bg-red-500 hover:bg-red-700";
+    saveButtonClass = "bg-red-500 hover:bg-red-800";
     cancelButtonClass = " bg-red-400 hover:bg-red-700";
     dynamicBackgroundClass = "bg-red-200";
   } else if (theme === "green") {
-    saveButtonClass = "bg-green-500 hover:bg-green-700";
+    saveButtonClass = "bg-green-500 hover:bg-green-800";
     cancelButtonClass = " bg-green-400 hover:bg-green-700";
     dynamicBackgroundClass = "bg-green-200";
   } else if (theme === "blue") {
-    saveButtonClass = "bg-blue-500 hover:bg-blue-700";
+    saveButtonClass = "bg-blue-500 hover:bg-blue-800";
     cancelButtonClass = " bg-blue-400 hover:bg-blue-700";
     dynamicBackgroundClass = "bg-blue-200";
   } else if (theme === "dark") {
-    saveButtonClass = "bg-gray-500 hover:bg-gray-700";
+    saveButtonClass = "bg-gray-500 hover:bg-gray-800";
     cancelButtonClass = " bg-gray-400 hover:bg-gray-700";
     dynamicBackgroundClass = "bg-gray-200";
   }
@@ -137,42 +137,93 @@ export default function CreateEntry({
         onSubmit={handleSubmit}
         className={`p-6 text-xs rounded ${dynamicBackgroundClass} relative flex flex-col gap-5`}
       >
-        <label className="block text-xs text-gray-900">
-          Amount:
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="mt-2 w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
-          />
-        </label>
         {!isAddingCategory ? (
-          <div className="flex gap-2 bc-white items-end">
-            <label className="">
-              Category:
-              <select
-                id="category"
-                name="category"
-                value={entryCategoryId}
-                onChange={(e) => setEntryCategoryId(e.target.value)}
-                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+          <>
+            <label className="block text-xs text-gray-900">
+              Amount:
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="mt-2 w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+              />
+            </label>
+            <div className="flex gap-2 bc-white items-end">
+              <label className="">
+                Category:
+                <select
+                  id="category"
+                  name="category"
+                  value={entryCategoryId}
+                  onChange={(e) => setEntryCategoryId(e.target.value)}
+                  className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                >
+                  {entryCategories &&
+                    entryCategories.map((entryCat) => (
+                      <option key={entryCat.id} value={entryCat.id}>
+                        {entryCat.icon}
+                        {entryCat.name}
+                      </option>
+                    ))}
+                </select>
+              </label>
+              <button
+                className={`${saveButtonClass} font-bold py-1.5 px-3 rounded ml-3 text-white`}
+                onClick={() => setIsAddingCategory(true)}
               >
-                {entryCategories &&
-                  entryCategories.map((entryCat) => (
-                    <option key={entryCat.id} value={entryCat.id}>
-                      {entryCat.icon}
-                      {entryCat.name}
+                +
+              </button>
+            </div>
+            <label>
+              Account:
+              <select
+                id="account"
+                name="account"
+                value={accountId}
+                onChange={(e) => setAccountId(e.target.value)}
+                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+              >
+                {accounts &&
+                  accounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {/* {account.icon} */}
+                      {account.name}
                     </option>
                   ))}
               </select>
             </label>
+            <label>
+              date:
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+              />
+            </label>
+            <label>
+              Details:
+              <input
+                type="text"
+                value={details}
+                onChange={(e) => setDetails(e.target.value)}
+                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+              />
+            </label>
             <button
-              className={`${saveButtonClass}hover:text-white hover:border-transparent font-bold py-1.5 px-3 rounded ml-3 text-white`}
-              onClick={() => setIsAddingCategory(true)}
+              className={`${saveButtonClass} text-white font-bold py-2 px-4 rounded`}
+              type="submit"
+              disabled={isAddingCategory}
             >
-              +
+              submit
             </button>
-          </div>
+            <button
+              className={`${cancelButtonClass} text-white absolute -top-3 -right-4 p-2 w-8 box-border rounded-full border-none`}
+              onClick={closeDialog}
+            >
+              X
+            </button>
+          </>
         ) : (
           <div className="flex-col flex">
             <label>
@@ -208,55 +259,6 @@ export default function CreateEntry({
             </div>
           </div>
         )}
-        <label>
-          Account:
-          <select
-            id="account"
-            name="account"
-            value={accountId}
-            onChange={(e) => setAccountId(e.target.value)}
-            className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-          >
-            {accounts &&
-              accounts.map((account) => (
-                <option key={account.id} value={account.id}>
-                  {/* {account.icon} */}
-                  {account.name}
-                </option>
-              ))}
-          </select>
-        </label>
-        <label>
-          date:
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-          />
-        </label>
-        <label>
-          Details:
-          <input
-            type="text"
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-            className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-          />
-        </label>
-        <button
-          className={`${saveButtonClass} text-white font-bold py-2 px-4 rounded`}
-          type="submit"
-          disabled={isAddingCategory}
-        >
-          submit
-        </button>
-        <button
-          className={`${cancelButtonClass} text-white absolute -top-3 -right-4 p-2 w-8 box-border rounded-full border-none`}
-          onClick={closeDialog}
-        >
-          X
-        </button>
       </form>
     </div>
   );
