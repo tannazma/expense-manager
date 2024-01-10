@@ -41,22 +41,23 @@ const Home = () => {
   };
 
   const { theme } = useContext(ThemeContext);
-  let navbarBackgroundColor = "bg-violet-200";
+  let accountColor = "bg-purple-100 text-purple-600";
 
   if (theme === "red") {
-    navbarBackgroundColor = "bg-red-200";
+    accountColor = "bg-red-200 text-red-600";
   } else if (theme === "green") {
-    navbarBackgroundColor = "bg-green-200";
+    accountColor = "bg-green-200 text-green-600";
   } else if (theme === "blue") {
-    navbarBackgroundColor = "bg-blue-200";
+    accountColor = "bg-blue-200 text-blue-600";
   } else if (theme === "dark") {
-    navbarBackgroundColor = "bg-gray-600";
+    accountColor = "bg-gray-600 text-gray-600";
   }
+
   return (
     <div>
       <NavBar />
       <div
-        className={`${navbarBackgroundColor} flex gap-6 min-h-[80px] p-1 pl-7 mb-3 items-center px-2 py-2`}
+        className={`${accountColor} flex gap-3 min-h-[80px] p-1 pl-7 mb-3 items-center px-1 py-1`}
       >
         {accounts && (
           <AccountsList
@@ -70,16 +71,14 @@ const Home = () => {
           onClick={() => setSelectedAccount(0)}
           className={`text-xs px-2 py-2${
             selectedAccountId !== 0
-              ? " text-xs font-semibold"
-              : " bg-purple-100 rounded text-purple-600 text-xs font-semibold "
+              ? "text-xs font-semibold text-black"
+              : `${accountColor} rounded px-1 py-1 text-xs font-semibold bg-white`
+          }
           }`}
         >
           All
         </button>
-        <SecondaryButton
-          // className="text-xs hover:text-violet-600 font-bold text-purple-900 bg-violet-100 border border-violet-800 px-1 py-1 rounded"
-          onClick={toggleShowExpenseDialog}
-        >
+        <SecondaryButton onClick={toggleShowExpenseDialog}>
           Create New Account
         </SecondaryButton>
         {showCreateExpenseDialog && (
