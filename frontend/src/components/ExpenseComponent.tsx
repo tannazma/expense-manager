@@ -50,6 +50,24 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
     getExpenseSum();
   }, [selectedAccountId]);
 
+  const { theme } = useContext(ThemeContext);
+  let entryBackgroundColorClass =
+    "border-purple-500 bg-violet-100 hover:bg-purple-500 text-purple-700";
+
+  if (theme === "red") {
+    entryBackgroundColorClass =
+      "border-red-500 bg-red-100 hover:bg-red-500 text-red-700";
+  } else if (theme === "green") {
+    entryBackgroundColorClass =
+      "border-green-500 bg-green-100 hover:bg-green-500 text-green-700";
+  } else if (theme === "blue") {
+    entryBackgroundColorClass =
+      "border-blue-500 bg-blue-100 hover:bg-blue-500 text-blue-700";
+  } else if (theme === "dark") {
+    entryBackgroundColorClass =
+      "border-gray-500 bg-gray-500 hover:bg-gray-300 text-gray-300";
+  }
+
   return (
     <div className="flex-1 pr-10 pl-10">
       <div>
@@ -81,7 +99,9 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
                 href={`/expenses/${expCategory?.id}`}
                 className="text-xs"
               >
-                <div className="flex pl-3 items-center bg-violet-100 hover:bg-purple-500 text-purple-700 font-semibold hover:text-white border border-purple-500 hover:border-transparent rounded m-2 px-2 py-2">
+                <div
+                  className={`${entryBackgroundColorClass} flex pl-3 items-center font-semibold hover:text-white border hover:border-transparent rounded m-2 px-2 py-2`}
+                >
                   <div className="flex justify-between gap-2 items-center">
                     {expCategory && (
                       <div className="flex justify-between gap-2 items-center">
