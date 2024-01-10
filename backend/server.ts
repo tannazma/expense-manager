@@ -13,11 +13,11 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(json());
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.send("Hello, world!");
 });
 
-app.get("/expenses", async (req, res) => {
+app.get("/api/expenses", async (req, res) => {
   const allExpenses = await prisma.expense.findMany({
     include: {
       expenseCategory: true,
@@ -26,7 +26,7 @@ app.get("/expenses", async (req, res) => {
   res.json(allExpenses);
 });
 
-app.get("/account/:accountId/expenses", async (req, res) => {
+app.get("/api/account/:accountId/expenses", async (req, res) => {
   const accountIdAsNumber = Number(req.params.accountId);
   if (!accountIdAsNumber) {
     res.status(404).send({
@@ -47,7 +47,7 @@ app.get("/account/:accountId/expenses", async (req, res) => {
   res.status(200).send(expensesForTheAccountId);
 });
 
-app.get("/accounts/:accountId/incomes", async (req, res) => {
+app.get("/api/accounts/:accountId/incomes", async (req, res) => {
   const accountIdAsNumber = Number(req.params.accountId);
   if (!accountIdAsNumber) {
     res.status(404).send({
@@ -68,12 +68,12 @@ app.get("/accounts/:accountId/incomes", async (req, res) => {
   res.status(200).send(incomesForTheAccountId);
 });
 
-app.get("/expense-categories", async (req, res) => {
+app.get("/api/expense-categories", async (req, res) => {
   const allExpensesCategories = await prisma.expenseCategory.findMany({});
   res.json(allExpensesCategories);
 });
 
-app.post("/expenses", async (req, res) => {
+app.post("/api/expenses", async (req, res) => {
   const requestBody = req.body;
   if (
     "amount" in requestBody &&
@@ -99,7 +99,7 @@ app.post("/expenses", async (req, res) => {
   }
 });
 
-app.get("/incomes", async (req, res) => {
+app.get("/api/incomes", async (req, res) => {
   const allIncomes = await prisma.income.findMany({
     include: {
       incomeCategory: true,
@@ -108,12 +108,12 @@ app.get("/incomes", async (req, res) => {
   res.json(allIncomes);
 });
 
-app.get("/income-categories", async (req, res) => {
+app.get("/api/income-categories", async (req, res) => {
   const allIncomesCategories = await prisma.incomeCategory.findMany({});
   res.json(allIncomesCategories);
 });
 
-app.get("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
+app.get("/api/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
   const allAccounts = await prisma.account.findMany({
     where: {
       userId: req.userId,
@@ -122,7 +122,7 @@ app.get("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
   res.json(allAccounts);
 });
 
-app.post("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
+app.post("/api/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
   const requestBody = req.body;
   const { name } = req.body;
   if (!name) {
@@ -152,7 +152,7 @@ app.post("/accounts", AuthMiddleware, async (req: AuthRequest, res) => {
 });
 
 app.delete(
-  "/expenses/:expenseId",
+  "/api/expenses/:expenseId",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const { expenseId } = req.params;
@@ -171,7 +171,7 @@ app.delete(
 );
 
 app.put(
-  "/expenses/:expenseId",
+  "/api/expenses/:expenseId",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const { expenseId } = req.params;
@@ -218,7 +218,7 @@ app.put(
 );
 
 app.put(
-  "/accounts/:accountId/edit",
+  "/api/accounts/:accountId/edit",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const { newName } = req.body;
@@ -267,7 +267,7 @@ app.put(
 );
 
 app.delete(
-  "/accounts/:accountId",
+  "/api/accounts/:accountId",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const { accountId } = req.params;
@@ -288,7 +288,7 @@ app.delete(
   }
 );
 
-app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
+app.get("/api/user", AuthMiddleware, async (req: AuthRequest, res) => {
   const loggedInUser = await prisma.user.findFirst({
     where: {
       id: req.userId,
@@ -297,7 +297,7 @@ app.get("/user", AuthMiddleware, async (req: AuthRequest, res) => {
   res.json(loggedInUser);
 });
 
-app.post("/incomes", async (req, res) => {
+app.post("/api/incomes", async (req, res) => {
   const requestBody = req.body;
   if (
     "amount" in requestBody &&
@@ -324,7 +324,7 @@ app.post("/incomes", async (req, res) => {
 });
 
 app.get(
-  "/accounts/:accountId/expenses-sum",
+  "/api/accounts/:accountId/expenses-sum",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const accountIdAsNumber = Number(req.params.accountId);
@@ -386,7 +386,7 @@ app.get(
 );
 
 app.get(
-  "/accounts/:accountId/incomes-sum",
+  "/api/accounts/:accountId/incomes-sum",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const accountIdAsNumber = Number(req.params.accountId);
@@ -446,7 +446,7 @@ app.get(
 );
 
 app.get(
-  "/category/:categoryId/expenses",
+  "/api/category/:categoryId/expenses",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const categoryIdAsNumber = Number(req.params.categoryId);
@@ -470,7 +470,7 @@ app.get(
 );
 
 app.get(
-  "/category/:categoryId/incomes",
+  "/api/category/:categoryId/incomes",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const categoryIdAsNumber = Number(req.params.categoryId);
@@ -493,7 +493,7 @@ app.get(
   }
 );
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const requestBody = req.body;
   if ("username" in requestBody && "password" in requestBody) {
     try {
@@ -521,7 +521,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/users", async (req, res) => {
+app.post("/api/users", async (req, res) => {
   const { username, password, email } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -540,7 +540,7 @@ app.post("/users", async (req, res) => {
   }
 });
 
-app.post("/expenses-categories", async (req, res) => {
+app.post("/api/expenses-categories", async (req, res) => {
   const { name: expenseCategoryName, icon: exoenseCategoryIcon } = req.body;
   try {
     const newExpenseCategory = await prisma.expenseCategory.create({
