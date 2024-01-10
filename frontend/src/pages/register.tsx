@@ -5,7 +5,6 @@ import { z } from "zod";
 import NavBar from "../components/NavBar";
 import { useContext } from "react";
 import ThemeContext from "@/components/ThemeContext";
-import { ThemeProvider } from "@/components/ThemeProvider";
 
 const dataFromFormValidator = z.object({
   username: z.string().min(4),

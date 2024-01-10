@@ -2,7 +2,6 @@ import useFetchUser from "../hooks/useFetchUser";
 import Login from "./login";
 import Home from "../components/Home";
 import Link from "next/link";
-import { ThemeProvider } from "../components/ThemeProvider";
 import { useContext } from "react";
 import ThemeContext from "@/components/ThemeContext";
 
@@ -22,7 +21,6 @@ export default function Index() {
   }
 
   return (
-    <ThemeProvider>
       <div>
         {user ? (
           <>
@@ -48,6 +46,5 @@ export default function Index() {
           </div>
         )}
       </div>
-    </ThemeProvider>
   );
 }

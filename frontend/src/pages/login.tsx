@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useFetchUser from "../hooks/useFetchUser";
 import NavBar from "@/components/NavBar";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeContext from "@/components/ThemeContext";
 
 const formValuesSchema = z.object({
