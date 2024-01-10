@@ -35,7 +35,9 @@ const ExpenseDetailPage = () => {
 
   useEffect(() => {
     const fetchAllExpenseCategories = async () => {
-      const response = await fetch("http://localhost:3001/expense-categories");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
+      );
       const data = await response.json();
       setExpenseCategories(data);
       if (data[0]) {
@@ -51,7 +53,7 @@ const ExpenseDetailPage = () => {
     } else {
       const fetchExpensesFromCategory = async () => {
         const response = await fetch(
-          `http://localhost:3001/category/${categoryIdFromUrl}/expenses`,
+          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/expenses`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -87,7 +89,7 @@ const ExpenseDetailPage = () => {
       console.error("Invalid expenseCategoryId:", expenseId);
       return;
     }
-    fetch(`http://localhost:3001/expenses/${expenseId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/expenses/${expenseId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -124,7 +126,7 @@ const ExpenseDetailPage = () => {
     event.preventDefault();
 
     const response = await fetch(
-      `http://localhost:3001/expenses/${expenseId}`,
+      `${process.env.NEXT_PUBLIC_SERVERURL}/expenses/${expenseId}`,
       {
         method: "PUT",
         headers: {
@@ -237,11 +239,13 @@ const ExpenseDetailPage = () => {
                   </button>
                 </div>
                 {isEditMode && (
-                  <div className="h-screen place-items-center w-screen modal transition-all-1s fixed top-0 left-0 right-0 bottom-0 z-50 gap-2 grid bg-black bg-opacity-30 items-center text-center justify-center"
-                  style={{
-                    display: isEditMode ? "grid" : "none",
-                    opacity: isEditMode ? 1 : 0,
-                  }}>
+                  <div
+                    className="h-screen place-items-center w-screen modal transition-all-1s fixed top-0 left-0 right-0 bottom-0 z-50 gap-2 grid bg-black bg-opacity-30 items-center text-center justify-center"
+                    style={{
+                      display: isEditMode ? "grid" : "none",
+                      opacity: isEditMode ? 1 : 0,
+                    }}
+                  >
                     <form
                       onSubmit={(event) =>
                         handleUpdateExpense(expense.id, event)

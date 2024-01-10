@@ -25,7 +25,9 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
 
   useEffect(() => {
     const getExpensesCategories = async () => {
-      const response = await fetch("http://localhost:3001/expense-categories");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
+      );
       const categories: ExpenseCategory[] = await response.json();
 
       setExpenseCategories(categories);
@@ -35,7 +37,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
 
   const getExpenseSum = async () => {
     const response = await fetch(
-      `http://localhost:3001/accounts/${selectedAccountId}/expenses-sum`,
+      `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -49,6 +51,9 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
   useEffect(() => {
     getExpenseSum();
   }, [selectedAccountId]);
+
+  console.log("fjiok");
+  console.log(process.env.NEXT_PUBLIC_SERVERURL);
 
   const { theme } = useContext(ThemeContext);
   let entryBackgroundColorClass =

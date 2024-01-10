@@ -26,7 +26,7 @@ export default function AccountsList({
   }
 
   async function handleSaveEditAccount() {
-    await fetch(`http://localhost:3001/accounts/${editingAccountId}/edit`, {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${editingAccountId}/edit`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,7 +46,7 @@ export default function AccountsList({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/accounts/${accountId}`,
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${accountId}`,
         {
           method: "DELETE",
           headers: {

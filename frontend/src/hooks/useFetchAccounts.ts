@@ -5,7 +5,7 @@ const useFetchAccounts = () => {
   const [accounts, setAccounts] = useState<Account[] | null>(null);
 
   async function refetchAccounts() {
-    const response = await fetch("http://localhost:3001/accounts", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/accounts`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },

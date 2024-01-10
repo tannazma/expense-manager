@@ -46,8 +46,8 @@ export default function CreateEntry({
     });
     await fetch(
       type === "expense"
-        ? "http://localhost:3001/expenses"
-        : "http://localhost:3001/incomes",
+        ? `${process.env.NEXT_PUBLIC_SERVERURL}/expenses`
+        : `${process.env.NEXT_PUBLIC_SERVERURL}/incomes`,
       {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -70,8 +70,8 @@ export default function CreateEntry({
     const getAllExpenseCategories = async () => {
       const response = await fetch(
         type === "expense"
-          ? "http://localhost:3001/expense-categories"
-          : "http://localhost:3001/income-categories"
+          ? `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
+          : `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
       );
       const data = await response.json();
       setEntryCategories(data);
@@ -87,7 +87,7 @@ export default function CreateEntry({
 
   async function addNewCategory() {
     console.log({ newCategoryName, newCategoryIcon });
-    fetch("http://localhost:3001/expenses-categories", {
+    fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/expenses-categories`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

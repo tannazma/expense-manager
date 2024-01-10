@@ -25,7 +25,7 @@ const Home = () => {
   ) => {
     event.preventDefault();
     console.log("gchvjbk");
-    await fetch("http://localhost:3001/accounts", {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/accounts`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

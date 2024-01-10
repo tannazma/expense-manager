@@ -6,11 +6,14 @@ const useFetchUser = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await fetch("http://localhost:3001/user", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/user`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setUser(data);

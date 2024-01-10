@@ -91,7 +91,7 @@ const IncomeCharts = () => {
   useEffect(() => {
     const getIncomeSum = async () => {
       const response = await fetch(
-        `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`,
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),

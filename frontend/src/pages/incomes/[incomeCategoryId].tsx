@@ -62,7 +62,9 @@ const IncomeDetailPage = () => {
 
   useEffect(() => {
     const fetchAllIncomeCategories = async () => {
-      const response = await fetch("http://localhost:3001/income-categories");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
+      );
       const data = await response.json();
       setIncomeCategories(data);
       if (data[0]) {
@@ -78,7 +80,7 @@ const IncomeDetailPage = () => {
     } else {
       const fetchIncomesFromCategory = async () => {
         const response = await fetch(
-          `http://localhost:3001/category/${categoryIdFromUrl}/incomes`,
+          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -110,7 +112,7 @@ const IncomeDetailPage = () => {
       console.error("Invalid incomeCategoryId:", incomeId);
       return;
     }
-    fetch(`http://localhost:3001/incomes/${incomeId}`, {
+    fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/incomes/${incomeId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -146,19 +148,22 @@ const IncomeDetailPage = () => {
   ) => {
     event.preventDefault();
 
-    const response = await fetch(`http://localhost:3001/incomes/${incomeId}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: Number(incomeAmount),
-        expenseCategoryId: Number(selectedIncomeCategoryId),
-        details: incomeDetails,
-        date: new Date(incomeDate).toISOString(),
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVERURL}/incomes/${incomeId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: Number(incomeAmount),
+          expenseCategoryId: Number(selectedIncomeCategoryId),
+          details: incomeDetails,
+          date: new Date(incomeDate).toISOString(),
+        }),
+      }
+    );
     if (response.ok) {
       const updatedIncome = await response.json();
       setIncomes((prevIncomes) =>
@@ -176,7 +181,7 @@ const IncomeDetailPage = () => {
     } else {
       const getIncomesFromCategories = async () => {
         const response = await fetch(
-          `http://localhost:3001/category/${categoryIdFromUrl}/incomes`,
+          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),

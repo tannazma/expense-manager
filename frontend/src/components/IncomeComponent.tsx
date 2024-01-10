@@ -25,7 +25,9 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
 
   useEffect(() => {
     const getIncomesCategories = async () => {
-      const response = await fetch("http://localhost:3001/income-categories");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
+      );
       const categories: IncomeCategory[] = await response.json();
       setIncomeCategories(categories);
     };
@@ -34,7 +36,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
 
   const getIncomeSum = async () => {
     const response = await fetch(
-      `http://localhost:3001/accounts/${selectedAccountId}/incomes-sum`,
+      `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),

@@ -28,7 +28,7 @@ const Register = () => {
   const handleRegister = async (data: DataFromForm) => {
     console.log(data);
     try {
-      await fetch("http://localhost:3001/users", {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
