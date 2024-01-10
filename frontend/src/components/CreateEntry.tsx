@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ExpenseCategory as EntryCategory } from "../../types";
 import useFetchAccounts from "../hooks/useFetchAccounts";
+import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
+import ThemeContext from "./ThemeContext";
 
 interface createEntryProps {
   showDialog: boolean;
@@ -99,6 +102,29 @@ export default function CreateEntry({
     setIsAddingCategory(false);
   }
 
+  const { theme } = useContext(ThemeContext);
+  let saveButtonClass = "bg-purple-500 hover:bg-purple-700";
+  let cancelButtonClass = "bg-purple-300 hover:bg-purple-700";
+  let dynamicBackgroundClass = "bg-violet-400";
+
+  if (theme === "red") {
+    saveButtonClass = "bg-red-500 hover:bg-red-700";
+    cancelButtonClass = " bg-red-400 hover:bg-red-700";
+    dynamicBackgroundClass = "bg-red-200";
+  } else if (theme === "green") {
+    saveButtonClass = "bg-green-500 hover:bg-green-700";
+    cancelButtonClass = " bg-green-400 hover:bg-green-700";
+    dynamicBackgroundClass = "bg-green-200";
+  } else if (theme === "blue") {
+    saveButtonClass = "bg-blue-500 hover:bg-blue-700";
+    cancelButtonClass = " bg-blue-400 hover:bg-blue-700";
+    dynamicBackgroundClass = "bg-blue-200";
+  } else if (theme === "dark") {
+    saveButtonClass = "bg-gray-500 hover:bg-gray-700";
+    cancelButtonClass = " bg-gray-400 hover:bg-gray-700";
+    dynamicBackgroundClass = "bg-gray-200";
+  }
+
   return (
     <div
       className="dialog-backdrop h-screen	w-screen grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-50"
@@ -109,7 +135,7 @@ export default function CreateEntry({
     >
       <form
         onSubmit={handleSubmit}
-        className="p-6 text-xs rounded bg-violet-400 relative flex flex-col gap-5 "
+        className={`p-6 text-xs rounded ${dynamicBackgroundClass} relative flex flex-col gap-5`}
       >
         <label className="block text-xs text-gray-900">
           Amount:
@@ -121,8 +147,8 @@ export default function CreateEntry({
           />
         </label>
         {!isAddingCategory ? (
-          <div className="flex gap-2 bc-white items-center">
-            <label>
+          <div className="flex gap-2 bc-white items-end">
+            <label className="">
               Category:
               <select
                 id="category"
@@ -141,15 +167,14 @@ export default function CreateEntry({
               </select>
             </label>
             <button
-              className=" bg-purple-500 hover:bg-purple-700 font-bold hover:text-white py-1.5 px-3 mt-6 mb-0 border border-purple-500 hover:border-transparent rounded ml-3 text-white"
-              title="Add a new category"
+              className={`${saveButtonClass}hover:text-white hover:border-transparent font-bold py-1.5 px-3 rounded ml-3 text-white`}
               onClick={() => setIsAddingCategory(true)}
             >
               +
             </button>
           </div>
         ) : (
-          <div className=" flex-col flex">
+          <div className="flex-col flex">
             <label>
               Category Name
               <input
@@ -176,18 +201,10 @@ export default function CreateEntry({
               </select>
             </label>
             <div className="flex ">
-              <button
-                onClick={addNewCategory}
-                className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Save
-              </button>
-              <button
-                onClick={closeAddingCategory}
-                className="bg-purple-50 hover:bg-purple-400 text-purple-800 font-bold py-2 px-4 rounded"
-              >
+              <PrimaryButton onClick={addNewCategory}>Save</PrimaryButton>
+              <SecondaryButton onClick={closeAddingCategory}>
                 Cancel
-              </button>
+              </SecondaryButton>
             </div>
           </div>
         )}
@@ -228,14 +245,14 @@ export default function CreateEntry({
           />
         </label>
         <button
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+          className={`${saveButtonClass} text-white font-bold py-2 px-4 rounded`}
           type="submit"
           disabled={isAddingCategory}
         >
           submit
         </button>
         <button
-          className=" bg-purple-300 hover:bg-purple-700 text-white absolute -top-3 -right-4 p-2 w-8 box-border rounded-full border-none"
+          className={`${cancelButtonClass} text-white absolute -top-3 -right-4 p-2 w-8 box-border rounded-full border-none`}
           onClick={closeDialog}
         >
           X
