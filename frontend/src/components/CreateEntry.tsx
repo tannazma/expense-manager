@@ -127,7 +127,7 @@ export default function CreateEntry({
 
   return (
     <div
-      className="dialog-backdrop h-screen	w-screen grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-50"
+      className="min-h-[200px] min-w-[200px] grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-50"
       style={{
         display: showDialog ? "grid" : "none",
         opacity: showDialog ? 1 : 0,
@@ -135,7 +135,7 @@ export default function CreateEntry({
     >
       <form
         onSubmit={handleSubmit}
-        className={`p-6 text-xs rounded ${dynamicBackgroundClass} relative flex flex-col gap-5`}
+        className={`p-6 text-xs rounded ${dynamicBackgroundClass} relative flex flex-col gap-2`}
       >
         {!isAddingCategory ? (
           <>
@@ -145,7 +145,7 @@ export default function CreateEntry({
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="mt-2 w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                className="mt-2 rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
               />
             </label>
             <div className="flex gap-2 bc-white items-end">
@@ -156,7 +156,7 @@ export default function CreateEntry({
                   name="category"
                   value={entryCategoryId}
                   onChange={(e) => setEntryCategoryId(e.target.value)}
-                  className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                  className="mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                 >
                   {entryCategories &&
                     entryCategories.map((entryCat) => (
@@ -181,7 +181,7 @@ export default function CreateEntry({
                 name="account"
                 value={accountId}
                 onChange={(e) => setAccountId(e.target.value)}
-                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               >
                 {accounts &&
                   accounts.map((account) => (
@@ -198,7 +198,7 @@ export default function CreateEntry({
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
             </label>
             <label>
@@ -207,7 +207,7 @@ export default function CreateEntry({
                 type="text"
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
-                className="mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
             </label>
             <button
@@ -234,7 +234,7 @@ export default function CreateEntry({
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setNewCategoryName(e.target.value)
                 }
-                className="mb-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="mb-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               />
             </label>
             <label>
@@ -242,7 +242,7 @@ export default function CreateEntry({
               <select
                 value={newCategoryIcon}
                 onChange={(e) => setNewCategoryIcon(e.target.value)}
-                className="mb-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                className="mb-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
               >
                 {["💟", "👎", "🦷", "👨‍🦲"].map((emoji, index) => (
                   <option key={index} value={emoji}>
