@@ -512,6 +512,7 @@ app.post("/api/login", async (req, res) => {
       }
       res.status(400).send({ message: "Login failed" });
     } catch (error) {
+      console.log("error 500 while logging in:", error)
       res.status(500).send({ message: "Something went wrong!" });
     }
   } else {
