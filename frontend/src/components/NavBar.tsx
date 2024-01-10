@@ -3,6 +3,10 @@ import { useRouter } from "next/router";
 import useToken from "../hooks/useToken";
 import useFetchUser from "../hooks/useFetchUser";
 import PrimaryButton from "./PrimaryButton";
+import { useContext } from "react";
+import ThemeContext from "./ThemeContext";
+import SecondaryButton from "./SecondaryButton";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const NavBar = () => {
   const user = useFetchUser();
@@ -15,40 +19,47 @@ const NavBar = () => {
     router.push("/login");
   };
 
+  let headerColor = "text-purple-700 bg-violet-300";
+  const { theme } = useContext(ThemeContext);
+
+  if (theme === "red") {
+    headerColor = "text-red-700 bg-red-300";
+  } else if (theme === "green") {
+    headerColor = "text-green-700 bg-green-300";
+  } else if (theme === "blue") {
+    headerColor = "text-blue-700 bg-blue-300";
+  } else if (theme === "dark") {
+    headerColor = "text-gray-700 bg-gray-300";
+  }
+
   return (
-    <nav className="flex flex-row justify-between items-center bg-violet-300 pl-6">
+    <nav
+      className={`${headerColor} flex flex-row justify-between items-center pl-6`}
+    >
       <Link href="/" className="">
-        <h1 className="text-purple-700 text-l font-semibold cursor-pointer">
+        <h1 className={`${headerColor} text-l font-semibold cursor-pointer`}>
           Expense Manager
         </h1>
       </Link>
-      <div className="pr-8">
+      <div className="pr-8 flex items-center">
+        <ThemeSwitcher />
         {token && user ? (
           <div className="flex px-2 py-2">
             <div className="flex flex-row items-center text-xs mr-3">
               Hello {user.username}
             </div>
-            <Link
-              href="/logout"
-              id="logout-btn"
-            >
+            <Link href="/logout" id="logout-btn">
               <PrimaryButton onClick={handleLogout}>Logout</PrimaryButton>
             </Link>
           </div>
         ) : (
           <div className=" flex flex-row justify-between items-center gap-3 ">
-            <Link
-              href="/login"
-              className="bg-violet-200 hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded m-2 align-right"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded"
-            >
-              Register
-            </Link>
+            <PrimaryButton>
+              <Link href="/login">Login</Link>
+            </PrimaryButton>
+            <SecondaryButton>
+              <Link href="/register">Register</Link>
+            </SecondaryButton>
           </div>
         )}
       </div>
