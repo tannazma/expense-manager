@@ -114,9 +114,7 @@ const ExpenseCharts = () => {
   return (
     <div>
       <div className="flex">
-        <SecondaryButton
-          onClick={() => setChartType("pie")}
-        >
+        <SecondaryButton onClick={() => setChartType("pie")}>
           <Image
             src={pieChartIcon}
             width={20}
@@ -125,9 +123,7 @@ const ExpenseCharts = () => {
           />
           Pie Chart
         </SecondaryButton>
-        <SecondaryButton
-          onClick={() => setChartType("bar")}
-        >
+        <SecondaryButton onClick={() => setChartType("bar")}>
           <Image
             src={barChartIcon}
             width={20}
