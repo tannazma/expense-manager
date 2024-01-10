@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useFetchUser from "../hooks/useFetchUser";
+import NavBar from "@/components/NavBar";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import ThemeContext from "@/components/ThemeContext";
 
 const formValuesSchema = z.object({
   username: z.string().min(3),
@@ -16,6 +19,29 @@ const Login = () => {
   const router = useRouter();
   const justRegistered = router.query["just-registered"];
   const user = useFetchUser();
+
+  const { theme } = useContext(ThemeContext);
+  let loginButton = "bg-purple-500 hover:bg-purple-700";
+  let loginBackgroundColor = "bg-violet-200";
+  let loginBackgroundColor2 = "bg-violet-100";
+
+  if (theme === "red") {
+    loginButton = "bg-red-500 hover:bg-red-700";
+    loginBackgroundColor = "bg-red-200";
+    loginBackgroundColor2 = "bg-red-100";
+  } else if (theme === "green") {
+    loginButton = "bg-green-500 hover:bg-green-700";
+    loginBackgroundColor = "bg-green-200";
+    loginBackgroundColor2 = "bg-green-100";
+  } else if (theme === "blue") {
+    loginButton = "bg-blue-500 hover:bg-blue-700";
+    loginBackgroundColor = "bg-blue-200";
+    loginBackgroundColor2 = "bg-blue-100";
+  } else if (theme === "dark") {
+    loginButton = "bg-gray-700 hover:bg-gray-400";
+    loginBackgroundColor = "bg-gray-200";
+    loginBackgroundColor2 = "bg-gray-100";
+  }
 
   const handleLogin = async (data: LoginFormInputs) => {
     console.log(data);
@@ -51,9 +77,13 @@ const Login = () => {
 
   return (
     <div>
-      {/* <NavBar /> */}
-      <div className="min-h-screen flex justify-center p-20 items-center align-top bg-violet-200">
-        <div className="min-w-[500px] rounded-2xl shadow-xl p-10 bg-violet-100">
+      <NavBar />
+      <div
+        className={`${loginBackgroundColor} min-h-screen flex justify-center p-20 items-center align-top`}
+      >
+        <div
+          className={`${loginBackgroundColor2} min-w-[500px] rounded-2xl shadow-xl p-10`}
+        >
           {user && (
             <h1 className="flex items-center justify-center text-2xl font-bold text-center mb-4 cursor-pointer">
               You are logged in {user.username}
@@ -98,7 +128,7 @@ const Login = () => {
             <button
               type="submit"
               id="submit-btn"
-              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+              className={`${loginButton} text-white font-bold py-2 px-4 rounded`}
             >
               Login
             </button>
