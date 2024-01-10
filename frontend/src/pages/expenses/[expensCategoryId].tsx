@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Expense, ExpenseCategory } from "../../../types";
 import { useRouter } from "next/router";
 import NavBar from "@/components/NavBar";
@@ -10,21 +10,12 @@ import {
   Line,
   LineChart,
 } from "recharts";
+import ThemeContext from "@/components/ThemeContext";
 
 interface ChartDataType {
   date: string;
   amount: number;
 }
-
-const COLORS = [
-  "#6a0dad",
-  "#9370DB",
-  "#9932CC",
-  "#BA55D3",
-  "#DA70D6",
-  "#EE82EE",
-  "#DDA0DD",
-];
 
 const ExpenseDetailPage = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -40,6 +31,7 @@ const ExpenseDetailPage = () => {
     ExpenseCategory[] | null
   >(null);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchAllExpenseCategories = async () => {
@@ -158,6 +150,33 @@ const ExpenseDetailPage = () => {
     }
   };
 
+  let firstButtonClass =
+    "border-purple-500 bg-violet-100 hover:bg-purple-500 text-purple-700";
+  let secondButtonClass =
+    " bg-purple-500 hover:bg-purple-700 border-purple-500";
+  let entryBackgroundColorClass = "bg-violet-300";
+  if (theme === "red") {
+    firstButtonClass =
+      "border-red-500 bg-red-100 hover:bg-red-500 text-red-700 ";
+    secondButtonClass = "bg-red-500 hover:bg-red-700 border-red-500";
+    entryBackgroundColorClass = "bg-red-300";
+  } else if (theme === "green") {
+    firstButtonClass =
+      "border-green-500 bg-green-100 hover:bg-green-500 text-green-700";
+    secondButtonClass = "bg-green-500 hover:bg-green-700 border-green-500";
+    entryBackgroundColorClass = "bg-green-300";
+  } else if (theme === "blue") {
+    firstButtonClass =
+      "border-blue-500 bg-blue-100 hover:bg-blue-500 text-blue-700";
+    secondButtonClass = "bg-blue-500 hover:bg-blue-700 border-blue-500";
+    entryBackgroundColorClass = "bg-blue-300";
+  } else if (theme === "dark") {
+    firstButtonClass =
+      "border-gray-500 bg-gray-500 hover:bg-gray-300 text-gray-300";
+    secondButtonClass = "bg-gray-500 hover:bg-gray-700 border-gray-500";
+    entryBackgroundColorClass = "bg-gray-300";
+  }
+
   return (
     <div>
       <NavBar />
@@ -186,13 +205,13 @@ const ExpenseDetailPage = () => {
         </LineChart>
       </div>
       {expenses.length > 0 ? (
-        <div className="flex flex-1 flex-col gap-3 text-xs p-3 pt-10 text-zinc-50 ">
+        <div className="flex flex-1 flex-col gap-3 text-xs p-3 pt-10">
           {expenses
             .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
             .map((expense) => (
               <div
                 key={expense.id}
-                className="bg-violet-500 p-5 shadow-xl rounded-md"
+                className={`${entryBackgroundColorClass} p-5 shadow-xl rounded-md`}
               >
                 <div className="flex ">
                   <span>{expense.expenseCategory?.icon}</span>
@@ -206,24 +225,28 @@ const ExpenseDetailPage = () => {
                 <div className="flex gap-3">
                   <button
                     onClick={() => handleDeleteExpense(expense.id)}
-                    className=" bg-purple-100 hover:bg-purple-700 text-purple-800 font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                    className={`${firstButtonClass} font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
                   >
                     Delete
                   </button>
                   <button
                     onClick={() => handleEditExpense(expense.id)}
-                    className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                    className={`${secondButtonClass} text-white font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
                   >
                     Edit
                   </button>
                 </div>
                 {isEditMode && (
-                  <div className="modal">
+                  <div className="h-screen place-items-center w-screen modal transition-all-1s fixed top-0 left-0 right-0 bottom-0 z-50 gap-2 grid bg-black bg-opacity-30 items-center text-center justify-center"
+                  style={{
+                    display: isEditMode ? "grid" : "none",
+                    opacity: isEditMode ? 1 : 0,
+                  }}>
                     <form
                       onSubmit={(event) =>
                         handleUpdateExpense(expense.id, event)
                       }
-                      className="p-10 rounded bg-violet-400 relative flex flex-col gap-5 "
+                      className={`${entryBackgroundColorClass} p-10 rounded relative flex flex-col gap-5`}
                     >
                       <label>
                         Amount:
@@ -231,31 +254,31 @@ const ExpenseDetailPage = () => {
                           type="number"
                           value={expenseAmount}
                           onChange={(e) => setExpenseAmount(e.target.value)}
-                          className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                          className="min-w-[500px] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset"
                         />
-                        <label>
-                          Category:
-                          <select
-                            id="category"
-                            name="category"
-                            value={selectedExpenseCategoryId}
-                            onChange={(e) =>
-                              setSelectedExpenseCategoryId(e.target.value)
-                            }
-                            className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
-                          >
-                            {expenseCategories &&
-                              expenseCategories.map((entryCat) => {
-                                console.log("entryCat", entryCat);
-                                return (
-                                  <option key={entryCat.id} value={entryCat.id}>
-                                    {entryCat.icon}
-                                    {entryCat.name}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </label>
+                      </label>
+                      <label>
+                        Category:
+                        <select
+                          id="category"
+                          name="category"
+                          value={selectedExpenseCategoryId}
+                          onChange={(e) =>
+                            setSelectedExpenseCategoryId(e.target.value)
+                          }
+                          className="min-w-[500px] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset"
+                        >
+                          {expenseCategories &&
+                            expenseCategories.map((entryCat) => {
+                              console.log("entryCat", entryCat);
+                              return (
+                                <option key={entryCat.id} value={entryCat.id}>
+                                  {entryCat.icon}
+                                  {entryCat.name}
+                                </option>
+                              );
+                            })}
+                        </select>
                       </label>
                       <label>
                         Details:
@@ -263,7 +286,7 @@ const ExpenseDetailPage = () => {
                           type="text"
                           value={expenseDetails}
                           onChange={(e) => setExpenseDetails(e.target.value)}
-                          className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                          className="min-w-[500px] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         />
                       </label>
                       <label>
@@ -272,18 +295,18 @@ const ExpenseDetailPage = () => {
                           type="date"
                           value={expenseDate}
                           onChange={(e) => setExpenseDate(e.target.value)}
-                          className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                          className="min-w-[500px] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         />
                       </label>
                       <button
                         type="submit"
-                        className=" bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                        className={`${secondButtonClass} text-white font-bold py-2 px-4 roundedbg-violet-200s hover:text-white border hover:border-transparent rounded align-right`}
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setIsEditMode(false)}
-                        className=" bg-purple-100 hover:bg-purple-700 text-purple-800 font-bold py-2 px-4 roundedbg-violet-200s  hover:text-white border border-purple-500 hover:border-transparent rounded align-right"
+                        className={`${firstButtonClass}font-bold py-2 px-4 roundedbg-violet-200s hover:text-white border hover:border-transparent rounded align-right`}
                       >
                         Close
                       </button>
