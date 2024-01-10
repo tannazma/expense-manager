@@ -3,7 +3,6 @@ import Login from "./login";
 import Home from "../components/Home";
 import Link from "next/link";
 import { ThemeProvider } from "../components/ThemeProvider";
-import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { useContext } from "react";
 import ThemeContext from "@/components/ThemeContext";
 
@@ -28,7 +27,6 @@ export default function Index() {
         {user ? (
           <>
             <Home />
-            <ThemeSwitcher />
           </>
         ) : (
           <div
