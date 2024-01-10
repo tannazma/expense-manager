@@ -2,12 +2,12 @@ import { useContext, ReactNode } from "react";
 import ThemeContext from "./ThemeContext";
 
 type SecondaryButtonProp = {
-  onClick?: (...args: any) => any;
-  children: ReactNode;
-  type?: "submit";
-};
+    onClick?: (...args: any) => any;
+    children: ReactNode;
+    type?: "submit";
+  };
 
-const SecondaryButton = ({ type, children, onClick }: SecondaryButtonProp) => {
+const SecondaryButton = ({ type ,children, onClick }:SecondaryButtonProp ) => {
   const { theme } = useContext(ThemeContext);
 
   let secondaryBackgroundColorClass = `bg-purple-100 text-purple-700 hover:bg-purple-500 hover:bg-purple-500 border-purple-500`;

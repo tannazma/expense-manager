@@ -10,18 +10,16 @@ type PrimaryButtonProp = {
 const PrimaryButton = ({ onClick, children, type }: PrimaryButtonProp) => {
   const { theme } = useContext(ThemeContext);
   let primaryBackgroundColorClass = `bg-purple-500 hover:bg-purple-800 bg-purple-700`;
-  
+
   if (theme === "red") {
-    primaryBackgroundColorClass = "bg-red-500 hover:bg-red-800 border-red-500";
+    primaryBackgroundColorClass = "bg-red-500 hover:bg-red-800";
   } else if (theme === "green") {
-    primaryBackgroundColorClass =
-      "bg-green-500 hoverbg-green-800 border-green-500";
+    primaryBackgroundColorClass = "bg-green-500 hoverbg-green-800";
   } else if (theme === "blue") {
-    primaryBackgroundColorClass =
-      "bg-blue-500 hover:bg-blue-800 border-blue-500";
+    primaryBackgroundColorClass = "bg-blue-500 hover:bg-blue-800";
   } else if (theme === "dark") {
     primaryBackgroundColorClass =
-      "bg-gray-800 hover:bg-gray-200 border-gray-200";
+      "bg-gray-800 hover:bg-gray-200 hover:text-black ";
   }
 
   return (
