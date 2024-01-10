@@ -24,7 +24,7 @@ const PrimaryButton = ({ onClick, children, type }: PrimaryButtonProp) => {
 
   return (
     <button
-      className={`${primaryBackgroundColorClass} text-xs text-white font-semibold hover:text-white py-1 px-2 border hover:border-transparent rounded m-2 align-right`}
+      className={`${primaryBackgroundColorClass} text-xs text-white font-semibold hover:text-white py-1 px-2 hover:border-transparent rounded m-2 align-right`}
       onClick={onClick}
       type={type}
     >
