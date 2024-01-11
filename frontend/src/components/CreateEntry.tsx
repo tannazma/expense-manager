@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { ExpenseCategory as EntryCategory } from "../../types";
 import useFetchAccounts from "../hooks/useFetchAccounts";
 import PrimaryButton from "./PrimaryButton";
@@ -26,8 +26,8 @@ export default function CreateEntry({
   const [entryCategories, setEntryCategories] = useState<
     EntryCategory[] | null
   >(null);
-  const { accounts } = useFetchAccounts();
-  const [accountId, setAccountId] = useState("");
+  let { accounts } = useFetchAccounts();
+  const [accountId, setAccountId] = useState<number | undefined>();
   const [amount, setAmount] = useState("");
   const [entryCategoryId, setEntryCategoryId] = useState("");
   const [isAddingCategory, setIsAddingCategory] = useState(false);
@@ -35,6 +35,12 @@ export default function CreateEntry({
   const [date, setDate] = useState(todayStr);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryIcon, setNewCategoryIcon] = useState("💟");
+
+  useEffect(() => {
+    if (accounts && accounts[0]) {
+      setAccountId(accounts[0].id);
+    }
+  }, [accounts]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -180,7 +186,9 @@ export default function CreateEntry({
                 id="account"
                 name="account"
                 value={accountId}
-                onChange={(e) => setAccountId(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setAccountId(Number(e.target.value))
+                }
                 className="mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               >
                 {accounts &&
