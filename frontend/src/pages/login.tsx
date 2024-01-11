@@ -56,7 +56,6 @@ const Login = () => {
           body: JSON.stringify(data),
         }
       );
-      router.push("/");
       if (response.ok) {
         const { token } = await response.json();
         localStorage.setItem("token", token);
