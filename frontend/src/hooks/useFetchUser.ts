@@ -20,7 +20,10 @@ const useFetchUser = () => {
         const data = await response.json();
         setUser(data);
       } else {
-        router.push("/login");
+        console.log(router.pathname)
+        if (router.pathname !== "/register") {
+          router.push("/login");
+        }
       }
     };
     getUser();
