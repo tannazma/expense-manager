@@ -79,10 +79,9 @@ export default function CreateEntry({
           ? `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
           : `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
       );
-      const data = await response.json();
-      setEntryCategories(data);
-      setEntryCategoryId(data[0].id);
-      setAccountId(data[0].id);
+      const categories = await response.json();
+      setEntryCategories(categories);
+      setEntryCategoryId(categories[0].id);
     };
     getAllExpenseCategories();
   }, []);
