@@ -6,6 +6,7 @@ import { z } from "zod";
 import useFetchUser from "../hooks/useFetchUser";
 import NavBar from "@/components/NavBar";
 import ThemeContext from "@/components/ThemeContext";
+import Link from "next/link";
 
 const formValuesSchema = z.object({
   username: z.string().min(3),
@@ -18,7 +19,6 @@ const Login = () => {
   const router = useRouter();
   const justRegistered = router.query["just-registered"];
   const user = useFetchUser();
-
   const { theme } = useContext(ThemeContext);
   let loginButton = "bg-purple-500 hover:bg-purple-700";
   let loginBackgroundColor = "bg-violet-200";
@@ -77,9 +77,35 @@ const Login = () => {
     resolver: zodResolver(formValuesSchema),
   });
 
+  let navbarBackgroundColor = "bg-violet-200";
+  if (theme === "red") {
+    navbarBackgroundColor = "bg-red-200";
+  } else if (theme === "green") {
+    navbarBackgroundColor = "bg-green-200";
+  } else if (theme === "blue") {
+    navbarBackgroundColor = "bg-blue-200";
+  } else if (theme === "dark") {
+    navbarBackgroundColor = "bg-gray";
+  }
+
   return (
     <div>
       <NavBar />
+      <div
+        className={`${navbarBackgroundColor}  flex flex-col justify-center items-center`}
+      >
+        <h1 className="text-center text-xl text-black font-bold">
+          Ready to explore? Log in and lets get started! <span>👇</span>
+        </h1>
+        <div className="flex flex-1 text-center text-l text-black font-semibold">
+          Don&apos;t have an account yet?
+          <div>
+            <Link href={"/register"} className="text-purple-500 pl-2">
+              Click Here to sign up
+            </Link>
+          </div>
+        </div>
+      </div>
       <div
         className={`${loginBackgroundColor} min-h-screen flex justify-center p-20 items-center align-top`}
       >
