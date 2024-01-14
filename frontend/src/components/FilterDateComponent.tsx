@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import FilterContext from "./FilterContext";
+import PrimaryButton from "./PrimaryButton";
 
 const FilterDateComponent = () => {
   const { setDateFilter } = useContext(FilterContext);
@@ -29,26 +30,28 @@ const FilterDateComponent = () => {
   return (
     <div className="flex justify-end pr-8">
       <form onSubmit={getExpenseSumBasedOnDate}>
-        <label>
+        <label className="text-xs">
           From
           <input
             type="date"
             value={fromDate}
             onChange={(e) => setFromDate(e.target.value)}
+            className="p-1 ml-1"
           />
         </label>
-        <label>
+        <label className="text-xs ml-3">
           To
           <input
             type="date"
             value={toDate}
             onChange={(e) => setToDate(e.target.value)}
+            className="p-1 ml-1"
           />
         </label>
-        <button type="submit">Submit</button>
+        <PrimaryButton type="submit">Submit</PrimaryButton>
         {fromDate && toDate ? (
-          <div>
-            Date from: {fromDate} to: {toDate}
+          <div className="text-l">
+            Date From: <span className="ml-2 mr-4">{fromDate}</span> to: <span className="ml-2">{toDate}</span>
           </div>
         ) : (
           ""
