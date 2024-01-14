@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
 const FilterContext = createContext<{
-  dateFilter: { from: string; to: string };
-  setDateFilter: Dispatch<SetStateAction<{ from: string; to: string }>>;
+  dateFilter: { from: string; to: string } | null;
+  setDateFilter: Dispatch<SetStateAction<{ from: string; to: string } | null>>;
 }>({
-  dateFilter: { from: "", to: "" },
+  dateFilter: null,
   setDateFilter: () => {},
 });
 export default FilterContext;
