@@ -6,12 +6,14 @@ import IncomeCharts from "./IncomeCharts";
 import CreateIncome from "./CreateEntry";
 import PrimaryButton from "./PrimaryButton";
 import ThemeContext from "./ThemeContext";
+import FilterContext from "./FilterContext";
 
 interface incomeProps {
   refetchBalance: () => void;
 }
 
 const IncomeComponent = ({ refetchBalance }: incomeProps) => {
+  const { dateFilter } = useContext(FilterContext);
   const selectedAccountId = useContext(SelectedAccountContext);
   const [incomeSum, setIncomeSum] = useState<incomeSumData[]>([]);
   const [incomeCategories, setIncomeCategories] = useState<IncomeCategory[]>(
@@ -35,21 +37,43 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
   }, []);
 
   const getIncomeSum = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+    if (dateFilter) {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch expense sum");
+        }
+        const sumData: incomeSumData[] = await response.json();
+        console.log("sum data with filtering data", sumData);
+        setIncomeSum(sumData);
+      } catch (error) {
+        console.error(error);
       }
-    );
-    const sumData: incomeSumData[] = await response.json();
-    setIncomeSum(sumData);
+    } else {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const sumData: incomeSumData[] = await response.json();
+      console.log("all sumdata before filtering date", sumData);
+      setIncomeSum(sumData);
+    }
   };
 
   useEffect(() => {
     getIncomeSum();
-  }, [selectedAccountId]);
+  }, [selectedAccountId, dateFilter]);
 
   const { theme } = useContext(ThemeContext);
   let entryBackgroundColorClass =
