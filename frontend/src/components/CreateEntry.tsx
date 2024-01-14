@@ -63,7 +63,7 @@ export default function CreateEntry({
             Number(entryCategoryId),
           accountId: Number(accountId),
           details: details,
-          date: new Date().toISOString(),
+          date: new Date(date).toISOString(),
         }),
       }
     );
