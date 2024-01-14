@@ -471,7 +471,7 @@ app.get(
         }
       });
 
-      res.send({ totalExpenses: summedExpenses });
+      res.send(summedExpenses);
     } catch (error) {
       res.status(500).send({ error: "Something went wrong" });
     }
