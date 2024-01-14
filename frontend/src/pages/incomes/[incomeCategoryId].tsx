@@ -131,8 +131,8 @@ const IncomeDetailPage = () => {
       });
   };
 
-  const handleEditIncome = (expenseId: number) => {
-    const incomeToEdit = incomes.find((income) => income.id === expenseId);
+  const handleEditIncome = (incomeId: number) => {
+    const incomeToEdit = incomes.find((income) => income.id === incomeId);
     if (incomeToEdit) {
       setIncomeAmount(incomeToEdit.amount.toString());
       setSelectedIncomeCategoryId(incomeToEdit.incomeCategoryId.toString());
@@ -158,7 +158,7 @@ const IncomeDetailPage = () => {
         },
         body: JSON.stringify({
           amount: Number(incomeAmount),
-          expenseCategoryId: Number(selectedIncomeCategoryId),
+          incomeCategoryId: Number(selectedIncomeCategoryId),
           details: incomeDetails,
           date: new Date(incomeDate).toISOString(),
         }),
@@ -247,8 +247,8 @@ const IncomeDetailPage = () => {
                 className={`${entryBackgroundColorClass} p-5 shadow-xl rounded-md`}
               >
                 <div className="flex">
-                  <span className="pr-2">{income.incomeCategory.icon}</span>
-                  <p className="pr-2 pb-6">{income.incomeCategory.name}</p>
+                  <span className="pr-2">{income.incomeCategory?.icon}</span>
+                  <p className="pr-2 pb-6">{income.incomeCategory?.name}</p>
                   <p className="justify-between flex-1 text-right	">
                     {new Date(income.date).toUTCString()}
                   </p>

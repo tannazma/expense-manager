@@ -170,6 +170,25 @@ app.delete(
   }
 );
 
+app.delete(
+  "/api/incomes/:incomeId",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const { incomeId } = req.params;
+    try {
+      const deletedIncomes = await prisma.income.deleteMany({
+        where: { id: Number(incomeId) },
+      });
+      res.status(200).send({
+        message: `${deletedIncomes.count} Income successfully deleted`,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Error deleting Income" });
+    }
+  }
+);
+
 app.put(
   "/api/expenses/:expenseId",
   AuthMiddleware,
@@ -213,6 +232,53 @@ app.put(
     } catch (error) {
       console.error(error);
       res.status(500).send({ error: "Error updating expense" });
+    }
+  }
+);
+
+app.put(
+  "/api/incomes/:incomeId",
+  AuthMiddleware,
+  async (req: AuthRequest, res) => {
+    const { incomeId } = req.params;
+    console.log(incomeId);
+    const { amount, incomeCategoryId, details, date } = req.body;
+    // console.log(req.body);
+    const income = await prisma.income.findUnique({
+      where: { id: Number(incomeId) },
+    });
+
+    if (!income) {
+      return res.status(404).send({ error: "Income not found." });
+    }
+
+    if (!amount || !incomeCategoryId || !details || !date) {
+      res.status(400).send({ error: "Income information is incomplete" });
+      return;
+    }
+    if (!Number.isInteger(amount) || !incomeCategoryId || !details || !date) {
+      res
+        .status(400)
+        .send({ error: "Income information is invalid or incomplete" });
+      return;
+    }
+    console.log(amount, incomeCategoryId, details, date);
+
+    try {
+      const updatedIncome = await prisma.income.update({
+        where: { id: Number(incomeId) },
+        data: {
+          amount: amount,
+          incomeCategoryId: incomeCategoryId,
+          details: details,
+          date: date,
+        },
+      });
+
+      res.status(200).send(updatedIncome);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Error updating income" });
     }
   }
 );
