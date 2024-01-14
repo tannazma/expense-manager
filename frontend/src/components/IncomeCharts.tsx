@@ -19,6 +19,7 @@ import pieChartIcon from "../../public/pie-chart-svgrepo-com.svg";
 import Image from "next/image";
 import ThemeContext from "./ThemeContext";
 import SecondaryButton from "./SecondaryButton";
+import FilterContext from "./FilterContext";
 
 const COLORS = [
   "#6a0dad",
@@ -74,6 +75,7 @@ const IncomeCharts = () => {
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const selectedAccountId = useContext(SelectedAccountContext);
   const { isDarkMode, isGreen, isBlue, isRed } = useContext(ThemeContext);
+  const { dateFilter } = useContext(FilterContext);
   let correctColors: string[];
 
   if (isDarkMode) {
@@ -90,24 +92,46 @@ const IncomeCharts = () => {
 
   useEffect(() => {
     const getIncomeSum = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
+      if (dateFilter) {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch income sum");
         }
-      );
-      const sumData: incomeSumData[] = await response.json();
-      // create chart data based on the response
-      const chartData: ChartDataType[] = sumData.map((item) => ({
-        amount: item.amount,
-        name: item.incomeCategoryName,
-      }));
-      setChartData(chartData); // set chart data
+        const sumData: incomeSumData[] = await response.json();
+        // create chart data based on the response
+        const chartData: ChartDataType[] = sumData.map((item) => ({
+          amount: item.amount,
+          name: item.incomeCategoryName,
+        }));
+        setChartData(chartData); // set chart data
+      } else {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        const sumData: incomeSumData[] = await response.json();
+        // create chart data based on the response
+        console.log("sumdata income",sumData);
+        const chartData: ChartDataType[] = sumData.map((item) => ({
+          amount: item.amount,
+          name: item.incomeCategoryName,
+        }));
+        setChartData(chartData); // set chart data
+      }
     };
     getIncomeSum();
-  }, [selectedAccountId]);
+  }, [selectedAccountId, dateFilter]);
 
   return (
     <div>
