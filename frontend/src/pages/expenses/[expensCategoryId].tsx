@@ -47,35 +47,36 @@ const ExpenseDetailPage = () => {
     fetchAllExpenseCategories();
   }, []);
 
+  const fetchExpensesFromCategory = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/expenses`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const data = await response.json();
+    setSelectedExpenseCategoryId(data[0].id);
+    setExpenses(data);
+
+    const chartData: ChartDataType[] = data.map((expense: Expense) => ({
+      // format the date as MM-DD
+      date:
+        new Date(expense.date).getMonth() +
+        1 +
+        "/" +
+        new Date(expense.date).getDate(),
+      amount: expense.amount,
+    }));
+
+    setChartData(chartData);
+  };
+
   useEffect(() => {
     if (isNaN(categoryIdFromUrl)) {
       return;
     } else {
-      const fetchExpensesFromCategory = async () => {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/expenses`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        const data = await response.json();
-        setSelectedExpenseCategoryId(data[0].id);
-        setExpenses(data);
-
-        const chartData: ChartDataType[] = data.map((expense: Expense) => ({
-          // format the date as MM-DD
-          date:
-            new Date(expense.date).getMonth() +
-            1 +
-            "/" +
-            new Date(expense.date).getDate(),
-          amount: expense.amount,
-        }));
-
-        setChartData(chartData);
-      };
       fetchExpensesFromCategory();
     }
   }, [categoryIdFromUrl]);
@@ -99,12 +100,15 @@ const ExpenseDetailPage = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        // Refetch the expenses after successfully deleting an expense
+        fetchExpensesFromCategory();
       })
       .catch((error) => {
         console.error(
           "There has been a problem with your fetch expenses:",
           error
         );
+        setIsEditMode(false);
       });
   };
 
