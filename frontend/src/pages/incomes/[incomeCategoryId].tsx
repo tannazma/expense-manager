@@ -74,35 +74,36 @@ const IncomeDetailPage = () => {
     fetchAllIncomeCategories();
   }, []);
 
+  const fetchIncomesFromCategory = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const data = await response.json();
+    setSelectedIncomeCategoryId(data[0].id);
+    setIncomes(data);
+
+    const chartData: ChartDataType[] = data.map((income: Income) => ({
+      // format the date as MM-DD
+      date:
+        new Date(income.date).getMonth() +
+        1 +
+        "/" +
+        new Date(income.date).getDate(),
+      amount: income.amount,
+    }));
+
+    setChartData(chartData);
+  };
+
   useEffect(() => {
     if (isNaN(categoryIdFromUrl)) {
       return;
     } else {
-      const fetchIncomesFromCategory = async () => {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        const data = await response.json();
-        setSelectedIncomeCategoryId(data[0].id);
-        setIncomes(data);
-
-        const chartData: ChartDataType[] = data.map((income: Income) => ({
-          // format the date as MM-DD
-          date:
-            new Date(income.date).getMonth() +
-            1 +
-            "/" +
-            new Date(income.date).getDate(),
-          amount: income.amount,
-        }));
-
-        setChartData(chartData);
-      };
       fetchIncomesFromCategory();
     }
   }, [categoryIdFromUrl]);
@@ -122,12 +123,15 @@ const IncomeDetailPage = () => {
         if (!response.ok) {
           throw new Error("Network income was not ok");
         }
+        // Refetch the incomes after successfully deleting an expense
+        fetchIncomesFromCategory();
       })
       .catch((error) => {
         console.error(
           "There has been a problem with your fetch incomes:",
           error
         );
+        setIsEditMode(false);
       });
   };
 
