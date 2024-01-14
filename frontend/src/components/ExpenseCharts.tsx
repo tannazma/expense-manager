@@ -19,6 +19,7 @@ import pieChartIcon from "../../public/pie-chart-svgrepo-com.svg";
 import Image from "next/image";
 import ThemeContext from "./ThemeContext";
 import SecondaryButton from "./SecondaryButton";
+import FilterContext from "./FilterContext";
 
 const COLORS = [
   "#6a0dad",
@@ -74,6 +75,7 @@ const ExpenseCharts = () => {
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const selectedAccountId = useContext(SelectedAccountContext);
   const { isDarkMode, isGreen, isBlue, isRed } = useContext(ThemeContext);
+  const { dateFilter } = useContext(FilterContext);
   let correctColors: string[];
 
   if (isDarkMode) {
@@ -90,26 +92,47 @@ const ExpenseCharts = () => {
 
   useEffect(() => {
     const getExpenseSum = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
+      if (dateFilter) {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch expense sum");
         }
-      );
-      const sumData: expenseSumData[] = await response.json();
-      // create chart data based on the response
-      const chartData: ChartDataType[] = sumData.map((item) => ({
-        name: item.expenseCategoryName,
-        amount: item.amount,
-      }));
+        const sumData: expenseSumData[] = await response.json();
+        // create chart data based on the response
+        const chartData: ChartDataType[] = sumData.map((item) => ({
+          name: item.expenseCategoryName,
+          amount: item.amount,
+        }));
+        setChartData(chartData); // set chart data
+      } else {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        const sumData: expenseSumData[] = await response.json();
+        // create chart data based on the response
+        const chartData: ChartDataType[] = sumData.map((item) => ({
+          name: item.expenseCategoryName,
+          amount: item.amount,
+        }));
 
-      setChartData(chartData); // set chart data
+        setChartData(chartData); // set chart data
+      }
     };
 
     getExpenseSum();
-  }, [selectedAccountId]);
+  }, [selectedAccountId, dateFilter]);
 
   return (
     <div>
