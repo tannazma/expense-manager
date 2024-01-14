@@ -13,7 +13,7 @@ import FilterContext from "./FilterContext";
 import FilterDateComponent from "./FilterDateComponent";
 
 const Home = () => {
-  const [dateFilter, setDateFilter] = useState({ from: "y", to: "ju" });
+  const [dateFilter, setDateFilter] = useState<{ from: string; to: string; } | null>(null);
   const { accounts, refetchAccounts } = useFetchAccounts();
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [accountName, setAccountName] = useState("");
