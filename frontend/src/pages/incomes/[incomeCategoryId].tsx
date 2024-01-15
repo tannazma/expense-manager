@@ -12,6 +12,8 @@ import {
 } from "recharts";
 import NavBar from "@/components/NavBar";
 import ThemeContext from "@/components/ThemeContext";
+import { AlertDialogDemo } from "../../components/AlertDialog";
+
 interface ChartDataType {
   date: string;
   amount: number;
@@ -31,6 +33,7 @@ const IncomeDetailPage = () => {
   >(null);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const { theme } = useContext(ThemeContext);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // new state variable for controlling the dialog
 
   let firstButtonClass =
     "border-purple-500 bg-violet-100 hover:bg-purple-500 text-purple-700";
@@ -261,11 +264,18 @@ const IncomeDetailPage = () => {
                 <p>{income.details}</p>
                 <div className="flex gap-3">
                   <button
-                    onClick={() => handleDeleteIncome(income.id)}
+                    onClick={() => setIsDialogOpen(true)}
                     className={`${firstButtonClass} font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
                   >
                     Delete
                   </button>
+                  {isDialogOpen && (
+                    <AlertDialogDemo
+                      isOpen={isDialogOpen}
+                      onContinue={() => handleDeleteIncome(income.id)}
+                      onCancel={() => setIsDialogOpen(false)}
+                    />
+                  )}
                   <button
                     onClick={() => handleEditIncome(income.id)}
                     className={`${secondButtonClass} text-white font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
