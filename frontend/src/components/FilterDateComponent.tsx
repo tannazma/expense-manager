@@ -49,13 +49,16 @@ const FilterDateComponent = () => {
           />
         </label>
         <PrimaryButton type="submit">Submit</PrimaryButton>
-        {fromDate && toDate ? (
-          <div className="text-l">
-            Date From: <span className="ml-2 mr-4">{fromDate}</span> to: <span className="ml-2">{toDate}</span>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="text-l min-h-[40px]">
+          {fromDate && toDate ? (
+            <>
+              Date From: <span className="ml-2 mr-4">{fromDate}</span> to:{" "}
+              <span className="ml-2">{toDate}</span>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
       </form>
     </div>
   );
