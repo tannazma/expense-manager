@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +7,7 @@ import useFetchUser from "../hooks/useFetchUser";
 import NavBar from "@/components/NavBar";
 import ThemeContext from "@/components/ThemeContext";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 const formValuesSchema = z.object({
   username: z.string().min(3),
@@ -23,6 +24,21 @@ const Login = () => {
   let loginButton = "bg-purple-500 hover:bg-purple-700";
   let loginBackgroundColor = "bg-violet-200";
   let loginBackgroundColor2 = "bg-violet-100";
+
+  useEffect(() => {
+    console.log("useEffect triggered");
+    if (justRegistered) {
+      toast("You are registered successfully. Now login please.", {
+        icon: "🎉",
+        style: {
+          borderRadius: "10px",
+          background: "#800000",
+          color: "#fff",
+          display: "flex",
+        },
+      });
+    }
+  }, [justRegistered]);
 
   if (theme === "red") {
     loginButton = "bg-red-500 hover:bg-red-700";
@@ -123,9 +139,6 @@ const Login = () => {
             <h1 className="flex justify-center text-3xl font-bold cursor-pointer">
               Login
             </h1>
-            {justRegistered && (
-              <p>you are registered successfully. now login please.</p>
-            )}
             <label>
               Username
               <input
