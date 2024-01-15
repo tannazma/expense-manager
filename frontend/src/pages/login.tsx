@@ -78,6 +78,16 @@ const Login = () => {
         router.push("/");
       } else {
         console.log("Login failed");
+        // trigger toast for failed login
+        toast("Login failed. Please try again.", {
+          icon: "⚠️",
+          style: {
+            borderRadius: "10px",
+            background: "#ff0000", // Red background
+            color: "#fff",
+            display: "flex",
+          },
+        });
       }
     } catch (error) {
       console.log("Something went wrong!", error);
