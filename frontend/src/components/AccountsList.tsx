@@ -3,6 +3,7 @@ import { Account } from "../../types";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import ThemeContext from "./ThemeContext";
+import { AlertDialogDemo } from "./AlertDialog";
 
 type Props = {
   accounts: Account[];
@@ -19,6 +20,7 @@ export default function AccountsList({
 }: Props) {
   const [editingAccountId, setEditingAccountId] = useState<number | null>(null);
   const [editingAccountName, setEditingAccountName] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // new state variable for controlling the dialog
 
   function cancelEdit() {
     setEditingAccountId(null);
@@ -26,14 +28,17 @@ export default function AccountsList({
   }
 
   async function handleSaveEditAccount() {
-    await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${editingAccountId}/edit`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ newName: editingAccountName }),
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${editingAccountId}/edit`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newName: editingAccountName }),
+      }
+    );
     await refetchAccounts();
     cancelEdit();
   }
@@ -68,8 +73,7 @@ export default function AccountsList({
 
   const { theme } = useContext(ThemeContext);
   let navbarTextColor = "text-purple-900 hover:text-violet-600 ";
-  let accountBackgroundColor =
-    "bg-white hover:text-violet-600 text-purple-600";
+  let accountBackgroundColor = "bg-white hover:text-violet-600 text-purple-600";
 
   if (theme === "red") {
     navbarTextColor = "text-red-900";
@@ -133,9 +137,16 @@ export default function AccountsList({
               >
                 Edit
               </button>
-              <PrimaryButton onClick={() => handleDeleteAccount(account.id)}>
+              <PrimaryButton onClick={() => setIsDialogOpen(true)}>
                 Delete
               </PrimaryButton>
+              {isDialogOpen && (
+                <AlertDialogDemo
+                  isOpen={isDialogOpen}
+                  onContinue={() => handleDeleteAccount(account.id)}
+                  onCancel={() => setIsDialogOpen(false)}
+                />
+              )}
             </>
           ) : null}
         </div>
