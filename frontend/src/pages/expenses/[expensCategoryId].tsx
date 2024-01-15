@@ -11,6 +11,7 @@ import {
   LineChart,
 } from "recharts";
 import ThemeContext from "@/components/ThemeContext";
+import { AlertDialogDemo } from "../../components/AlertDialog";
 
 interface ChartDataType {
   date: string;
@@ -32,6 +33,7 @@ const ExpenseDetailPage = () => {
   >(null);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const { theme } = useContext(ThemeContext);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // new state variable for controlling the dialog
 
   useEffect(() => {
     const fetchAllExpenseCategories = async () => {
@@ -230,11 +232,18 @@ const ExpenseDetailPage = () => {
                 <p>{expense.details}</p>
                 <div className="flex gap-3">
                   <button
-                    onClick={() => handleDeleteExpense(expense.id)}
+                    onClick={() => setIsDialogOpen(true)}
                     className={`${firstButtonClass} font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
                   >
                     Delete
                   </button>
+                  {isDialogOpen && (
+                    <AlertDialogDemo
+                      isOpen={isDialogOpen}
+                      onContinue={() => handleDeleteExpense(expense.id)}
+                      onCancel={() => setIsDialogOpen(false)}
+                    />
+                  )}
                   <button
                     onClick={() => handleEditExpense(expense.id)}
                     className={`${secondButtonClass} text-white font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
