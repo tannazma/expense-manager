@@ -26,7 +26,6 @@ const Register = () => {
   });
 
   const handleRegister = async (data: DataFromForm) => {
-    console.log(data);
     try {
       await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/users`, {
         method: "POST",
@@ -37,7 +36,7 @@ const Register = () => {
       });
       router.push("/login?just-registered=true");
     } catch (error) {
-      console.log("Something went wrong!");
+      console.log("Something went wrong!", error);
     }
   };
 

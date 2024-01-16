@@ -59,7 +59,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
           throw new Error("Failed to fetch expense sum");
         }
         const sumData: expenseSumData[] = await response.json();
-        console.log("sum data with filtering data", sumData);
+        //sum data with filtering data
         setExpenseSum(sumData);
       } catch (error) {
         console.error(error);
@@ -74,11 +74,10 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
         }
       );
       const sumData: expenseSumData[] = await response.json();
-      console.log("all sumdata before filtering date", sumData);
+      //all sumdata before filtering date
       setExpenseSum(sumData);
     }
   };
-  console.log("efffff", expenseSum);
 
   useEffect(() => {
     getExpenseSum();

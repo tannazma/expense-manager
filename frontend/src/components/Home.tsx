@@ -31,7 +31,6 @@ const Home = () => {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    console.log("gchvjbk");
     await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/accounts`, {
       method: "post",
       headers: {

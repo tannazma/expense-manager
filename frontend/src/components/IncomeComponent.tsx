@@ -51,7 +51,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
           throw new Error("Failed to fetch expense sum");
         }
         const sumData: incomeSumData[] = await response.json();
-        console.log("sum data with filtering data", sumData);
+        //sum data with filtering data
         setIncomeSum(sumData);
       } catch (error) {
         console.error(error);
@@ -66,7 +66,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
         }
       );
       const sumData: incomeSumData[] = await response.json();
-      console.log("all sumdata before filtering date", sumData);
+      //all sumdata before filtering date
       setIncomeSum(sumData);
     }
   };

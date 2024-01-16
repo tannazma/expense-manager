@@ -26,7 +26,6 @@ const Login = () => {
   let loginBackgroundColor2 = "bg-violet-100";
 
   useEffect(() => {
-    console.log("useEffect triggered");
     if (justRegistered) {
       toast("You are registered successfully. Now login please.", {
         icon: "🎉",
@@ -59,7 +58,6 @@ const Login = () => {
   }
 
   const handleLogin = async (data: LoginFormInputs) => {
-    console.log(data);
 
     try {
       const response = await fetch(
@@ -77,7 +75,6 @@ const Login = () => {
         localStorage.setItem("token", token);
         router.push("/");
       } else {
-        console.log("Login failed");
         // trigger toast for failed login
         toast("Login failed. Please try again.", {
           icon: "⚠️",

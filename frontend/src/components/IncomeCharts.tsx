@@ -122,7 +122,6 @@ const IncomeCharts = () => {
         );
         const sumData: incomeSumData[] = await response.json();
         // create chart data based on the response
-        console.log("sumdata income",sumData);
         const chartData: ChartDataType[] = sumData.map((item) => ({
           amount: item.amount,
           name: item.incomeCategoryName,

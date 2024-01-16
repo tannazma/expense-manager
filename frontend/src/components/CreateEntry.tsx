@@ -47,12 +47,7 @@ export default function CreateEntry({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({
-      amount,
-      category: entryCategoryId,
-      details: details,
-      account: accountId,
-    });
+
     await fetch(
       type === "expense"
         ? `${process.env.NEXT_PUBLIC_SERVERURL}/expenses`
@@ -98,7 +93,6 @@ export default function CreateEntry({
   }
 
   async function addNewCategory() {
-    console.log({ newCategoryName, newCategoryIcon });
     fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/expenses-categories`, {
       method: "post",
       headers: { "Content-Type": "application/json" },

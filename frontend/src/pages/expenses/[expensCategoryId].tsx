@@ -287,7 +287,6 @@ const ExpenseDetailPage = () => {
                         >
                           {expenseCategories &&
                             expenseCategories.map((entryCat) => {
-                              console.log("entryCat", entryCat);
                               return (
                                 <option key={entryCat.id} value={entryCat.id}>
                                   {entryCat.icon}

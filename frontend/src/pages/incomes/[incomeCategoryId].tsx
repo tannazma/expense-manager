@@ -61,7 +61,6 @@ const IncomeDetailPage = () => {
     secondButtonClass = "bg-gray-500 hover:bg-gray-700 border-gray-500";
     entryBackgroundColorClass = "bg-gray-300";
   }
-  console.log(categoryIdFromUrl);
 
   useEffect(() => {
     const fetchAllIncomeCategories = async () => {
@@ -317,7 +316,6 @@ const IncomeDetailPage = () => {
                         >
                           {incomeCategories &&
                             incomeCategories.map((entryCat) => {
-                              console.log("entryCat", entryCat);
                               return (
                                 <option key={entryCat.id} value={entryCat.id}>
                                   {entryCat.icon}
