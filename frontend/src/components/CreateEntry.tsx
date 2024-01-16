@@ -4,6 +4,9 @@ import useFetchAccounts from "../hooks/useFetchAccounts";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import ThemeContext from "./ThemeContext";
+import {notify} from "../services/CustomToast";
+import expenseIcon from "../../public/expense.svg";
+import incomeIcon from "../../public/income.svg";
 
 interface createEntryProps {
   showDialog: boolean;
@@ -70,6 +73,10 @@ export default function CreateEntry({
     onCreated();
     setShowDialog(false);
     refetchBalance();
+    notify({
+      icon: type === "expense" ? expenseIcon : incomeIcon,
+      text: type === "expense" ? "expense" : "income",
+    });
   };
 
   useEffect(() => {
@@ -132,7 +139,7 @@ export default function CreateEntry({
 
   return (
     <div
-      className="min-h-[200px] min-w-[200px] grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-50"
+      className="min-h-[200px] min-w-[200px] grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-40"
       style={{
         display: showDialog ? "grid" : "none",
         opacity: showDialog ? 1 : 0,
