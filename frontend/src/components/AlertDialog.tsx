@@ -19,10 +19,10 @@ export function AlertDialogDemo({
   onCancel,
 }: AlertDialogDemoProps) {
   return (
-    <div className="min-h-[200px] min-w-[200px] grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-40">
+    <div className="min-h-[200px] min-w-[200px] grid place-items-center fixed top-0 left-0 right-0 bottom-0 transition-all-1s z-50 bg-black bg-opacity-20">
       {isOpen && (
         <AlertDialog open={isOpen} onOpenChange={onCancel}>
-          <AlertDialogContent className="bg-gray-300 p-6 rounded-lg shadow-md">
+          <AlertDialogContent className="bg-white p-6 rounded-lg shadow-md">
             <AlertDialogTitle className="text-lg font-semibold mb-2">
               Are you absolutely sure?
             </AlertDialogTitle>
