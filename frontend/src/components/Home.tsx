@@ -4,7 +4,7 @@ import IncomeComponent from "./IncomeComponent";
 import SelectedAccountContext from "./SelectedAccountContext";
 import useFetchAccounts from "../hooks/useFetchAccounts";
 import NavBar from "./NavBar";
-import useBalance from "@/hooks/useBalance";
+import useBalance from "../hooks/useBalance";
 import AccountsList from "./AccountsList";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
