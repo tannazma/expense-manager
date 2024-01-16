@@ -11,6 +11,7 @@ import SecondaryButton from "./SecondaryButton";
 import ThemeContext from "./ThemeContext";
 import FilterContext from "./FilterContext";
 import FilterDateComponent from "./FilterDateComponent";
+import { Toaster } from "react-hot-toast";
 
 const Home = () => {
   const [dateFilter, setDateFilter] = useState<{
@@ -147,7 +148,7 @@ const Home = () => {
             )}
           </div>
           <div className="flex items-end">
-          <FilterDateComponent />
+            <FilterDateComponent />
           </div>
         </div>
         <div className="flex flex-wrap gap-20 p-7 mb-5">
@@ -157,6 +158,7 @@ const Home = () => {
           </SelectedAccountContext.Provider>
         </div>
       </div>
+      <Toaster />
     </FilterContext.Provider>
   );
 };
