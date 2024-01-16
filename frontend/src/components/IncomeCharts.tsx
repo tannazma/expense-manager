@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import useIsRendered from "../hooks/useIsRendered";
 import {
   BarChart,
@@ -90,47 +90,58 @@ const IncomeCharts = () => {
     correctColors = COLORS; // default colors
   }
 
-  useEffect(() => {
-    const getIncomeSum = async () => {
-      if (dateFilter) {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch income sum");
+  const getIncomeSum = useCallback(async () => {
+    if (dateFilter) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
         }
-        const sumData: incomeSumData[] = await response.json();
-        // create chart data based on the response
-        const chartData: ChartDataType[] = sumData.map((item) => ({
-          amount: item.amount,
-          name: item.incomeCategoryName,
-        }));
-        setChartData(chartData); // set chart data
-      } else {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        const sumData: incomeSumData[] = await response.json();
-        // create chart data based on the response
-        const chartData: ChartDataType[] = sumData.map((item) => ({
-          amount: item.amount,
-          name: item.incomeCategoryName,
-        }));
-        setChartData(chartData); // set chart data
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch income sum");
       }
-    };
-    getIncomeSum();
+      const sumData: incomeSumData[] = await response.json();
+      // create chart data based on the response
+      const chartData: ChartDataType[] = sumData.map((item) => ({
+        amount: item.amount,
+        name: item.incomeCategoryName,
+      }));
+      setChartData(chartData); // set chart data
+    } else {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const sumData: incomeSumData[] = await response.json();
+      // create chart data based on the response
+      const chartData: ChartDataType[] = sumData.map((item) => ({
+        amount: item.amount,
+        name: item.incomeCategoryName,
+      }));
+      setChartData(chartData); // set chart data
+    }
   }, [selectedAccountId, dateFilter]);
+
+  useEffect(() => {
+    getIncomeSum();
+  }, [getIncomeSum]);
+
+  useEffect(() => {
+    const handleEntryEvent = () => {
+      getIncomeSum();
+    };
+    window.addEventListener("CreatedEntryEvent", handleEntryEvent);
+    return () => {
+      window.removeEventListener("CreatedEntryEvent", handleEntryEvent);
+    };
+  }, [getIncomeSum]);
 
   return (
     <div>

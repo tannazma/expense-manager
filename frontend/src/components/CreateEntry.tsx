@@ -4,7 +4,7 @@ import useFetchAccounts from "../hooks/useFetchAccounts";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import ThemeContext from "./ThemeContext";
-import {notify} from "../services/CustomToast";
+import { notify } from "../services/CustomToast";
 import expenseIcon from "../../public/expense.svg";
 import incomeIcon from "../../public/income.svg";
 
@@ -65,6 +65,11 @@ export default function CreateEntry({
         }),
       }
     );
+    
+    const entryEvent = new Event("CreatedEntryEvent");
+    (window as any).dispatchEvent(entryEvent);
+    console.log("dispatching event");
+
     onCreated();
     setShowDialog(false);
     refetchBalance();

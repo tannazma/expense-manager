@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import useIsRendered from "../hooks/useIsRendered";
 import {
   BarChart,
@@ -89,50 +89,61 @@ const ExpenseCharts = () => {
   } else {
     correctColors = COLORS; // default colors
   }
+  
+  const getExpenseSum = useCallback(async () => {
+    if (dateFilter) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch expense sum");
+      }
+      const sumData: expenseSumData[] = await response.json();
+      // create chart data based on the response
+      const chartData: ChartDataType[] = sumData.map((item) => ({
+        name: item.expenseCategoryName,
+        amount: item.amount,
+      }));
+      setChartData(chartData); // set chart data
+    } else {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const sumData: expenseSumData[] = await response.json();
+      // create chart data based on the response
+      const chartData: ChartDataType[] = sumData.map((item) => ({
+        name: item.expenseCategoryName,
+        amount: item.amount,
+      }));
+
+      setChartData(chartData); // set chart data
+    }
+  }, [selectedAccountId, dateFilter]);
+
 
   useEffect(() => {
-    const getExpenseSum = async () => {
-      if (dateFilter) {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum-filter?from=${dateFilter.from}&to=${dateFilter.to}`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch expense sum");
-        }
-        const sumData: expenseSumData[] = await response.json();
-        // create chart data based on the response
-        const chartData: ChartDataType[] = sumData.map((item) => ({
-          name: item.expenseCategoryName,
-          amount: item.amount,
-        }));
-        setChartData(chartData); // set chart data
-      } else {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        const sumData: expenseSumData[] = await response.json();
-        // create chart data based on the response
-        const chartData: ChartDataType[] = sumData.map((item) => ({
-          name: item.expenseCategoryName,
-          amount: item.amount,
-        }));
-
-        setChartData(chartData); // set chart data
-      }
-    };
-
     getExpenseSum();
-  }, [selectedAccountId, dateFilter]);
+  }, [getExpenseSum]);
+
+  useEffect(() => {
+    const handleEntryEvent = () => {
+      getExpenseSum();
+    };
+    window.addEventListener("CreatedEntryEvent", handleEntryEvent);
+    return () => {
+      window.removeEventListener("CreatedEntryEvent", handleEntryEvent);
+    };
+  }, [getExpenseSum]);
 
   return (
     <div>
