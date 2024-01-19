@@ -122,7 +122,7 @@ export default function AccountsList({
                   pathname: router.pathname, // keep the same page
                   query: {
                     ...router.query,
-                    accountname: account.name,
+                    accountName: account.name,
                     accountId: account.id,
                   }, // keep existing query parameters and add/replace accountname
                 };
