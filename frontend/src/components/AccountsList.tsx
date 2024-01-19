@@ -4,6 +4,7 @@ import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import ThemeContext from "./ThemeContext";
 import { AlertDialogDemo } from "./AlertDialog";
+import { useRouter } from "next/router";
 
 type Props = {
   accounts: Account[];
@@ -21,6 +22,7 @@ export default function AccountsList({
   const [editingAccountId, setEditingAccountId] = useState<number | null>(null);
   const [editingAccountName, setEditingAccountName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false); // new state variable for controlling the dialog
+  const router = useRouter();
 
   function cancelEdit() {
     setEditingAccountId(null);
@@ -116,6 +118,15 @@ export default function AccountsList({
               onClick={() => {
                 setSelectedAccount(account.id);
                 setEditingAccountId(null);
+                const path = {
+                  pathname: router.pathname, // keep the same page
+                  query: {
+                    ...router.query,
+                    accountname: account.name,
+                    accountId: account.id,
+                  }, // keep existing query parameters and add/replace accountname
+                };
+                router.push(path, undefined, { shallow: true }); // change the URL without triggering data re-fetch
               }}
               className={`bg  ${
                 selectedAccountId !== account.id
