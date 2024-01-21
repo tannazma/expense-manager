@@ -79,18 +79,19 @@ export default function CreateEntry({
     });
   };
 
+  const getAllEntryCategories = async () => {
+    const response = await fetch(
+      type === "expense"
+        ? `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
+        : `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
+    );
+    const categories = await response.json();
+    setEntryCategories(categories);
+    setEntryCategoryId(categories[0].id);
+  };
+
   useEffect(() => {
-    const getAllExpenseCategories = async () => {
-      const response = await fetch(
-        type === "expense"
-          ? `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
-          : `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
-      );
-      const categories = await response.json();
-      setEntryCategories(categories);
-      setEntryCategoryId(categories[0].id);
-    };
-    getAllExpenseCategories();
+    getAllEntryCategories();
   }, []);
 
   function closeDialog() {
@@ -98,7 +99,8 @@ export default function CreateEntry({
   }
 
   async function addNewCategory() {
-    fetch(
+    setIsAddingCategory(false);
+    await fetch(
       type === "expense"
         ? `${process.env.NEXT_PUBLIC_SERVERURL}/expenses-categories`
         : `${process.env.NEXT_PUBLIC_SERVERURL}/incomes-categories`,
@@ -111,7 +113,7 @@ export default function CreateEntry({
         }),
       }
     );
-    setIsAddingCategory(false);
+    getAllEntryCategories();
   }
 
   function closeAddingCategory() {
