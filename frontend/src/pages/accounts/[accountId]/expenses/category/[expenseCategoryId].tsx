@@ -13,7 +13,6 @@ import {
 import ThemeContext from "@/components/ThemeContext";
 import { AlertDialogDemo } from "../../../../../components/AlertDialog";
 import AccountComponent from "@/components/AccountComponent";
-import SelectedAccountContext from "@/components/SelectedAccountContext";
 
 interface ChartDataType {
   date: string;
@@ -22,16 +21,15 @@ interface ChartDataType {
 
 const ExpensesFromAcountFromCategory = () => {
   const router = useRouter();
-  const selectedAccountId = useContext(SelectedAccountContext);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [expenseAmount, setExpenseAmount] = useState("");
   const [selectedExpenseCategoryId, setSelectedExpenseCategoryId] =
-  useState("");
+    useState("");
   const [expenseDetails, setExpenseDetails] = useState("");
   const [expenseDate, setExpenseDate] = useState("");
   const [expenseCategories, setExpenseCategories] = useState<
-  ExpenseCategory[] | null
+    ExpenseCategory[] | null
   >(null);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const { theme } = useContext(ThemeContext);
@@ -92,7 +90,6 @@ const ExpensesFromAcountFromCategory = () => {
         amount: expense.amount,
       }));
       setChartData(chartData);
-    } else {
     }
   };
   if (isNaN(categoryIdFromUrl)) {
