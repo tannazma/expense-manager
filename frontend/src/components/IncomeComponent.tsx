@@ -27,11 +27,18 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
 
   useEffect(() => {
     const getIncomesCategories = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
-      );
-      const categories: IncomeCategory[] = await response.json();
-      setIncomeCategories(categories);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch income categories");
+        }
+        const categories: IncomeCategory[] = await response.json();
+        setIncomeCategories(categories);
+      } catch (error) {
+        console.error(error);
+      }
     };
     getIncomesCategories();
   }, []);
@@ -48,7 +55,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
           }
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch expense sum");
+          throw new Error("Failed to fetch income sum");
         }
         const sumData: incomeSumData[] = await response.json();
         //sum data with filtering data
@@ -121,7 +128,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
             return (
               <Link
                 key={summary.incomeCategoryId}
-                href={`/incomes/${incCategory?.id}`}
+                href={`/accounts/${selectedAccountId}/incomes/category/${incCategory?.id}`}
                 className="text-xs"
               >
                 <div

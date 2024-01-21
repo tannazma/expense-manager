@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Income, IncomeCategory } from "../../../types";
+import { Income, IncomeCategory } from "../../../../../../types";
 import { useRouter } from "next/router";
 
 import {
@@ -12,18 +12,18 @@ import {
 } from "recharts";
 import NavBar from "@/components/NavBar";
 import ThemeContext from "@/components/ThemeContext";
-import { AlertDialogDemo } from "../../components/AlertDialog";
+import { AlertDialogDemo } from "../../../../../components/AlertDialog";
+import AccountComponent from "@/components/AccountComponent";
 
 interface ChartDataType {
   date: string;
   amount: number;
 }
 
-const IncomeDetailPage = () => {
+const IncomesFromAcountFromCategory = () => {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const router = useRouter();
-  const categoryIdFromUrl = Number(router.query.incomeCategoryId);
   const [incomeAmount, setIncomeAmount] = useState("");
   const [selectedIncomeCategoryId, setSelectedIncomeCategoryId] = useState("");
   const [incomeDetails, setIncomeDetails] = useState("");
@@ -34,6 +34,8 @@ const IncomeDetailPage = () => {
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const { theme } = useContext(ThemeContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false); // new state variable for controlling the dialog
+  const accountIdFromUrl = Number(router.query.accountId);
+  const categoryIdFromUrl = Number(router.query.incomeCategoryId);
 
   let firstButtonClass =
     "border-purple-500 bg-violet-100 hover:bg-purple-500 text-purple-700";
@@ -63,6 +65,12 @@ const IncomeDetailPage = () => {
   }
 
   useEffect(() => {
+    if (router.isReady) {
+      fetchIncomesFromCategory();
+    }
+  }, [router.isReady, accountIdFromUrl, categoryIdFromUrl]);
+
+  useEffect(() => {
     const fetchAllIncomeCategories = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
@@ -76,32 +84,6 @@ const IncomeDetailPage = () => {
     fetchAllIncomeCategories();
   }, []);
 
-  const fetchIncomesFromCategory = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      }
-    );
-    const data = await response.json();
-    setSelectedIncomeCategoryId(data[0].id);
-    setIncomes(data);
-
-    const chartData: ChartDataType[] = data.map((income: Income) => ({
-      // format the date as MM-DD
-      date:
-        new Date(income.date).getMonth() +
-        1 +
-        "/" +
-        new Date(income.date).getDate(),
-      amount: income.amount,
-    }));
-
-    setChartData(chartData);
-  };
-
   useEffect(() => {
     if (isNaN(categoryIdFromUrl)) {
       return;
@@ -109,6 +91,71 @@ const IncomeDetailPage = () => {
       fetchIncomesFromCategory();
     }
   }, [categoryIdFromUrl]);
+
+  useEffect(() => {
+    if (isNaN(categoryIdFromUrl)) {
+      return;
+    } else {
+      const getIncomesFromCategories = async () => {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        const data = await response.json();
+        setIncomes(data);
+
+        const chartData: ChartDataType[] = data.map((income: Income) => ({
+          // format the date as MM-DD
+          date:
+            new Date(income.date).getMonth() +
+            1 +
+            "/" +
+            new Date(income.date).getDate(),
+          amount: income.amount,
+        }));
+
+        setChartData(chartData);
+      };
+      getIncomesFromCategories();
+    }
+  }, [categoryIdFromUrl]);
+
+  const fetchIncomesFromCategory = async () => {
+    // Check if accountId is not null
+    if (accountIdFromUrl !== null && !isNaN(categoryIdFromUrl)) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${accountIdFromUrl}/category/${categoryIdFromUrl}/incomes`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const data = await response.json();
+      setSelectedIncomeCategoryId(data[0].id);
+      setIncomes(data);
+
+      const chartData: ChartDataType[] = data.map((income: Income) => ({
+        // format the date as MM-DD
+        date:
+          new Date(income.date).getMonth() +
+          1 +
+          "/" +
+          new Date(income.date).getDate(),
+        amount: income.amount,
+      }));
+
+      setChartData(chartData);
+    }
+  };
+
+  if (isNaN(categoryIdFromUrl)) {
+    return <div>Income not found</div>;
+  }
 
   const handleDeleteIncome = (incomeId: number) => {
     if (!Number.isInteger(incomeId)) {
@@ -181,44 +228,10 @@ const IncomeDetailPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (isNaN(categoryIdFromUrl)) {
-      return;
-    } else {
-      const getIncomesFromCategories = async () => {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        const data = await response.json();
-        setIncomes(data);
-
-        const chartData: ChartDataType[] = data.map((income: Income) => ({
-          // format the date as MM-DD
-          date:
-            new Date(income.date).getMonth() +
-            1 +
-            "/" +
-            new Date(income.date).getDate(),
-          amount: income.amount,
-        }));
-
-        setChartData(chartData);
-      };
-      getIncomesFromCategories();
-    }
-  }, [categoryIdFromUrl]);
-
-  if (isNaN(categoryIdFromUrl)) {
-    return <div>Income not found</div>;
-  }
   return (
     <div>
       <NavBar />
+      <AccountComponent />
       <div className="pt-10">
         <LineChart
           width={300}
@@ -367,4 +380,4 @@ const IncomeDetailPage = () => {
     </div>
   );
 };
-export default IncomeDetailPage;
+export default IncomesFromAcountFromCategory;

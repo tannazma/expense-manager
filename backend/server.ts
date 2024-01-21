@@ -743,14 +743,35 @@ app.get(
 );
 
 app.get(
-  "/api/category/:categoryId/incomes",
+  "/api/accounts/:accountId/category/:categoryId/incomes",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const categoryIdAsNumber = Number(req.params.categoryId);
-    const incomes = await prisma.income.findMany({
+    const accountIdAsNumber = Number(req.params.accountId);
+    if (!accountIdAsNumber && accountIdAsNumber !== 0) {
+      res.status(400).send({
+        message: "Incomes with that id not found",
+      });
+      return;
+    }
+    const currentUserAccounts = await prisma.account.findMany({
       where: {
-        incomeCategoryId: categoryIdAsNumber,
+        userId: req.userId,
       },
+    });
+    const incomes = await prisma.income.findMany({
+      where:
+        accountIdAsNumber === 0
+          ? {
+              accountId: {
+                in: currentUserAccounts.map((acc) => acc.id),
+              },
+              incomeCategoryId: categoryIdAsNumber,
+            }
+          : {
+              incomeCategoryId: categoryIdAsNumber,
+              accountId: accountIdAsNumber,
+            },
       include: {
         incomeCategory: true,
         accounts: true,
@@ -758,7 +779,7 @@ app.get(
     });
     if (!incomes) {
       res.status(404).send({
-        message: "Expense Category with that id not found",
+        message: "Income Category with that id not found",
       });
       return;
     }
