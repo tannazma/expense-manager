@@ -829,6 +829,21 @@ app.post("/api/expenses-categories", async (req, res) => {
   }
 });
 
+app.post("/api/incomes-categories", async (req, res) => {
+  const { name: incomeCategoryName, icon: incomeCategoryIcon } = req.body;
+  try {
+    const newIncomeCategory = await prisma.incomeCategory.create({
+      data: {
+        name: incomeCategoryName,
+        icon: incomeCategoryIcon,
+      },
+    });
+    res.status(200).send(newIncomeCategory);
+  } catch {
+    res.status(500).send({ error: "Error creating income category" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`⚡ Server listening on port: ${port}`);
 });

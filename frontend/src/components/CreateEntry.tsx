@@ -65,7 +65,7 @@ export default function CreateEntry({
         }),
       }
     );
-    
+
     const entryEvent = new Event("CreatedEntryEvent");
     (window as any).dispatchEvent(entryEvent);
     console.log("dispatching event");
@@ -98,14 +98,19 @@ export default function CreateEntry({
   }
 
   async function addNewCategory() {
-    fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/expenses-categories`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: newCategoryName,
-        icon: newCategoryIcon,
-      }),
-    });
+    fetch(
+      type === "expense"
+        ? `${process.env.NEXT_PUBLIC_SERVERURL}/expenses-categories`
+        : `${process.env.NEXT_PUBLIC_SERVERURL}/incomes-categories`,
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: newCategoryName,
+          icon: newCategoryIcon,
+        }),
+      }
+    );
     setIsAddingCategory(false);
   }
 
