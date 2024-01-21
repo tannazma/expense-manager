@@ -698,14 +698,35 @@ app.get(
 );
 
 app.get(
-  "/api/category/:categoryId/expenses",
+  "/api/accounts/:accountId/category/:categoryId/expenses",
   AuthMiddleware,
   async (req: AuthRequest, res) => {
     const categoryIdAsNumber = Number(req.params.categoryId);
-    const expenses = await prisma.expense.findMany({
+    const accountIdAsNumber = Number(req.params.accountId);
+    if (!accountIdAsNumber && accountIdAsNumber !== 0) {
+      res.status(400).send({
+        message: "Expenses with that id not found",
+      });
+      return;
+    }
+    const currentUserAccounts = await prisma.account.findMany({
       where: {
-        expenseCategoryId: categoryIdAsNumber,
+        userId: req.userId,
       },
+    });
+    const expenses = await prisma.expense.findMany({
+      where:
+        accountIdAsNumber === 0
+          ? {
+              accountId: {
+                in: currentUserAccounts.map((acc) => acc.id),
+              },
+              expenseCategoryId: categoryIdAsNumber,
+            }
+          : {
+              accountId: accountIdAsNumber,
+              expenseCategoryId: categoryIdAsNumber,
+            },
       include: {
         expenseCategory: true,
         account: true,

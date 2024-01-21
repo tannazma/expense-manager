@@ -129,7 +129,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
             return (
               <Link
                 key={summary.expenseCategoryId}
-                href={`/expenses/${expCategory?.id}`}
+                href={`/accounts/${selectedAccountId}/category/${expCategory?.id}/expenses`}
                 className="text-xs"
               >
                 <div
