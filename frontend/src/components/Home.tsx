@@ -41,9 +41,9 @@ const Home = () => {
         name: accountName,
       }),
     });
-
     refetchAccounts();
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
+    setAccountName("")
   };
 
   const { theme } = useContext(ThemeContext);
@@ -100,9 +100,8 @@ const Home = () => {
                 />
                 Account name
               </label>
-
               <PrimaryButton type="submit">Create</PrimaryButton>
-              <SecondaryButton type="submit">Cancel</SecondaryButton>
+              <SecondaryButton onClick={()=>setShowCreateExpenseDialog(false)}>Cancel</SecondaryButton>
             </form>
           )}
         </div>

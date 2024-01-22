@@ -31,6 +31,7 @@ const AccountComponent = () => {
       }),
     });
 
+    setAccountName("")
     refetchAccounts();
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
@@ -89,7 +90,7 @@ const AccountComponent = () => {
           </label>
 
           <PrimaryButton type="submit">Create</PrimaryButton>
-          <SecondaryButton type="submit">Cancel</SecondaryButton>
+          <SecondaryButton >Cancel</SecondaryButton>
         </form>
       )}
     </div>
