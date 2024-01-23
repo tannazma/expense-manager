@@ -88,8 +88,8 @@ app.post("/api/expenses", async (req, res) => {
       });
       res.status(201).send({ message: "Expense created!" });
     } catch (error) {
-      res.status(500).send({ message: "Something went wrong!" });
       console.error("error while creating expense:", error);
+      res.status(500).send({ message: "Something went wrong!" });
     }
   } else {
     res.status(400).send({
@@ -378,8 +378,8 @@ app.post("/api/incomes", async (req, res) => {
       });
       res.status(201).send({ message: "Income created!" });
     } catch (error) {
-      res.status(500).send({ message: "Something went wrong!" });
       console.error("error while creating income:", error);
+      res.status(500).send({ message: "Something went wrong!" });
     }
   } else {
     res.status(400).send({
@@ -539,6 +539,7 @@ app.get(
 
       res.send(summedExpenses);
     } catch (error) {
+      console.error(error);
       res.status(500).send({ error: "Something went wrong" });
     }
   }
@@ -632,6 +633,7 @@ app.get(
 
       res.send(summedIncomes);
     } catch (error) {
+      console.error(error);
       res.status(500).send({ error: "Something went wrong" });
     }
   }
@@ -831,6 +833,7 @@ app.post("/api/users", async (req, res) => {
     res.status(200).send(newUser);
     console.log(newUser);
   } catch (error) {
+    console.error(error);
     res.status(500).send({ error: "Error registering user" });
   }
 });
@@ -845,7 +848,8 @@ app.post("/api/expenses-categories", async (req, res) => {
       },
     });
     res.status(200).send(newExpenseCategory);
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).send({ error: "Error registering user" });
   }
 });
@@ -860,7 +864,8 @@ app.post("/api/incomes-categories", async (req, res) => {
       },
     });
     res.status(200).send(newIncomeCategory);
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).send({ error: "Error creating income category" });
   }
 });
