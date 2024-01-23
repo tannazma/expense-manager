@@ -1,30 +1,25 @@
 [
   {
-    "id": 1,
     "username": "Tannaz",
     "password": "tannaz123",
     "email": "tannaz@gmail.com"
   },
   {
-    "id": 2,
     "username": "Ardeshir",
     "password": "ardeshir123",
     "email": "ardeshir@gmail.com"
   },
   {
-    "id": 3,
     "username": "Sanaz",
     "password": "sanaz123",
     "email": "sanaz@gmail.com"
   },
   {
-    "id": 4,
     "username": "Akram",
     "password": "akram123",
     "email": "akram@gmail.com"
   },
   {
-    "id": 5,
     "username": "Majid",
     "password": "majid123",
     "email": "majid@gmail.com"

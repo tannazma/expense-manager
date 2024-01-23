@@ -30,7 +30,7 @@ const seed = async () => {
     const thisUser = userData[i];
     await prisma.user.create({
       data: {
-        id: thisUser.id,
+        // id: thisUser.id,
         email: thisUser.email,
         password: hashSync(thisUser.password, 10),
         username: thisUser.username,
