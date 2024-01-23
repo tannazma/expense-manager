@@ -64,10 +64,6 @@ const ExpensesFromAcountFromCategory = () => {
     }}, [accountIdFromUrl, categoryIdFromUrl])
 
   useEffect(() => {
-    console.log("FETCHING DATA")
-   
-    
-  
     const fetchAllExpenseCategories = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
@@ -81,8 +77,6 @@ const ExpensesFromAcountFromCategory = () => {
         fetchExpensesFromCategory();
       }
     };
-
-
 
     if (router.isReady) {
       fetchAllExpenseCategories();
