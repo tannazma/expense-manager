@@ -27,7 +27,7 @@ const useFetchUser = () => {
       }
     };
     getUser();
-  }, []);
+  }, [router]);
   return user;
 };
 export default useFetchUser;

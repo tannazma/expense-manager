@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { expenseSumData, incomeSumData } from "../../types";
 
 const useBalance = () => {
@@ -16,7 +16,7 @@ const useBalance = () => {
   );
   const balance = incomeTotal - expenseTotal;
 
-  const getIncomeSum = async () => {
+  const getIncomeSum = useCallback(async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/incomes-sum`,
       {
@@ -27,13 +27,13 @@ const useBalance = () => {
     );
     const sumData: incomeSumData[] = await response.json();
     setIncomeSum(sumData);
-  };
+  }, [selectedAccountId]);
 
   useEffect(() => {
     getIncomeSum();
-  }, [selectedAccountId]);
+  }, [getIncomeSum]);
 
-  const getExpenseSum = async () => {
+  const getExpenseSum = useCallback(async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${selectedAccountId}/expenses-sum`,
       {
@@ -44,11 +44,11 @@ const useBalance = () => {
     );
     const sumData: expenseSumData[] = await response.json();
     setExpenseSum(sumData);
-  };
+  }, [selectedAccountId]);
 
   useEffect(() => {
     getExpenseSum();
-  }, [selectedAccountId]);
+  }, [getExpenseSum]);
 
   function refetchBalance() {
     getExpenseSum();

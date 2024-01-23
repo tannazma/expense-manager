@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import CreateEntry from "./CreateEntry";
 import { ExpenseCategory, expenseSumData } from "../../types";
 import Link from "next/link";
@@ -44,7 +44,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
     getExpensesCategories();
   }, []);
 
-  const getExpenseSum = async () => {
+  const getExpenseSum = useCallback(async () => {
     if (dateFilter) {
       try {
         const response = await fetch(
@@ -77,11 +77,11 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
       //all sumdata before filtering date
       setExpenseSum(sumData);
     }
-  };
+  }, [selectedAccountId, dateFilter]);
 
   useEffect(() => {
     getExpenseSum();
-  }, [selectedAccountId, dateFilter]);
+  }, [getExpenseSum]);
 
   // Code to set the background color class based on the theme
   let entryBackgroundColorClass =

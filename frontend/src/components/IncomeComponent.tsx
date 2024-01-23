@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { IncomeCategory, incomeSumData } from "../../types";
 import Link from "next/link";
 import SelectedAccountContext from "./SelectedAccountContext";
@@ -43,7 +43,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
     getIncomesCategories();
   }, []);
 
-  const getIncomeSum = async () => {
+  const getIncomeSum = useCallback(async () => {
     if (dateFilter) {
       try {
         const response = await fetch(
@@ -76,11 +76,11 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
       //all sumdata before filtering date
       setIncomeSum(sumData);
     }
-  };
+  }, [selectedAccountId, dateFilter]);
 
   useEffect(() => {
     getIncomeSum();
-  }, [selectedAccountId, dateFilter]);
+  }, [getIncomeSum]);
 
   const { theme } = useContext(ThemeContext);
   let entryBackgroundColorClass =

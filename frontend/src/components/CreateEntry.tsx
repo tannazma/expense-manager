@@ -1,4 +1,10 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { ExpenseCategory as EntryCategory } from "../../types";
 import useFetchAccounts from "../hooks/useFetchAccounts";
 import PrimaryButton from "./PrimaryButton";
@@ -79,7 +85,7 @@ export default function CreateEntry({
     });
   };
 
-  const getAllEntryCategories = async () => {
+  const getAllEntryCategories = useCallback(async () => {
     const response = await fetch(
       type === "expense"
         ? `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
@@ -88,11 +94,11 @@ export default function CreateEntry({
     const categories = await response.json();
     setEntryCategories(categories);
     setEntryCategoryId(categories[0].id);
-  };
+  }, [type]);
 
   useEffect(() => {
     getAllEntryCategories();
-  }, []);
+  }, [getAllEntryCategories]);
 
   function closeDialog() {
     setShowDialog(!showDialog);
