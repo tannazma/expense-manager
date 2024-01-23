@@ -26,7 +26,8 @@ const useFetchUser = () => {
         }
       }
     };
-    getUser();
+    if (localStorage.getItem("token")) {getUser()}
+    
   }, [router]);
   return user;
 };
