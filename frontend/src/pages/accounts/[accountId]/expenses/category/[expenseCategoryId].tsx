@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Expense, ExpenseCategory } from "../../../../../../types";
 import NavBar from "@/components/NavBar";
 import {
@@ -37,35 +37,8 @@ const ExpensesFromAcountFromCategory = () => {
   const accountIdFromUrl = Number(router.query.accountId);
   const categoryIdFromUrl = Number(router.query.expenseCategoryId);
 
-  useEffect(() => {
-    if (router.isReady) {
-      fetchExpensesFromCategory();
-    }
-  }, [router.isReady, accountIdFromUrl, categoryIdFromUrl]);
-
-  useEffect(() => {
-    const fetchAllExpenseCategories = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
-      );
-      const data = await response.json();
-      setExpenseCategories(data);
-      if (data[0]) {
-        setSelectedExpenseCategoryId(data[0].id);
-      }
-    };
-    fetchAllExpenseCategories();
-  }, []);
-
-  useEffect(() => {
-    if (isNaN(categoryIdFromUrl)) {
-      return;
-    } else {
-      fetchExpensesFromCategory();
-    }
-  }, [categoryIdFromUrl]);
-
-  const fetchExpensesFromCategory = async () => {
+  
+  const fetchExpensesFromCategory = useCallback(async () => {
     // Check if accountId is not null
     if (accountIdFromUrl !== null && !isNaN(categoryIdFromUrl)) {
       const response = await fetch(
@@ -79,9 +52,7 @@ const ExpensesFromAcountFromCategory = () => {
       const data = await response.json();
       setSelectedExpenseCategoryId(data[0].id);
       setExpenses(data);
-
       const chartData: ChartDataType[] = data.map((expense: Expense) => ({
-        // format the date as MM-DD
         date:
           new Date(expense.date).getMonth() +
           1 +
@@ -90,8 +61,37 @@ const ExpensesFromAcountFromCategory = () => {
         amount: expense.amount,
       }));
       setChartData(chartData);
+    }}, [accountIdFromUrl, categoryIdFromUrl])
+
+  useEffect(() => {
+    console.log("FETCHING DATA")
+   
+    
+  
+    const fetchAllExpenseCategories = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
+      );
+      const data = await response.json();
+      setExpenseCategories(data);
+      if (data[0]) {
+        setSelectedExpenseCategoryId(data[0].id);
+      }
+      if (router.isReady) {
+        fetchExpensesFromCategory();
+      }
+    };
+
+
+
+    if (router.isReady) {
+      fetchAllExpenseCategories();
+      fetchExpensesFromCategory();
     }
-  };
+  }, [router, categoryIdFromUrl, accountIdFromUrl, fetchExpensesFromCategory]);
+
+  
+
   if (isNaN(categoryIdFromUrl)) {
     return <div>Expense not found</div>;
   }
