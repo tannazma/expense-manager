@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Income, IncomeCategory } from "../../../../../../types";
 import { useRouter } from "next/router";
 
@@ -64,6 +64,35 @@ const IncomesFromAcountFromCategory = () => {
     entryBackgroundColorClass = "bg-gray-300";
   }
 
+  const fetchIncomesFromCategory = useCallback(async () => {
+    // Check if accountId is not null
+    if (accountIdFromUrl !== null && !isNaN(categoryIdFromUrl)) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${accountIdFromUrl}/category/${categoryIdFromUrl}/incomes`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const data = await response.json();
+      setSelectedIncomeCategoryId(data[0].id);
+      setIncomes(data);
+
+      const chartData: ChartDataType[] = data.map((income: Income) => ({
+        // format the date as MM-DD
+        date:
+          new Date(income.date).getMonth() +
+          1 +
+          "/" +
+          new Date(income.date).getDate(),
+        amount: income.amount,
+      }));
+
+      setChartData(chartData);
+    }
+  }, [accountIdFromUrl, categoryIdFromUrl]);
+
   useEffect(() => {
     const fetchAllIncomeCategories = async () => {
       const response = await fetch(
@@ -77,8 +106,9 @@ const IncomesFromAcountFromCategory = () => {
     };
     if (router.isReady) {
       fetchAllIncomeCategories();
+      fetchIncomesFromCategory();
     }
-  }, [router]);
+  }, [router, categoryIdFromUrl, accountIdFromUrl, fetchIncomesFromCategory]);
 
   useEffect(() => {
     const getIncomesFromCategories = async () => {
@@ -107,35 +137,6 @@ const IncomesFromAcountFromCategory = () => {
     };
     getIncomesFromCategories();
   }, [categoryIdFromUrl]);
-
-  const fetchIncomesFromCategory = async () => {
-    // Check if accountId is not null
-    if (accountIdFromUrl !== null && !isNaN(categoryIdFromUrl)) {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVERURL}/accounts/${accountIdFromUrl}/category/${categoryIdFromUrl}/incomes`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const data = await response.json();
-      setSelectedIncomeCategoryId(data[0].id);
-      setIncomes(data);
-
-      const chartData: ChartDataType[] = data.map((income: Income) => ({
-        // format the date as MM-DD
-        date:
-          new Date(income.date).getMonth() +
-          1 +
-          "/" +
-          new Date(income.date).getDate(),
-        amount: income.amount,
-      }));
-
-      setChartData(chartData);
-    }
-  };
 
   if (isNaN(categoryIdFromUrl)) {
     return <div>Income not found</div>;
