@@ -8,6 +8,7 @@ const useFetchUser = () => {
 
   useEffect(() => {
     const getUser = async () => {
+      console.log("HELLLLLLLLOOOOOOOOOO")
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVERURL}/user`,
         {
