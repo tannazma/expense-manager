@@ -4,7 +4,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx tsx watch server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db-seed": "tsx prisma/seed.ts",
+    "db-clear": "prisma db push --force-reset",
+    "db-reset": "npm run db-clear && npm run db-seed",
+    "build": "tsc",
+    "start": "npm run build && node build/server.ts"
   },
   "keywords": [],
   "author": "",
