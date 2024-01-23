@@ -65,12 +65,6 @@ const IncomesFromAcountFromCategory = () => {
   }
 
   useEffect(() => {
-    if (router.isReady) {
-      fetchIncomesFromCategory();
-    }
-  }, [router.isReady, accountIdFromUrl, categoryIdFromUrl]);
-
-  useEffect(() => {
     const fetchAllIncomeCategories = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
@@ -81,47 +75,37 @@ const IncomesFromAcountFromCategory = () => {
         setSelectedIncomeCategoryId(data[0].id);
       }
     };
-    fetchAllIncomeCategories();
-  }, []);
+    if (router.isReady) {
+      fetchAllIncomeCategories();
+    }
+  }, [router]);
 
   useEffect(() => {
-    if (isNaN(categoryIdFromUrl)) {
-      return;
-    } else {
-      fetchIncomesFromCategory();
-    }
-  }, [categoryIdFromUrl]);
+    const getIncomesFromCategories = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const data = await response.json();
+      setIncomes(data);
 
-  useEffect(() => {
-    if (isNaN(categoryIdFromUrl)) {
-      return;
-    } else {
-      const getIncomesFromCategories = async () => {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/category/${categoryIdFromUrl}/incomes`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        const data = await response.json();
-        setIncomes(data);
+      const chartData: ChartDataType[] = data.map((income: Income) => ({
+        // format the date as MM-DD
+        date:
+          new Date(income.date).getMonth() +
+          1 +
+          "/" +
+          new Date(income.date).getDate(),
+        amount: income.amount,
+      }));
 
-        const chartData: ChartDataType[] = data.map((income: Income) => ({
-          // format the date as MM-DD
-          date:
-            new Date(income.date).getMonth() +
-            1 +
-            "/" +
-            new Date(income.date).getDate(),
-          amount: income.amount,
-        }));
-
-        setChartData(chartData);
-      };
-      getIncomesFromCategories();
-    }
+      setChartData(chartData);
+    };
+    getIncomesFromCategories();
   }, [categoryIdFromUrl]);
 
   const fetchIncomesFromCategory = async () => {
