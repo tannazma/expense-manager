@@ -74,7 +74,7 @@ export default function CreateEntry({
 
     const entryEvent = new Event("CreatedEntryEvent");
     (window as any).dispatchEvent(entryEvent);
-    console.log("dispatching event");
+    // console.log("dispatching event");
 
     onCreated();
     setShowDialog(false);
