@@ -1,19 +1,16 @@
 import { IncomeCategory } from "@prisma/client";
 
-export const seedIncomeCategories: IncomeCategory[] = [
+export const seedIncomeCategories: Omit<IncomeCategory, "id">[] = [
   {
-    "id": 1,
-    "name": "Salary",
-    "icon": "💸"
+    name: "Salary",
+    icon: "💸",
   },
   {
-    "id": 2,
-    "name": "Social media",
-    "icon": "📸"
+    name: "Social media",
+    icon: "📸",
   },
   {
-    "id": 3,
-    "name": "Forex",
-    "icon": "📊"
-  }
-]
+    name: "Forex",
+    icon: "📊",
+  },
+];
