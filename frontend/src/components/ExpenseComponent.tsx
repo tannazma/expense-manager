@@ -26,21 +26,22 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
 
-  useEffect(() => {
-    const getExpensesCategories = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch expense categories");
-        }
-        const categories: ExpenseCategory[] = await response.json();
-        setExpenseCategories(categories);
-      } catch (error) {
-        console.error(error);
+  const getExpensesCategories = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/expense-categories`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch expense categories");
       }
-    };
+      const categories: ExpenseCategory[] = await response.json();
+      setExpenseCategories(categories);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     getExpensesCategories();
   }, []);
 
@@ -114,7 +115,9 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
             showDialog={showCreateExpenseDialog}
             type="expense"
             setShowDialog={setShowCreateExpenseDialog}
-            onCreated={getExpenseSum}
+            onCreated={() => {
+              getExpenseSum(), getExpensesCategories();
+            }}
             refetchBalance={refetchBalance}
           />
         )}
