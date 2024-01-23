@@ -25,21 +25,21 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
     setShowCreateIncomeDialog(!showCreateIncomeDialog);
   };
 
-  useEffect(() => {
-    const getIncomesCategories = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch income categories");
-        }
-        const categories: IncomeCategory[] = await response.json();
-        setIncomeCategories(categories);
-      } catch (error) {
-        console.error(error);
+  const getIncomesCategories = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/income-categories`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch income categories");
       }
-    };
+      const categories: IncomeCategory[] = await response.json();
+      setIncomeCategories(categories);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
     getIncomesCategories();
   }, []);
 
@@ -113,7 +113,9 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
             showDialog={showCreateIncomeDialog}
             type="income"
             setShowDialog={setShowCreateIncomeDialog}
-            onCreated={getIncomeSum}
+            onCreated={() => {
+              getIncomeSum(), getIncomesCategories();
+            }}
             refetchBalance={refetchBalance}
           />
         )}
