@@ -64,7 +64,7 @@ const Home = () => {
       <div>
         <NavBar />
         <div
-          className={`${accountColor} flex flex-col gap-3 min-h-[80px] p-1 pl-7 mb-3 items-start px-1 py-1`}
+          className={`${accountColor} flex flex-col md:flex-row gap-3 min-h-[80px] p-1 pl-7 mb-3 items-start px-1 py-1 md:items-center`}
         >
           {accounts && (
             <AccountsList
@@ -89,9 +89,9 @@ const Home = () => {
              New Account
           </SecondaryButton>
           {showCreateExpenseDialog && (
-            <form onSubmit={handleCreateAccount} className="flex items-end">
-              <label className="text-xs flex flex-col">
-              Account name
+            <form onSubmit={handleCreateAccount} className="flex items-end md:items-center md:h-[50px]">
+              <label className="text-xs flex flex-col md:flex-row md:flex-row-reverse md:items-center md:h-[50px]">
+                Account name
                 <input
                   id="accountName"
                   name="accountName"
@@ -114,7 +114,7 @@ const Home = () => {
                   <span className="text-green-600"> {balance}</span>
                 </h2>
                 <p className="bg-green-100 border rounded border-green-800 text-xs text-green-900 pt-2 pb-2 mt-3">
-                  <span className="text-xs mr-2">😍 </span>Great job!
+                  <span className="text-xs mr-2 pl-2">😍 </span>Great job!
                   You&apos;re on track with your finances!
                 </p>
               </>
@@ -128,7 +128,7 @@ const Home = () => {
                   </span>
                 </h2>
                 <p className="border-yellow-500 border text-xs rounded bg-yellow-50 text-yellow-700 pt-2 pb-2 mt-3">
-                  <span className="text-xs mr-2">🚧 </span>Watch out! Consider
+                  <span className="text-xs mr-2 pl-2">🚧 </span>Watch out! Consider
                   limiting your spendings!
                 </p>
               </>

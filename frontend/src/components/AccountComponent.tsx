@@ -52,7 +52,7 @@ const AccountComponent = () => {
 
   return (
     <div
-      className={`${accountColor} flex flex-col gap-3 min-h-[80px] p-1 pl-7 mb-3 items-start px-1 py-1`}
+      className={`${accountColor} flex flex-col gap-3 min-h-[80px] p-1 pl-7 mb-3 items-start px-1 py-1 md:flex-row md:items-center`}
     >
       {accounts && (
         <AccountsList
@@ -77,8 +77,8 @@ const AccountComponent = () => {
          New Account
       </SecondaryButton>
       {showCreateExpenseDialog && (
-        <form onSubmit={handleCreateAccount} className="flex items-end">
-          <label className="text-xs">
+        <form onSubmit={handleCreateAccount} className="flex items-end md:items-center">
+          <label className="text-xs flex flex-col md:flex-row md:flex-row-reverse md:items-center md:h-[50px]">
           Account name
             <input
               id="accountName"
