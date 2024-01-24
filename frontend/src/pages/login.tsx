@@ -129,10 +129,10 @@ const Login = () => {
         </div>
       </div>
       <div
-        className={`${loginBackgroundColor} min-h-screen flex justify-center p-20 items-center align-top`}
+        className={`${loginBackgroundColor} min-h-screen flex justify-center md:p-20 items-center align-top p-7`}
       >
         <div
-          className={`${loginBackgroundColor2} min-w-[500px] rounded-2xl shadow-xl p-10`}
+          className={`${loginBackgroundColor2} min-w-[80vw] md:min-w-[500px] rounded-2xl shadow-xl p-10`}
         >
           {user && (
             <h1 className="flex items-center justify-center text-2xl font-bold text-center mb-4 cursor-pointer">

@@ -66,10 +66,10 @@ const Register = () => {
     <div>
       <NavBar />
       <div
-        className={`${registerBackgroundColor} min-h-screen items-center flex justify-center p-20 align-top`}
+        className={`${registerBackgroundColor} min-h-screen items-center flex justify-center md:p-20 align-top p-7`}
       >
         <main
-          className={`${registerBackgroundColor2} min-w-[500px] rounded-3xl shadow-xl p-10 `}
+          className={`${registerBackgroundColor2} min-w-[80vw] md:min-w-[500px] rounded-3xl shadow-xl p-10 `}
         >
           <div>
             <h1 className="text-2xl font-bold text-center mb-4 cursor-pointer">
