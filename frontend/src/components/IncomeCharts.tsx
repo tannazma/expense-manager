@@ -76,6 +76,8 @@ const IncomeCharts = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
   const { isDarkMode, isGreen, isBlue, isRed } = useContext(ThemeContext);
   const { dateFilter } = useContext(FilterContext);
+  const [chartWitdhState, setChartWidthState] = useState(0);
+
   let correctColors: string[];
 
   if (isDarkMode) {
@@ -143,8 +145,18 @@ const IncomeCharts = () => {
     };
   }, [getIncomeSum]);
 
-  const chartWidth =
-    window.innerWidth < 768 ? window.innerWidth : window.innerWidth / 2 - 100;
+  useEffect(() => {
+    const handleResizeCharts = () => {
+      setChartWidthState(
+        window.innerWidth < 768
+          ? window.innerWidth
+          : window.innerWidth / 2 - 100
+      );
+    };
+    window.addEventListener("resize", handleResizeCharts);
+    //to set the state at first to set the state for the default size, cause event is resize we need to get the state
+    handleResizeCharts();
+  }, []);
 
   return (
     <div>
@@ -169,11 +181,8 @@ const IncomeCharts = () => {
         </SecondaryButton>
       </div>
       {isRendered && chartType === "pie" && (
-        <div>
-          <PieChart
-            width={chartWidth}
-            height={350}
-          >
+        <div className="md:flex md:items-center md:mt-3 md:mb-3 md:p-8">
+          <PieChart width={chartWitdhState} height={400}>
             <Pie
               dataKey="amount"
               data={chartData}
@@ -200,8 +209,8 @@ const IncomeCharts = () => {
         </div>
       )}
       {isRendered && chartType === "bar" && (
-        <div className="flex items-center h-[300px]">
-          <BarChart width={chartWidth} height={350} data={chartData}>
+        <div className="flex items-center md:p-8 md:mt-3 md:mb-3">
+          <BarChart width={chartWitdhState} height={400} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"

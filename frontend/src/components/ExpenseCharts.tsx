@@ -76,6 +76,8 @@ const ExpenseCharts = () => {
   const selectedAccountId = useContext(SelectedAccountContext);
   const { isDarkMode, isGreen, isBlue, isRed } = useContext(ThemeContext);
   const { dateFilter } = useContext(FilterContext);
+  const [chartWitdhState, setChartWidthState] = useState(0);
+
   let correctColors: string[];
 
   if (isDarkMode) {
@@ -89,9 +91,6 @@ const ExpenseCharts = () => {
   } else {
     correctColors = COLORS; // default colors
   }
-
-  const chartWidth =
-    window.innerWidth < 768 ? window.innerWidth : window.innerWidth / 2 - 100;
 
   const getExpenseSum = useCallback(async () => {
     if (dateFilter) {
@@ -147,6 +146,19 @@ const ExpenseCharts = () => {
     };
   }, [getExpenseSum]);
 
+  useEffect(() => {
+    const handleResizeCharts = () => {
+      setChartWidthState(
+        window.innerWidth < 768
+          ? window.innerWidth
+          : window.innerWidth / 2 - 100
+      );
+    };
+    window.addEventListener("resize", handleResizeCharts);
+    //to set the state at first to set the state for the default size, cause event is resize we need to get the state
+    handleResizeCharts();
+  }, []);
+
   return (
     <div>
       <div className="flex pl-7">
@@ -170,8 +182,8 @@ const ExpenseCharts = () => {
         </SecondaryButton>
       </div>
       {isRendered && chartType === "pie" && (
-        <div>
-          <PieChart width={chartWidth} height={350}>
+        <div className="md:flex md:items-center md:mt-3 md:mb-3 md:p-8">
+          <PieChart width={chartWitdhState} height={400}>
             <Pie
               dataKey="amount"
               data={chartData}
@@ -198,8 +210,8 @@ const ExpenseCharts = () => {
         </div>
       )}
       {isRendered && chartType === "bar" && (
-        <div className="flex items-center h-[300px]">
-          <BarChart width={chartWidth} height={350} data={chartData}>
+        <div className="flex items-center md:p-8 md:mt-3 md:mb-3">
+          <BarChart width={chartWitdhState} height={400} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"
