@@ -143,6 +143,9 @@ const IncomeCharts = () => {
     };
   }, [getIncomeSum]);
 
+  const chartWidth =
+    window.innerWidth < 768 ? window.innerWidth : window.innerWidth / 2 - 100;
+
   return (
     <div>
       <div className="flex pl-7">
@@ -167,7 +170,10 @@ const IncomeCharts = () => {
       </div>
       {isRendered && chartType === "pie" && (
         <div>
-          <PieChart width={window.innerWidth} height={350}>
+          <PieChart
+            width={chartWidth}
+            height={350}
+          >
             <Pie
               dataKey="amount"
               data={chartData}
@@ -195,7 +201,7 @@ const IncomeCharts = () => {
       )}
       {isRendered && chartType === "bar" && (
         <div className="flex items-center h-[300px]">
-          <BarChart width={window.innerWidth} height={350} data={chartData}>
+          <BarChart width={chartWidth} height={350} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"

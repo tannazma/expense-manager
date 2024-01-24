@@ -149,7 +149,7 @@ const Home = () => {
             <FilterDateComponent />
           </div>
         </div>
-        <div className="flex flex-wrap gap-20 mb-5">
+        <div className="flex flex-col gap-20 mb-5 md:flex-row">
           <SelectedAccountContext.Provider value={selectedAccountId}>
             <ExpenseComponent refetchBalance={refetchBalance} />
             <IncomeComponent refetchBalance={refetchBalance} />
