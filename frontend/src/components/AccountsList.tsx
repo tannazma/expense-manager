@@ -100,7 +100,7 @@ export default function AccountsList({
           className={`${navbarTextColor} text-xs font-semibold flex items-center`}
         >
           {editingAccountId === account.id ? (
-            <>
+            <div className="flex items-center">
               <input
                 value={editingAccountName}
                 onInput={(e) =>
@@ -112,7 +112,7 @@ export default function AccountsList({
                 Save
               </SecondaryButton>
               <SecondaryButton onClick={cancelEdit}>Cancel</SecondaryButton>
-            </>
+            </div>
           ) : (
             <button
               onClick={() => {
@@ -138,7 +138,7 @@ export default function AccountsList({
             </button>
           )}
           {selectedAccountId === account.id && !editingAccountId ? (
-            <>
+            <div className="flex items-center">
               <button
                 className={`${navbarTextColor} ml-2 text-xs font-medium`}
                 onClick={() => {
@@ -158,7 +158,7 @@ export default function AccountsList({
                   onCancel={() => setIsDialogOpen(false)}
                 />
               )}
-            </>
+            </div>
           ) : null}
         </div>
       ))}

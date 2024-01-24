@@ -28,7 +28,7 @@ const SecondaryButton = ({ type ,children, onClick }:SecondaryButtonProp ) => {
 
   return (
     <button
-      className={`${secondaryBackgroundColorClass} text-xs items-center flex gap-2 font-semibold hover:text-white py-1 px-2 border hover:border-transparent rounded mr-2 mt-2`}
+      className={`${secondaryBackgroundColorClass} text-xs items-center flex gap-2 font-semibold hover:text-white py-1 px-2 border hover:border-transparent rounded mr-2`}
       onClick={onClick}
       type={type}
     >
