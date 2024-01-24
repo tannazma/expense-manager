@@ -74,7 +74,7 @@ const AccountComponent = () => {
         All
       </button>
       <SecondaryButton onClick={toggleShowExpenseDialog}>
-        Create New Account
+         New Account
       </SecondaryButton>
       {showCreateExpenseDialog && (
         <form onSubmit={handleCreateAccount} className="flex items-center">

@@ -103,17 +103,23 @@ const ExpensesFromAcountFromCategory = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          // throw new Error("Network response was not ok");
+          alert("nothing here")
+          // fetchExpensesFromCategory();
+          setIsDialogOpen(false)
+
         }
         // Refetch the expenses after successfully deleting an expense
         fetchExpensesFromCategory();
+        setIsDialogOpen(false)
       })
       .catch((error) => {
         console.error(
           "There has been a problem with your fetch expenses:",
           error
         );
-        setIsEditMode(false);
+        // fetchExpensesFromCategory();
+        // setIsEditMode(false);
       });
   };
 

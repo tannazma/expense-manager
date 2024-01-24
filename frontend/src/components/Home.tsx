@@ -86,7 +86,7 @@ const Home = () => {
             All
           </button>
           <SecondaryButton onClick={toggleShowExpenseDialog}>
-            Create New Account
+             New Account
           </SecondaryButton>
           {showCreateExpenseDialog && (
             <form onSubmit={handleCreateAccount} className="flex items-center">
@@ -105,15 +105,15 @@ const Home = () => {
             </form>
           )}
         </div>
-        <div className="flex justify-between">
-          <div className="flex flex-col">
+        <div className="flex justify-between flex-col">
+          <div className="flex flex-col pl-7 pr-7 pb-4">
             {balance > 1000 && (
               <>
-                <h2 className="text-l pl-6">
+                <h2 className="text-l">
                   Balance:
                   <span className="text-green-600"> {balance}</span>
                 </h2>
-                <p className="bg-green-100 border rounded border-green-800 text-xs text-green-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
+                <p className="bg-green-100 border rounded border-green-800 text-xs text-green-900 pt-2 pb-2 mt-3">
                   <span className="text-xs mr-2">😍 </span>Great job!
                   You&apos;re on track with your finances!
                 </p>
@@ -121,13 +121,13 @@ const Home = () => {
             )}
             {balance <= 1000 && balance > 500 && (
               <>
-                <h2 className=" text-l pl-7 ">
+                <h2 className=" text-l ">
                   Balance:
                   <span className="text-yellow-600 font-semibold">
                     {balance}
                   </span>
                 </h2>
-                <p className="border-yellow-500 border text-xs rounded bg-yellow-50 text-yellow-700 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
+                <p className="border-yellow-500 border text-xs rounded bg-yellow-50 text-yellow-700 pt-2 pb-2 mt-3">
                   <span className="text-xs mr-2">🚧 </span>Watch out! Consider
                   limiting your spendings!
                 </p>
@@ -135,17 +135,17 @@ const Home = () => {
             )}
             {balance <= 500 && (
               <>
-                <h2 className="text-l pl-7">
+                <h2 className="text-l">
                   Balance: <span className="text-red-600">{balance}</span>
                 </h2>
-                <p className="bg-red-100 border text-xs rounded border-red-500 text-red-900 pl-7 pt-2 pb-2 w-[500px] ml-7 mt-3">
-                  <span className="text-xs mr-2">⛔ </span> Warning! You have
+                <p className="bg-red-100 border text-xs rounded border-red-500 text-red-900 pt-2 pb-2 mt-3">
+                  <span className="text-xs mr-2 pl-2">⛔ </span> Warning! You have
                   low funds! Consider saving more.
                 </p>
               </>
             )}
           </div>
-          <div className="flex items-end">
+          <div className="flex items-end pl-7 pr-7">
             <FilterDateComponent />
           </div>
         </div>

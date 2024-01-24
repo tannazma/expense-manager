@@ -48,8 +48,11 @@ const NavBar = () => {
             <div className="flex flex-row items-center text-xs mr-3">
               Hello {user.username}
             </div>
-            <Link href="/logout" id="logout-btn">
+            <Link href="/logout" id="logout-btn" className="pr-2">
+              <div className="pr-0">
+
               <PrimaryButton onClick={handleLogout}>Logout</PrimaryButton>
+              </div>
             </Link>
           </div>
         ) : (
