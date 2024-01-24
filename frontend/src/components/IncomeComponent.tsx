@@ -120,7 +120,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
           />
         )}
       </div>
-      <div className="flex flex-col pr-10 pl-10">
+      <div className="flex flex-col pr-7 pl-7">
         {incomeSum
           .sort((a, b) => (a.amount > b.amount ? -1 : 1))
           .map((summary) => {
@@ -135,7 +135,7 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
               >
                 <div
                   key={summary.incomeCategoryId}
-                  className={`${entryBackgroundColorClass} flex pl-3 items-center bg-transparent font-semibold hover:text-white border hover:border-transparent rounded m-2 px-2 py-2`}
+                  className={`${entryBackgroundColorClass} flex items-center bg-transparent font-semibold hover:text-white border hover:border-transparent rounded m-2 px-2 py-2`}
                 >
                   <div className="flex justify-between gap-2 items-center">
                     {incCategory && (
