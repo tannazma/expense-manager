@@ -29,7 +29,7 @@ const FilterDateComponent = () => {
 
   return (
     <div className="flex justify-between pr-8">
-      <form onSubmit={getExpenseSumBasedOnDate} className="flex">
+      <form onSubmit={getExpenseSumBasedOnDate} className="flex items-end">
         <label className="text-xs">
           From
           <input
@@ -49,7 +49,6 @@ const FilterDateComponent = () => {
           />
         </label>
         <div className="flex items-center pt-2">
-
           <PrimaryButton type="submit">Search</PrimaryButton>
         </div>
         <div className="text-l">
