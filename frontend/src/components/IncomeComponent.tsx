@@ -101,9 +101,9 @@ const IncomeComponent = ({ refetchBalance }: incomeProps) => {
   }
 
   return (
-    <div className="flex-1 pr-10 pl-10">
+    <div className="flex-1 pt-8">
       <div>
-        <h2 className="text-lg font-semibold">Incomes</h2>
+        <h2 className="text-lg font-semibold pl-7">Incomes</h2>
         <IncomeCharts />
         <div className="flex justify-end pr-8">
           <PrimaryButton onClick={toggleShowIncomeDialog}>+</PrimaryButton>
