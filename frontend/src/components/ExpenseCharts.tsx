@@ -89,7 +89,7 @@ const ExpenseCharts = () => {
   } else {
     correctColors = COLORS; // default colors
   }
-  
+
   const getExpenseSum = useCallback(async () => {
     if (dateFilter) {
       const response = await fetch(
@@ -130,7 +130,6 @@ const ExpenseCharts = () => {
     }
   }, [selectedAccountId, dateFilter]);
 
-
   useEffect(() => {
     getExpenseSum();
   }, [getExpenseSum]);
@@ -169,7 +168,7 @@ const ExpenseCharts = () => {
       </div>
       {isRendered && chartType === "pie" && (
         <div>
-          <PieChart width={500} height={300}>
+          <PieChart width={window.innerWidth} height={300}>
             <Pie
               dataKey="amount"
               data={chartData}
@@ -178,9 +177,9 @@ const ExpenseCharts = () => {
               outerRadius={110}
               fill="#00008"
               label={true}
-              paddingAngle={2}
+              paddingAngle={4}
               animationDuration={1000}
-              fontSize={12}
+              fontSize={8}
             >
               {chartData.map((entry, index) => (
                 <Cell
@@ -191,13 +190,13 @@ const ExpenseCharts = () => {
               ))}
             </Pie>
             <Tooltip />
-            <Legend layout="vertical" align="left" verticalAlign="middle" />
+            <Legend layout="horizontal" align="center" verticalAlign="bottom" />
           </PieChart>
         </div>
       )}
       {isRendered && chartType === "bar" && (
         <div className="flex items-center h-[300px]">
-          <BarChart width={500} height={300} data={chartData}>
+          <BarChart width={300} height={300} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"

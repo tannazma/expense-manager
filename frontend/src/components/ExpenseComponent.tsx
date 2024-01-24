@@ -103,7 +103,7 @@ const ExpenseComponent = ({ refetchBalance }: expenseProps) => {
 
   // The component renders a list of expense categories and their sums, and a button to create a new expense
   return (
-    <div className="flex-1 pr-10 pl-10">
+    <div className="flex-1">
       <div>
         <h2 className="text-lg font-semibold">Expenses</h2>
         <ExpenseCharts />
