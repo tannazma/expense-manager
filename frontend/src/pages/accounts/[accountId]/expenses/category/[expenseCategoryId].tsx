@@ -13,6 +13,8 @@ import {
 import ThemeContext from "@/components/ThemeContext";
 import { AlertDialogDemo } from "../../../../../components/AlertDialog";
 import AccountComponent from "@/components/AccountComponent";
+import PrimaryButton from "@/components/PrimaryButton";
+import SecondaryButton from "@/components/SecondaryButton";
 
 interface ChartDataType {
   date: string;
@@ -37,7 +39,6 @@ const ExpensesFromAcountFromCategory = () => {
   const accountIdFromUrl = Number(router.query.accountId);
   const categoryIdFromUrl = Number(router.query.expenseCategoryId);
 
-  
   const fetchExpensesFromCategory = useCallback(async () => {
     // Check if accountId is not null
     if (accountIdFromUrl !== null && !isNaN(categoryIdFromUrl)) {
@@ -61,7 +62,8 @@ const ExpensesFromAcountFromCategory = () => {
         amount: expense.amount,
       }));
       setChartData(chartData);
-    }}, [accountIdFromUrl, categoryIdFromUrl])
+    }
+  }, [accountIdFromUrl, categoryIdFromUrl]);
 
   useEffect(() => {
     const fetchAllExpenseCategories = async () => {
@@ -84,8 +86,6 @@ const ExpensesFromAcountFromCategory = () => {
     }
   }, [router, categoryIdFromUrl, accountIdFromUrl, fetchExpensesFromCategory]);
 
-  
-
   if (isNaN(categoryIdFromUrl)) {
     return <div>Expense not found</div>;
   }
@@ -104,14 +104,13 @@ const ExpensesFromAcountFromCategory = () => {
       .then((response) => {
         if (!response.ok) {
           // throw new Error("Network response was not ok");
-          alert("nothing here")
+          alert("nothing here");
           // fetchExpensesFromCategory();
-          setIsDialogOpen(false)
-
+          setIsDialogOpen(false);
         }
         // Refetch the expenses after successfully deleting an expense
         fetchExpensesFromCategory();
-        setIsDialogOpen(false)
+        setIsDialogOpen(false);
       })
       .catch((error) => {
         console.error(
@@ -231,35 +230,50 @@ const ExpensesFromAcountFromCategory = () => {
                 key={expense.id}
                 className={`${entryBackgroundColorClass} p-5 shadow-xl rounded-md`}
               >
-                <div className="flex ">
-                  <span>{expense.expenseCategory?.icon}</span>
-                  <p className="pr-2 pb-6">{expense.expenseCategory?.name}</p>
-                  <p className="justify-between flex-1 text-right	">
-                    {new Date(expense.date).toUTCString()}
-                  </p>
-                </div>
-                <p>{expense.amount} €</p>
-                <p>{expense.details}</p>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setIsDialogOpen(true)}
-                    className={`${firstButtonClass} font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
-                  >
-                    Delete
-                  </button>
-                  {isDialogOpen && (
-                    <AlertDialogDemo
-                      isOpen={isDialogOpen}
-                      onContinue={() => handleDeleteExpense(expense.id)}
-                      onCancel={() => setIsDialogOpen(false)}
-                    />
-                  )}
-                  <button
-                    onClick={() => handleEditExpense(expense.id)}
-                    className={`${secondButtonClass} text-white font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
-                  >
-                    Edit
-                  </button>
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <div className="flex">
+                      <span className="mr-2">
+                        {expense.expenseCategory?.icon}
+                      </span>
+                      <p className="pr-2 pb-6 font-bold">
+                        {expense.expenseCategory?.name}
+                      </p>
+                    </div>
+                    <div>
+                      <p>{new Date(expense.date).toUTCString()}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <div className="flex flex-col">
+                      <p className="font-semibold">
+                        Amount:
+                        <span> {expense.amount} €</span>
+                      </p>
+                      <div>
+                        <p>
+                          {expense.details ? expense.details : "No details yet"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex justify-end gap-5">
+                      <PrimaryButton onClick={() => setIsDialogOpen(true)}>
+                        Delete
+                      </PrimaryButton>
+                      {isDialogOpen && (
+                        <AlertDialogDemo
+                          isOpen={isDialogOpen}
+                          onContinue={() => handleDeleteExpense(expense.id)}
+                          onCancel={() => setIsDialogOpen(false)}
+                        />
+                      )}
+                      <SecondaryButton
+                        onClick={() => handleEditExpense(expense.id)}
+                      >
+                        Edit
+                      </SecondaryButton>
+                    </div>
+                  </div>
                 </div>
                 {isEditMode && (
                   <div

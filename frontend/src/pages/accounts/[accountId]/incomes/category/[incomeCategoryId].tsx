@@ -14,6 +14,8 @@ import NavBar from "@/components/NavBar";
 import ThemeContext from "@/components/ThemeContext";
 import { AlertDialogDemo } from "../../../../../components/AlertDialog";
 import AccountComponent from "@/components/AccountComponent";
+import PrimaryButton from "@/components/PrimaryButton";
+import SecondaryButton from "@/components/SecondaryButton";
 
 interface ChartDataType {
   date: string;
@@ -250,36 +252,53 @@ const IncomesFromAcountFromCategory = () => {
                 key={income.id}
                 className={`${entryBackgroundColorClass} p-5 shadow-xl rounded-md`}
               >
-                <div className="flex">
-                  <span className="pr-2">{income.incomeCategory?.icon}</span>
-                  <p className="pr-2 pb-6">{income.incomeCategory?.name}</p>
-                  <p className="justify-between flex-1 text-right	">
-                    {new Date(income.date).toUTCString()}
-                  </p>
+                <div className="flex flex-col">
+                  <div className="flex justify-between">
+                    <div className="flex">
+                      <span className="mr-2">
+                        {income.incomeCategory?.icon}
+                      </span>
+                      <p className="pr-2 pb-6 font-bold">
+                        {income.incomeCategory?.name}
+                      </p>
+                    </div>
+                    <div>
+                      <p>{new Date(income.date).toUTCString()}</p>
+                    </div>
+                  </div>
                 </div>
-                <p>{income.amount} €</p>
-                <p>{income.details}</p>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setIsDialogOpen(true)}
-                    className={`${firstButtonClass} font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
-                  >
-                    Delete
-                  </button>
-                  {isDialogOpen && (
-                    <AlertDialogDemo
-                      isOpen={isDialogOpen}
-                      onContinue={() => handleDeleteIncome(income.id)}
-                      onCancel={() => setIsDialogOpen(false)}
-                    />
-                  )}
-                  <button
-                    onClick={() => handleEditIncome(income.id)}
-                    className={`${secondButtonClass} text-white font-bold py-1 px-2 hover:text-white border hover:border-transparent rounded align-right`}
-                  >
-                    Edit
-                  </button>
+                <div className="flex justify-between">
+                  <div className="flex flex-col">
+                    <p>
+                      <span className="font-semibold">Amount:</span>
+                      <span> {income.amount} €</span>
+                    </p>
+                    <div>
+                      <span className="font-semibold">Details: </span>
+                      <span> 
+                        {income.details ? income.details : "No details yet"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-5">
+                    <PrimaryButton onClick={() => setIsDialogOpen(true)}>
+                      Delete
+                    </PrimaryButton>
+                    {isDialogOpen && (
+                      <AlertDialogDemo
+                        isOpen={isDialogOpen}
+                        onContinue={() => handleDeleteIncome(income.id)}
+                        onCancel={() => setIsDialogOpen(false)}
+                      />
+                    )}
+                    <SecondaryButton
+                      onClick={() => handleEditIncome(income.id)}
+                    >
+                      Edit
+                    </SecondaryButton>
+                  </div>
                 </div>
+
                 {isEditMode && (
                   <div
                     className="h-screen place-items-center w-screen modal transition-all-1s fixed top-0 left-0 right-0 bottom-0 z-50 gap-2 grid bg-black bg-opacity-30 items-center text-center justify-center"
