@@ -5,15 +5,23 @@ import { useRouter } from "next/router";
 const useFetchUser = () => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-
+  
   useEffect(() => {
     const getUser = async () => {
-      console.log("HELLLLLLLLOOOOOOOOOO")
+      console.log("getting user")
+      const token = localStorage.getItem("token")
+      if (!token) {
+        if (router.pathname !== "/register") {
+        router.push("/login");
+        }
+        return
+      }
+      else {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVERURL}/user`,
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + token,
           },
         }
       );
@@ -26,10 +34,12 @@ const useFetchUser = () => {
           router.push("/login");
         }
       }
+    }
     };
-    if (localStorage.getItem("token")) {getUser()}
-    
-  }, [router]);
+    getUser()
+  //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return user;
 };
 export default useFetchUser;
