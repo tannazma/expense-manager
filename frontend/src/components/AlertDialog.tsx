@@ -31,8 +31,8 @@ export function AlertDialogDemo({
               remove your data from our servers.
             </AlertDialogDescription>
             <div className="flex justify-end mt-4 space-x-3">
-              <PrimaryButton onClick={onCancel}>Cancel</PrimaryButton>
-              <SecondaryButton onClick={onContinue}>Continue</SecondaryButton>
+              <PrimaryButton onClick={onCancel}>No</PrimaryButton>
+              <SecondaryButton onClick={onContinue}>Yes</SecondaryButton>
             </div>
           </AlertDialogContent>
         </AlertDialog>
