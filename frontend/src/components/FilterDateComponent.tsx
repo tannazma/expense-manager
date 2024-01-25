@@ -51,7 +51,7 @@ const FilterDateComponent = () => {
         <div className="flex items-center pt-2">
           <PrimaryButton type="submit">Search</PrimaryButton>
         </div>
-        <div className="text-l">
+        {/* <div className="pl-2 text-xs">
           {fromDate && toDate ? (
             <>
               Date From: <span className="ml-2 mr-4">{fromDate}</span> to:{" "}
@@ -60,7 +60,7 @@ const FilterDateComponent = () => {
           ) : (
             ""
           )}
-        </div>
+        </div> */}
       </form>
     </div>
   );
