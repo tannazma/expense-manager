@@ -5,8 +5,10 @@ import SecondaryButton from "./SecondaryButton";
 import useFetchAccounts from "../hooks/useFetchAccounts";
 import { useContext, useState } from "react";
 import ThemeContext from "./ThemeContext";
+import { useRouter } from "next/router";
 
 const AccountComponent = () => {
+  const router = useRouter()
   const { accounts, refetchAccounts } = useFetchAccounts();
   const [showCreateExpenseDialog, setShowCreateExpenseDialog] = useState(false);
   const [accountName, setAccountName] = useState("");
@@ -31,11 +33,11 @@ const AccountComponent = () => {
       }),
     });
 
-    setAccountName("")
+    setAccountName("");
     refetchAccounts();
     setShowCreateExpenseDialog(!showCreateExpenseDialog);
   };
-  
+
   const { theme } = useContext(ThemeContext);
 
   let accountColor = "bg-purple-100 text-purple-600";
@@ -63,7 +65,18 @@ const AccountComponent = () => {
         />
       )}
       <button
-        onClick={() => setSelectedAccount(0)}
+        onClick={() => {
+          setSelectedAccount(0);
+          const path = {
+            pathname: router.pathname, // keep the same page
+            query: {
+              ...router.query,
+              accountName: 'all',
+              accountId: 0,
+            }, // keep existing query parameters and add/replace accountname
+          };
+          router.push(path, undefined, { shallow: true }); // change the URL without triggering data re-fetch
+        }}
         className={`text-xs px-2 py-2${
           selectedAccountId !== 0
             ? "text-xs font-semibold text-black"
@@ -74,12 +87,15 @@ const AccountComponent = () => {
         All
       </button>
       <SecondaryButton onClick={toggleShowExpenseDialog}>
-         New Account
+        New Account
       </SecondaryButton>
       {showCreateExpenseDialog && (
-        <form onSubmit={handleCreateAccount} className="flex items-end md:items-center">
+        <form
+          onSubmit={handleCreateAccount}
+          className="flex items-end md:items-center"
+        >
           <label className="text-xs flex flex-col md:flex-row md:flex-row-reverse md:items-center md:h-[50px]">
-          Account name
+            Account name
             <input
               id="accountName"
               name="accountName"
@@ -90,7 +106,7 @@ const AccountComponent = () => {
           </label>
 
           <PrimaryButton type="submit">Create</PrimaryButton>
-          <SecondaryButton >Cancel</SecondaryButton>
+          <SecondaryButton>Cancel</SecondaryButton>
         </form>
       )}
     </div>
