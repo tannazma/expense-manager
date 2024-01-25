@@ -113,7 +113,7 @@ const Home = () => {
                   Balance:
                   <span className="text-green-600"> {balance}</span>
                 </h2>
-                <p className="bg-green-100 border rounded border-green-800 text-xs text-green-900 pt-2 pb-2 mt-3">
+                <p className="bg-green-100 border rounded border-green-800 text-xs text-green-900 pt-2 pb-2 mt-3 md:w-[400px]">
                   <span className="text-xs mr-2 pl-2">😍 </span>Great job!
                   You&apos;re on track with your finances!
                 </p>
@@ -127,7 +127,7 @@ const Home = () => {
                     {balance}
                   </span>
                 </h2>
-                <p className="border-yellow-500 border text-xs rounded bg-yellow-50 text-yellow-700 pt-2 pb-2 mt-3">
+                <p className="border-yellow-500 border text-xs rounded bg-yellow-50 text-yellow-700 pt-2 pb-2 mt-3 md:w-[400px]">
                   <span className="text-xs mr-2 pl-2">🚧 </span>Watch out! Consider
                   limiting your spendings!
                 </p>
@@ -138,7 +138,7 @@ const Home = () => {
                 <h2 className="text-l">
                   Balance: <span className="text-red-600">{balance}</span>
                 </h2>
-                <p className="bg-red-100 border text-xs rounded border-red-500 text-red-900 pt-2 pb-2 mt-3 md:w-[600px]">
+                <p className="bg-red-100 border text-xs rounded border-red-500 text-red-900 pt-2 pb-2 mt-3 md:w-[400px]">
                   <span className="text-xs mr-2 pl-2">⛔ </span> Warning! You have
                   low funds! Consider saving more.
                 </p>
