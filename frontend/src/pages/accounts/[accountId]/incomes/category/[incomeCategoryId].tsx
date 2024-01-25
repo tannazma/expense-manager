@@ -159,17 +159,21 @@ const IncomesFromAcountFromCategory = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network income was not ok");
+          // throw new Error("Network income was not ok");
+          alert("nothing here");
+          // fetchExpensesFromCategory();
+          setIsDialogOpen(false);
         }
         // Refetch the incomes after successfully deleting an expense
         fetchIncomesFromCategory();
+        setIsDialogOpen(false);
       })
       .catch((error) => {
         console.error(
           "There has been a problem with your fetch incomes:",
           error
         );
-        setIsEditMode(false);
+        // setIsEditMode(false);
       });
   };
 
