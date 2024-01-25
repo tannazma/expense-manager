@@ -226,6 +226,9 @@ app.put(
           details: details,
           date: date,
         },
+        include: {
+          expenseCategory: true,
+        },
       });
 
       res.status(200).send(updatedExpense);
@@ -272,6 +275,9 @@ app.put(
           incomeCategoryId: incomeCategoryId,
           details: details,
           date: date,
+        },
+        include: {
+          incomeCategory: true,
         },
       });
 
