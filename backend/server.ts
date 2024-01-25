@@ -820,9 +820,22 @@ app.post("/api/login", async (req, res) => {
 
 app.post("/api/users", async (req, res) => {
   const { username, password, email } = req.body;
+  const requestBody = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
 
   try {
+    // Check if user already exists
+    const userExists = await prisma.user.findFirst({
+      where: {
+        username: requestBody.username,
+      },
+    });
+
+    // If user exists send an error response
+    if (userExists) {
+      return res.status(400).send({ error: "User already exists!" });
+    }
+
     const newUser = await prisma.user.create({
       data: {
         username,
@@ -830,7 +843,13 @@ app.post("/api/users", async (req, res) => {
         email,
       },
     });
-    res.status(200).send(newUser);
+
+    // Generating the token with the new user data
+    const token = toToken({ userId: newUser.id });
+
+    // Sending the token along with the new user data
+    res.status(200).send({ user: newUser, token: token });
+
     console.log(newUser);
   } catch (error) {
     console.error(error);

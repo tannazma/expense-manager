@@ -5,6 +5,7 @@ import { z } from "zod";
 import NavBar from "../components/NavBar";
 import { useContext } from "react";
 import ThemeContext from "@/components/ThemeContext";
+import { toast } from "react-hot-toast";
 
 const dataFromFormValidator = z.object({
   username: z.string().min(4),
@@ -27,14 +28,22 @@ const Register = () => {
 
   const handleRegister = async (data: DataFromForm) => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_SERVERURL}/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      router.push("/login?just-registered=true");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVERURL}/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      // router.push("/login?just-registered=true");
+      if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+        router.push("/");
+      }
     } catch (error) {
       console.log("Something went wrong!", error);
     }
