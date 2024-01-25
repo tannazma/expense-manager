@@ -233,12 +233,12 @@ const ExpensesFromAcountFromCategory = () => {
                 className={`${entryBackgroundColorClass} p-5 shadow-xl rounded-md`}
               >
                 <div className="flex flex-col">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center pb-6">
                     <div className="flex">
                       <span className="mr-2">
                         {expense.expenseCategory?.icon}
                       </span>
-                      <p className="pr-2 pb-6 font-bold">
+                      <p className="pr-2 font-bold">
                         {expense.expenseCategory?.name}
                       </p>
                     </div>
@@ -246,35 +246,36 @@ const ExpensesFromAcountFromCategory = () => {
                       <p>{new Date(expense.date).toUTCString()}</p>
                     </div>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-end">
                     <div className="flex flex-col">
-                      <p className="font-semibold">
-                        Amount:
+                      <p className="pb-2">
+                        <span className="font-semibold">Amount:</span>
                         <span> {expense.amount} €</span>
                       </p>
                       <div>
-                        <p>
+                        <span className="font-semibold">Details: </span>
+                        <span>
                           {expense.details ? expense.details : "No details yet"}
-                        </p>
+                        </span>
                       </div>
                     </div>
-                    <div className="flex justify-end gap-5">
-                      <PrimaryButton onClick={() => setIsDialogOpen(true)}>
-                        Delete
-                      </PrimaryButton>
-                      {isDialogOpen && (
-                        <AlertDialogDemo
-                          isOpen={isDialogOpen}
-                          onContinue={() => handleDeleteExpense(expense.id)}
-                          onCancel={() => setIsDialogOpen(false)}
-                        />
-                      )}
-                      <SecondaryButton
-                        onClick={() => handleEditExpense(expense.id)}
-                      >
-                        Edit
-                      </SecondaryButton>
-                    </div>
+                  </div>
+                  <div className="flex justify-end gap-5 pt-2">
+                    <PrimaryButton onClick={() => setIsDialogOpen(true)}>
+                      Delete
+                    </PrimaryButton>
+                    {isDialogOpen && (
+                      <AlertDialogDemo
+                        isOpen={isDialogOpen}
+                        onContinue={() => handleDeleteExpense(expense.id)}
+                        onCancel={() => setIsDialogOpen(false)}
+                      />
+                    )}
+                    <SecondaryButton
+                      onClick={() => handleEditExpense(expense.id)}
+                    >
+                      Edit
+                    </SecondaryButton>
                   </div>
                 </div>
                 {isEditMode && (
