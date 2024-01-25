@@ -160,7 +160,7 @@ const IncomeCharts = () => {
 
   return (
     <div>
-      <div className="flex pl-7">
+      <div className="flex pl-7 pb-5">
         <SecondaryButton onClick={() => setChartType("pie")}>
           <Image
             src={pieChartIcon}
@@ -181,8 +181,8 @@ const IncomeCharts = () => {
         </SecondaryButton>
       </div>
       {isRendered && chartType === "pie" && (
-        <div className="md:flex md:items-center md:mt-3 md:mb-3 md:p-8">
-          <PieChart width={chartWitdhState} height={400}>
+        <div className="md:flex md:items-center">
+          <PieChart width={chartWitdhState} height={300}>
             <Pie
               dataKey="amount"
               data={chartData}
@@ -204,13 +204,13 @@ const IncomeCharts = () => {
               ))}
             </Pie>
             <Tooltip />
-            <Legend layout="horizontal" align="left" verticalAlign="bottom" />
+            <Legend layout="horizontal" align="center" verticalAlign="bottom" />
           </PieChart>
         </div>
       )}
       {isRendered && chartType === "bar" && (
-        <div className="flex items-center md:p-8 md:mt-3 md:mb-3">
-          <BarChart width={chartWitdhState} height={400} data={chartData}>
+        <div className="flex items-center justify-center align-middle">
+          <BarChart width={chartWitdhState * 0.8} height={300} data={chartData}>
             <CartesianGrid strokeDasharray="5 3" />
             <XAxis
               dataKey="name"
