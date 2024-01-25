@@ -51,7 +51,9 @@ const ExpensesFromAcountFromCategory = () => {
         }
       );
       const data = await response.json();
-      setSelectedExpenseCategoryId(data[0].id);
+      if (data[0]) {
+        setSelectedExpenseCategoryId(data[0].id);
+      }
       setExpenses(data);
       const chartData: ChartDataType[] = data.map((expense: Expense) => ({
         date:

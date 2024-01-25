@@ -78,7 +78,9 @@ const IncomesFromAcountFromCategory = () => {
         }
       );
       const data = await response.json();
-      setSelectedIncomeCategoryId(data[0].id);
+      if (data[0]) {
+        setSelectedIncomeCategoryId(data[0].id);
+      }
       setIncomes(data);
 
       const chartData: ChartDataType[] = data.map((income: Income) => ({
@@ -275,7 +277,7 @@ const IncomesFromAcountFromCategory = () => {
                     </p>
                     <div>
                       <span className="font-semibold">Details: </span>
-                      <span> 
+                      <span>
                         {income.details ? income.details : "No details yet"}
                       </span>
                     </div>
