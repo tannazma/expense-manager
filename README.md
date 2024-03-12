@@ -32,15 +32,16 @@ The project uses a combination of technologies for an optimized and user-friendl
 - Apply filters to entries based on the date
 
 <div style="display:flex">
-<img src="./frontend/public/expense-manager-income-piechart.png" style="width: 300px; height: 400px flex: 1;">
- <img src="./frontend/public/expense-manager-income-barchart.png" style="width: 300px; height: 400px flex: 1;">
+    <img src="./frontend/public/expense-manager-income-piechart.png" style="width: 300px; height: 400px flex: 1;">
+    <img src="./frontend/public/expense-manager-income-barchart.png" style="width: 300px; height: 400px flex: 1;">
 </div>
 
 #### Details Page for expense/income
 
 - Line chart based on the income or expense over time
 - Access comprehensive information about each income or expense
-  <img src="./frontend/public/expense-manager-detailpage.png" style="width: 300px; height: 400px;">
+
+<img src="./frontend/public/expense-manager-detailpage.png" style="width: 300px; height: 400px;">
 
 ## Setup
 
