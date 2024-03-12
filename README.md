@@ -3,7 +3,7 @@ Spend Smart is a comprehensive and interactive expense manager that helps you no
 
 In this application, you can create multiple incomes and expenses across a wide variety of categories. You can even create unique categories for income and expense. Spend Smart helps you visualize your financial habits with beautiful bar, line, and pie charts as well as detailed views of each income or expense.
 
-<img src="expense-manager-homepage" style="width: 300px; height: 400px;">
+<img src="./frontend//public/expense-manager-homepage.png" style="width: 300px; height: 400px;">
 
 ### Tech Stack
 The project uses a combination of technologies for an optimized and user-friendly experience.
@@ -26,14 +26,15 @@ The project uses a combination of technologies for an optimized and user-friendl
 - A detailed view of each income and expense entry
 - Apply filters to entries based on the date
 
-- <img src="expense-manager-incomes" style="width: 300px; height: 400px;"> -
+- <img src="./frontend/public/expense-manager-income-piechart.png" style="width: 300px; height: 400px;"> -
+- <img src="./frontend/public/expense-manager-income-barchart.png" style="width: 300px; height: 400px;"> -
 
 
 #### Details Page for expense/income
 - Line chart based on the income or expense over time
 - Access comprehensive information about each income or expense
   
-- <img src="expense-manager-detailpage" style="width: 300px; height: 400px;"> - 
+- <img src="./frontend/public/expense-manager-detailpage.png" style="width: 300px; height: 400px;"> - 
 
 ## Setup
 1. Clone the repository
