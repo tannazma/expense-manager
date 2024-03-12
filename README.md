@@ -31,7 +31,7 @@ The project uses a combination of technologies for an optimized and user-friendl
 - A detailed view of each income and expense entry
 - Apply filters to entries based on the date
 
-<div style="display:flex">
+<div style="display:flex; gap:20px">
     <img src="./frontend/public/expense-manager-income-piechart.png" style="width: 300px; height: 400px flex: 1;">
     <img src="./frontend/public/expense-manager-income-barchart.png" style="width: 300px; height: 400px flex: 1;">
 </div>
